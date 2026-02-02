@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 043a3be2c75d06e4cb5b5764ca3fb015
+timeCreated: 1770071274
+licenseType: Pro
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Mystery Font
+  fontNames:
+  - Mystery Font
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

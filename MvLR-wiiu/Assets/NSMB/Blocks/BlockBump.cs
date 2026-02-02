@@ -5,7 +5,6 @@ namespace NSMB.Blocks {
     public sealed class BlockBump : MonoBehaviour {
         public float bumpHeight = 0.18f;
         public float bumpDuration = 0.10f;
-        public string bumpSfxResourcesPath = "NSMB/AudioClips/Resources/Sound/block_bump";
         public float bumpSfxVolume = 0.8f;
 
         private Vector3 _startPos;
@@ -53,7 +52,7 @@ namespace NSMB.Blocks {
             if (root != null) {
                 NSMB.Audio.AudioManager audio = root.GetComponent<NSMB.Audio.AudioManager>();
                 if (audio != null) {
-                    audio.PlayResourcesOneShot(bumpSfxResourcesPath, bumpSfxVolume);
+                    audio.PlayOneShot(NSMB.Audio.SoundEffectId.World_Block_Bump, bumpSfxVolume);
                 }
             }
 

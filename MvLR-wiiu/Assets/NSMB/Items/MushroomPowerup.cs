@@ -6,7 +6,6 @@ namespace NSMB.Items {
     public sealed class MushroomPowerup : MonoBehaviour {
         public float moveSpeed = 2.2f;
         public int scoreValue = 1000;
-        public string collectSfxResourcesPath = "NSMB/AudioClips/Resources/Sound/block_powerup";
         public float collectSfxVolume = 0.8f;
 
         private Rigidbody2D _rb;
@@ -53,7 +52,7 @@ namespace NSMB.Items {
             if (root != null) {
                 NSMB.Audio.AudioManager audio = root.GetComponent<NSMB.Audio.AudioManager>();
                 if (audio != null) {
-                    audio.PlayResourcesOneShot(collectSfxResourcesPath, collectSfxVolume);
+                    audio.PlayOneShot(NSMB.Audio.SoundEffectId.World_Block_Powerup, collectSfxVolume);
                 }
             }
 

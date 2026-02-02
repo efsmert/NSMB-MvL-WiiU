@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: e34ef0f777d5c2c4aad8a93a0b72d400
+timeCreated: 1770071275
+licenseType: Pro
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: 'Super Mario: DS Version - Original'
+  fontNames:
+  - 'Super Mario: DS Version - Original'
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

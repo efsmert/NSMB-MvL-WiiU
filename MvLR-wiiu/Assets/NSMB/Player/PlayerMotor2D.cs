@@ -119,6 +119,40 @@ namespace NSMB.Player {
             RaycastHit2D hit = Physics2D.Raycast(origin, Vector2.down, groundCheckDistance, groundMask);
             _isGrounded = hit.collider != null;
         }
+
+        private void OnCollisionEnter2D(Collision2D collision) {
+            if (collision == null || collision.collider == null) {
+                return;
+            }
+
+            NSMB.Enemies.GoombaEnemy goomba = collision.collider.GetComponent<NSMB.Enemies.GoombaEnemy>();
+            if (goomba == null) {
+                return;
+            }
+
+            if (_rb == null) {
+                return;
+            }
+
+            // Simple stomp rule: player is above enemy and moving downward.
+            if (_rb.velocity.y > 0.01f) {
+                // Running into enemy while moving upward - treat as damage.
+                PlayerHealth phUp = GetComponent<PlayerHealth>();
+                if (phUp != null) {
+                    phUp.TakeHit();
+                }
+                return;
+            }
+
+            float dy = transform.position.y - collision.collider.transform.position.y;
+            if (dy > 0.25f) {
+                goomba.TryStomp(this);
+            } else {
+                PlayerHealth ph = GetComponent<PlayerHealth>();
+                if (ph != null) {
+                    ph.TakeHit();
+                }
+            }
+        }
     }
 }
-

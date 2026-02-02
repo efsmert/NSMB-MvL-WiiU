@@ -6,6 +6,11 @@ namespace NSMB.Audio {
         private AudioSource _sfxSource;
         [SerializeField] private float _sfxVolume = 1f;
 
+        public float SfxVolume {
+            get { return _sfxVolume; }
+            set { _sfxVolume = Mathf.Clamp01(value); }
+        }
+
         private void Awake() {
             _sfxSource = GetComponent<AudioSource>();
             _sfxSource.playOnAwake = false;
@@ -34,6 +39,19 @@ namespace NSMB.Audio {
 
         public void PlayResourcesOneShot(string resourcesPath) {
             PlayResourcesOneShot(resourcesPath, 1f);
+        }
+
+        public void PlayOneShot(SoundEffectId soundEffect, float volume, int variant) {
+            AudioClip clip = soundEffect.LoadClip(variant);
+            PlayOneShot(clip, volume);
+        }
+
+        public void PlayOneShot(SoundEffectId soundEffect, float volume) {
+            PlayOneShot(soundEffect, volume, 0);
+        }
+
+        public void PlayOneShot(SoundEffectId soundEffect) {
+            PlayOneShot(soundEffect, 1f, 0);
         }
     }
 }

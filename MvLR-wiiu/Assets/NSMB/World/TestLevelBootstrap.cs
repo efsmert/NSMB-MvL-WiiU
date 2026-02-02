@@ -17,6 +17,7 @@ namespace NSMB.World {
 
             BuildCoins();
             BuildMoreBlocks();
+            BuildEnemies();
         }
 
         private void BuildGround() {
@@ -40,6 +41,31 @@ namespace NSMB.World {
             BuildBumpBlock(new Vector2(-1.5f, 0.5f), false);
             BuildBumpBlock(new Vector2(-0.5f, 0.5f), false);
             BuildBumpBlock(new Vector2(0.5f, 0.5f), false);
+        }
+
+        private void BuildEnemies() {
+            BuildGoomba(new Vector2(4.0f, -1.4f));
+            BuildGoomba(new Vector2(-4.5f, -1.4f));
+        }
+
+        private void BuildGoomba(Vector2 position) {
+            GameObject go = new GameObject("Goomba");
+            go.transform.parent = transform;
+            go.transform.position = new Vector3(position.x, position.y, 0f);
+
+            Rigidbody2D rb = go.AddComponent<Rigidbody2D>();
+            rb.gravityScale = 3.5f;
+            rb.freezeRotation = true;
+
+            BoxCollider2D col = go.AddComponent<BoxCollider2D>();
+            col.size = new Vector2(0.9f, 0.8f);
+
+            SpriteRenderer sr = go.AddComponent<SpriteRenderer>();
+            sr.sprite = CreatePlaceholderSprite();
+            sr.color = new Color(0.55f, 0.35f, 0.2f, 1f);
+            sr.sortingOrder = 0;
+
+            go.AddComponent<NSMB.Enemies.GoombaEnemy>();
         }
 
         private void BuildCoin(Vector2 position) {
@@ -77,7 +103,7 @@ namespace NSMB.World {
             sr.size = new Vector2(1f, 1f);
             sr.sortingOrder = 0;
 
-            NSMB.Blocks.BlockBump bump = go.AddComponent<NSMB.Blocks.BlockBump>();
+            go.AddComponent<NSMB.Blocks.BlockBump>();
             go.AddComponent<NSMB.Blocks.BlockHitDetector>();
 
             if (spawnsMushroom) {

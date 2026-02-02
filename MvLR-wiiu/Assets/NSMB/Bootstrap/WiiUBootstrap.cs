@@ -6,8 +6,6 @@ namespace NSMB.WiiU {
         private static void AfterSceneLoad() {
             EnsureCamera();
             EnsureGameRoot();
-            EnsureTestLevel();
-            EnsurePlayer();
         }
 
         private static void EnsureGameRoot() {
@@ -36,23 +34,20 @@ namespace NSMB.WiiU {
 
             cam.orthographic = true;
             cam.orthographicSize = 5f;
+            cam.clearFlags = CameraClearFlags.SolidColor;
+            cam.backgroundColor = new Color(0.10f, 0.10f, 0.14f, 1f);
 
             NSMB.Camera.CameraFollow2D follow = cam.GetComponent<NSMB.Camera.CameraFollow2D>();
             if (follow == null) {
                 follow = cam.gameObject.AddComponent<NSMB.Camera.CameraFollow2D>();
             }
-        }
 
-        private static void EnsureTestLevel() {
-            if (Object.FindObjectOfType(typeof(NSMB.World.TestLevelBootstrap)) != null) {
-                return;
+            if (cam.GetComponent<NSMB.Camera.PixelPerfectCameraManual>() == null) {
+                cam.gameObject.AddComponent<NSMB.Camera.PixelPerfectCameraManual>();
             }
-
-            GameObject go = new GameObject("TestLevel");
-            go.AddComponent<NSMB.World.TestLevelBootstrap>();
         }
 
-        private static void EnsurePlayer() {
+        public static void EnsurePlayerForFlow() {
             NSMB.Player.PlayerMotor2D existing = Object.FindObjectOfType(typeof(NSMB.Player.PlayerMotor2D)) as NSMB.Player.PlayerMotor2D;
             if (existing != null) {
                 BindCameraTarget(existing.transform);
@@ -75,6 +70,7 @@ namespace NSMB.WiiU {
 
             player.AddComponent<NSMB.Player.PlayerMotor2D>();
             player.AddComponent<NSMB.Player.PlayerSfx>();
+            player.AddComponent<NSMB.Player.PlayerHealth>();
             BindCameraTarget(player.transform);
         }
 

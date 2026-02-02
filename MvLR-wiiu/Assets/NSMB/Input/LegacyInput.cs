@@ -19,6 +19,17 @@ namespace NSMB.Input {
         public static bool GetSprint() {
             return UnityEngine.Input.GetKey(KeyCode.LeftShift) || UnityEngine.Input.GetKey(KeyCode.RightShift);
         }
+
+        public static bool GetPauseDown() {
+            return UnityEngine.Input.GetKeyDown(KeyCode.Escape);
+        }
+
+        public static bool GetSubmitDown() {
+            return UnityEngine.Input.GetKeyDown(KeyCode.Return) || UnityEngine.Input.GetKeyDown(KeyCode.Space);
+        }
+
+        public static bool GetBackDown() {
+            return UnityEngine.Input.GetKeyDown(KeyCode.Escape) || UnityEngine.Input.GetKeyDown(KeyCode.Backspace);
+        }
     }
 }
-

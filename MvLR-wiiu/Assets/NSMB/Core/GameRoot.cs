@@ -25,8 +25,12 @@ namespace NSMB.Core {
                 gameObject.AddComponent<NSMB.Gameplay.GameManager>();
             }
 
-            if (GetComponent<NSMB.UI.HudBootstrap>() == null) {
-                gameObject.AddComponent<NSMB.UI.HudBootstrap>();
+            if (GetComponent<NSMB.Gameplay.GameFlow>() == null) {
+                gameObject.AddComponent<NSMB.Gameplay.GameFlow>();
+            }
+
+            if (GetComponent<NSMB.UI.UIRootBootstrap>() == null) {
+                gameObject.AddComponent<NSMB.UI.UIRootBootstrap>();
             }
         }
     }

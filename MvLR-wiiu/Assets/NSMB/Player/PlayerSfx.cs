@@ -3,7 +3,6 @@ using UnityEngine;
 namespace NSMB.Player {
     [RequireComponent(typeof(PlayerMotor2D))]
     public sealed class PlayerSfx : MonoBehaviour {
-        public string jumpSfxResourcesPath = "NSMB/AudioClips/Resources/Sound/player/jump";
         public float jumpVolume = 0.9f;
 
         private NSMB.Audio.AudioManager _audio;
@@ -17,9 +16,8 @@ namespace NSMB.Player {
 
         private void OnPlayerJump() {
             if (_audio != null) {
-                _audio.PlayResourcesOneShot(jumpSfxResourcesPath, jumpVolume);
+                _audio.PlayOneShot(NSMB.Audio.SoundEffectId.Player_Sound_Jump, jumpVolume);
             }
         }
     }
 }
-
