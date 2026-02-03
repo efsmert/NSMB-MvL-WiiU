@@ -380,6 +380,24 @@ namespace NSMB.Player {
                 return;
             }
 
+            NSMB.Enemies.BobombEnemy bobomb = collision.collider.GetComponent<NSMB.Enemies.BobombEnemy>();
+            if (bobomb != null) {
+                if (_rb == null) {
+                    return;
+                }
+
+                if (_rb.velocity.y > 0.01f) {
+                    PlayerHealth phUpBobomb = GetComponent<PlayerHealth>();
+                    if (phUpBobomb != null) {
+                        phUpBobomb.TakeHit();
+                    }
+                    return;
+                }
+
+                bobomb.HandlePlayerCollision(this, collision);
+                return;
+            }
+
             NSMB.Enemies.GoombaEnemy goomba = collision.collider.GetComponent<NSMB.Enemies.GoombaEnemy>();
             if (goomba == null) {
                 return;

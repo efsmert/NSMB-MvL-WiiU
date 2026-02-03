@@ -18,28 +18,21 @@ namespace NSMB.Visual {
         }
 
         public static Sprite[] GetGoombaWalkFrames() {
-            // Typical walk is first two frames.
-            Sprite a = NSMB.Content.ResourceSpriteCache.FindSprite(NSMB.Content.GameplayAtlasPaths.Goomba, "goomba_0");
-            Sprite b = NSMB.Content.ResourceSpriteCache.FindSprite(NSMB.Content.GameplayAtlasPaths.Goomba, "goomba_1");
-            if (a != null && b != null) {
-                return new Sprite[] { a, b };
+            Sprite[] frames = NSMB.Enemies.Unity6EnemyPrototypes.GetGoombaWalkFrames();
+            if (frames == null || frames.Length == 0) {
+                WarnOnce(ref _warnedGoomba, NSMB.Content.GameplayAtlasPaths.Goomba, "goomba_0..goomba_7");
+                return NSMB.Content.ResourceSpriteCache.FindSpritesByPrefix(NSMB.Content.GameplayAtlasPaths.Goomba, "goomba_");
             }
-            if (a == null || b == null) {
-                WarnOnce(ref _warnedGoomba, NSMB.Content.GameplayAtlasPaths.Goomba, "goomba_0/goomba_1");
-            }
-            return NSMB.Content.ResourceSpriteCache.FindSpritesByPrefix(NSMB.Content.GameplayAtlasPaths.Goomba, "goomba_");
+            return frames;
         }
 
         public static Sprite[] GetKoopaWalkFrames() {
-            Sprite a = NSMB.Content.ResourceSpriteCache.FindSprite(NSMB.Content.GameplayAtlasPaths.Koopa, "koopa_0");
-            Sprite b = NSMB.Content.ResourceSpriteCache.FindSprite(NSMB.Content.GameplayAtlasPaths.Koopa, "koopa_1");
-            if (a != null && b != null) {
-                return new Sprite[] { a, b };
+            Sprite[] frames = NSMB.Enemies.Unity6EnemyPrototypes.GetKoopaGreenWalkFrames();
+            if (frames == null || frames.Length == 0) {
+                WarnOnce(ref _warnedKoopa, NSMB.Content.GameplayAtlasPaths.Koopa, "koopa_*");
+                return NSMB.Content.ResourceSpriteCache.FindSpritesByPrefix(NSMB.Content.GameplayAtlasPaths.Koopa, "koopa_");
             }
-            if (a == null || b == null) {
-                WarnOnce(ref _warnedKoopa, NSMB.Content.GameplayAtlasPaths.Koopa, "koopa_0/koopa_1");
-            }
-            return NSMB.Content.ResourceSpriteCache.FindSpritesByPrefix(NSMB.Content.GameplayAtlasPaths.Koopa, "koopa_");
+            return frames;
         }
 
         public static Sprite[] GetCoinSpinFrames() {

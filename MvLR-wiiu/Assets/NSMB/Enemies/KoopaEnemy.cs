@@ -21,9 +21,12 @@ namespace NSMB.Enemies {
         public float wakeupSeconds = 6.0f;
 
         private Rigidbody2D _rb;
-        private Collider2D _col;
+        private Transform _graphics;
         private SpriteRenderer _sr;
         private NSMB.Visual.SimpleSpriteAnimator _anim;
+
+        private Sprite[] _walkFrames;
+        private Sprite[] _shellFrames;
 
         private KoopaState _state = KoopaState.Walking;
         private int _dir = -1;
@@ -31,34 +34,13 @@ namespace NSMB.Enemies {
 
         private void Awake() {
             _rb = GetComponent<Rigidbody2D>();
-            _col = GetComponent<Collider2D>();
             _rb.gravityScale = gravityScale;
             _rb.freezeRotation = true;
 
-            _sr = GetComponent<SpriteRenderer>();
-            if (_sr == null) {
-                _sr = gameObject.AddComponent<SpriteRenderer>();
-            }
+            _walkFrames = Unity6EnemyPrototypes.GetKoopaGreenWalkFrames();
+            _shellFrames = Unity6EnemyPrototypes.GetKoopaGreenShellFrames();
 
-            EnsureVisuals();
-        }
-
-        private void EnsureVisuals() {
-            if (_sr == null) {
-                return;
-            }
-
-            _anim = GetComponent<NSMB.Visual.SimpleSpriteAnimator>();
-
-            // Default walk frames.
-            Sprite[] walk = NSMB.Visual.GameplaySprites.GetKoopaWalkFrames();
-            if (walk != null && walk.Length > 0) {
-                _sr.sprite = walk[0];
-                if (_anim == null) {
-                    _anim = gameObject.AddComponent<NSMB.Visual.SimpleSpriteAnimator>();
-                }
-                _anim.SetFrames(walk, 10f, true);
-            }
+            Unity6EnemyPrototypes.ApplyKoopaGreen(gameObject, out _graphics, out _sr, out _anim);
         }
 
         private void FixedUpdate() {
@@ -189,14 +171,15 @@ namespace NSMB.Enemies {
             _wakeupTimer = Mathf.Max(0.5f, wakeupSeconds);
 
             if (_anim != null) {
-                _anim.enabled = false;
+                if (_shellFrames != null && _shellFrames.Length > 0) {
+                    _anim.enabled = true;
+                    _anim.SetFrames(_shellFrames, 60f, true);
+                } else {
+                    _anim.enabled = false;
+                }
             }
 
             if (_sr != null) {
-                Sprite shell = NSMB.Content.ResourceSpriteCache.FindSprite(NSMB.Content.GameplayAtlasPaths.Koopa, "koopa_2");
-                if (shell != null) {
-                    _sr.sprite = shell;
-                }
                 _sr.flipX = false;
             }
         }
@@ -205,7 +188,12 @@ namespace NSMB.Enemies {
             _state = KoopaState.ShellMoving;
             _wakeupTimer = 0f;
             if (_anim != null) {
-                _anim.enabled = false;
+                if (_shellFrames != null && _shellFrames.Length > 0) {
+                    _anim.enabled = true;
+                    _anim.SetFrames(_shellFrames, 60f, true);
+                } else {
+                    _anim.enabled = false;
+                }
             }
         }
 
@@ -214,14 +202,13 @@ namespace NSMB.Enemies {
 
             // Restore walk animation.
             if (_sr != null) {
-                Sprite[] walk = NSMB.Visual.GameplaySprites.GetKoopaWalkFrames();
-                if (walk != null && walk.Length > 0) {
-                    _sr.sprite = walk[0];
+                if (_walkFrames != null && _walkFrames.Length > 0) {
+                    _sr.sprite = _walkFrames[0];
                     if (_anim == null) {
-                        _anim = gameObject.AddComponent<NSMB.Visual.SimpleSpriteAnimator>();
+                        _anim = (_graphics != null) ? _graphics.gameObject.AddComponent<NSMB.Visual.SimpleSpriteAnimator>() : gameObject.AddComponent<NSMB.Visual.SimpleSpriteAnimator>();
                     }
                     _anim.enabled = true;
-                    _anim.SetFrames(walk, 10f, true);
+                    _anim.SetFrames(_walkFrames, 60f, true);
                 }
             }
         }

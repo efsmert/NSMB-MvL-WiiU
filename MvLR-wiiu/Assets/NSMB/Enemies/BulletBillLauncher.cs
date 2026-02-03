@@ -52,13 +52,7 @@ namespace NSMB.Enemies {
             rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
 
             BoxCollider2D col = go.AddComponent<BoxCollider2D>();
-            col.size = new Vector2(0.75f, 0.5f);
             col.isTrigger = false;
-
-            SpriteRenderer sr = go.AddComponent<SpriteRenderer>();
-            sr.sortingOrder = 0;
-            sr.color = Color.white;
-            sr.sprite = NSMB.Content.ResourceSpriteCache.FindSprite(NSMB.Content.GameplayAtlasPaths.BulletBill, "bullet-bill_0");
 
             BulletBillProjectile proj = go.AddComponent<BulletBillProjectile>();
             proj.direction = dir;
@@ -67,4 +61,3 @@ namespace NSMB.Enemies {
         }
     }
 }
-

@@ -13,43 +13,18 @@ namespace NSMB.Enemies {
         private Rigidbody2D _rb;
         private int _dir = -1;
         private bool _dead;
+        private Transform _graphics;
         private SpriteRenderer _sr;
+        private Vector3 _baseGraphicsScale;
 
         private void Awake() {
             _rb = GetComponent<Rigidbody2D>();
             _rb.gravityScale = gravityScale;
             _rb.freezeRotation = true;
 
-            _sr = GetComponent<SpriteRenderer>();
-            if (_sr == null) {
-                _sr = gameObject.AddComponent<SpriteRenderer>();
-            }
-
-            EnsureVisuals();
-        }
-
-        private void EnsureVisuals() {
-            if (_sr == null) {
-                return;
-            }
-
-            bool placeholder = (_sr.sprite == null) || (_sr.sprite.texture == Texture2D.whiteTexture);
-            if (!placeholder) {
-                return;
-            }
-
-            Sprite[] walk = NSMB.Visual.GameplaySprites.GetGoombaWalkFrames();
-            if (walk != null && walk.Length > 0) {
-                _sr.sprite = walk[0];
-                _sr.color = Color.white;
-                _sr.sortingOrder = 0;
-
-                NSMB.Visual.SimpleSpriteAnimator anim = GetComponent<NSMB.Visual.SimpleSpriteAnimator>();
-                if (anim == null) {
-                    anim = gameObject.AddComponent<NSMB.Visual.SimpleSpriteAnimator>();
-                }
-                anim.SetFrames(walk, 10f, true);
-            }
+            NSMB.Visual.SimpleSpriteAnimator anim;
+            Unity6EnemyPrototypes.ApplyGoomba(gameObject, out _graphics, out _sr, out anim);
+            _baseGraphicsScale = (_graphics != null) ? _graphics.localScale : Vector3.one;
         }
 
         private void FixedUpdate() {
@@ -60,6 +35,9 @@ namespace NSMB.Enemies {
             Vector2 v = _rb.velocity;
             v.x = _dir * moveSpeed;
             _rb.velocity = v;
+            if (_sr != null) {
+                _sr.flipX = (_dir > 0);
+            }
         }
 
         private void OnCollisionEnter2D(Collision2D collision) {
@@ -88,8 +66,9 @@ namespace NSMB.Enemies {
             PlaySfx(NSMB.Audio.SoundEffectId.Enemy_Generic_Stomp, 0.8f);
 
             // Flatten visual and remove collisions; no player bounce.
-            Transform t = transform;
-            t.localScale = new Vector3(1f, 0.2f, 1f);
+            if (_graphics != null) {
+                _graphics.localScale = new Vector3(_baseGraphicsScale.x, _baseGraphicsScale.y * 0.2f, _baseGraphicsScale.z);
+            }
 
             _rb.velocity = Vector2.zero;
             _rb.isKinematic = true;
@@ -113,8 +92,9 @@ namespace NSMB.Enemies {
             PlaySfx(NSMB.Audio.SoundEffectId.Enemy_Generic_Stomp, 0.9f);
 
             // Flatten visual (placeholder-friendly)
-            Transform t = transform;
-            t.localScale = new Vector3(1f, 0.2f, 1f);
+            if (_graphics != null) {
+                _graphics.localScale = new Vector3(_baseGraphicsScale.x, _baseGraphicsScale.y * 0.2f, _baseGraphicsScale.z);
+            }
 
             // Stop moving & disable collider so the player doesn't get snagged.
             _rb.velocity = Vector2.zero;

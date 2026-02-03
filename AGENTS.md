@@ -917,5 +917,6 @@ using Unity.Entities;
 1. When setting properties of the sounds, PCM MUST be selected as the compression format, please keep this in mind when porting.
 
 **What folders are what**
-1. 'NSMB-MarioVsLuigi/' is the original Unity 6.0.0 project that we are trying to downgrade to Unity 2017.1.2p3. ALWAYS INSPECT CODE / SCRIPTS HERE BEFORE DOWNGRADING SO WE CAN ACHIEVE AS MUCH PARITY AS POSSIBLE. TRY TO KEEP AS MUCH CODE AS CLOSE AS POSSIBLE TO ORIGINAL WHILE KEEPING COMPATIBILITY WITH THE OLDER C# 4.0 LANGUAGE (Unity 2017.1.2p3 only supports C# 4.0)
-2. 'MvLR-wiiu/' is the directory containing the Unity 2017.1.2p3 project that we are building now.
+0. YOU MUST READ 'UNITY-6.md' - it contains the Unity 6000 project (in step 1 below) layout to further help port stuff down to Unity 2017
+1. 'NSMB-MarioVsLuigi/' is the original Unity 6000 project that we are trying to downgrade to Unity 2017.1.2p3. ALWAYS INSPECT CODE / SCRIPTS HERE BEFORE DOWNGRADING SO WE CAN ACHIEVE AS MUCH PARITY AS POSSIBLE. TRY TO KEEP AS MUCH CODE AS CLOSE AS POSSIBLE TO ORIGINAL WHILE KEEPING COMPATIBILITY WITH THE OLDER C# 4.0 LANGUAGE (Unity 2017.1.2p3 only supports C# 4.0)
+2. 'MvLR-wiiu/' is the directory containing the Unity 2017.1.2p3 project that we are building now. When you want to port a feature from the original Unity 6000 project, YOU MUST look through 'UNITY-6.md' to find scripts and associated code related to the feature being requested, you MUST try your best to reimplement the code with the fewest needed changes to get it working with the old C# 4.0 limitations.

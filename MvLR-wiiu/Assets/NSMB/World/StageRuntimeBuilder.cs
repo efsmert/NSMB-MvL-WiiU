@@ -212,6 +212,21 @@ namespace NSMB.World {
                     case StageEntityKind.PiranhaPlant:
                         SpawnPiranhaPlant(entitiesRoot.transform, e.position);
                         break;
+                    case StageEntityKind.Boo:
+                        SpawnBoo(entitiesRoot.transform, e.position);
+                        break;
+                    case StageEntityKind.Bobomb:
+                        SpawnBobomb(entitiesRoot.transform, e.position);
+                        break;
+                    case StageEntityKind.Spinner:
+                        SpawnSpinner(entitiesRoot.transform, e.position);
+                        break;
+                    case StageEntityKind.EnterablePipe:
+                        SpawnEnterablePipe(entitiesRoot.transform, e);
+                        break;
+                    case StageEntityKind.MarioBrosPlatform:
+                        SpawnMarioBrosPlatform(entitiesRoot.transform, e);
+                        break;
                     default:
                         // Unknown/unsupported - skip (importer should warn).
                         break;
@@ -424,12 +439,7 @@ namespace NSMB.World {
             rb.gravityScale = 3.5f;
             rb.freezeRotation = true;
 
-            BoxCollider2D col = go.AddComponent<BoxCollider2D>();
-            col.size = new Vector2(0.9f, 0.8f);
-
-            SpriteRenderer sr = go.AddComponent<SpriteRenderer>();
-            sr.color = Color.white;
-            sr.sortingOrder = 0;
+            go.AddComponent<BoxCollider2D>();
 
             go.AddComponent<NSMB.Enemies.GoombaEnemy>();
         }
@@ -443,12 +453,7 @@ namespace NSMB.World {
             rb.gravityScale = 3.5f;
             rb.freezeRotation = true;
 
-            BoxCollider2D col = go.AddComponent<BoxCollider2D>();
-            col.size = new Vector2(0.9f, 0.9f);
-
-            SpriteRenderer sr = go.AddComponent<SpriteRenderer>();
-            sr.color = Color.white;
-            sr.sortingOrder = 0;
+            go.AddComponent<BoxCollider2D>();
 
             go.AddComponent<NSMB.Enemies.KoopaEnemy>();
         }
@@ -560,14 +565,94 @@ namespace NSMB.World {
 
             // Collider: simple bite box.
             BoxCollider2D col = go.AddComponent<BoxCollider2D>();
-            col.size = new Vector2(0.8f, 1.2f);
             col.isTrigger = true;
+
+            go.AddComponent<NSMB.Enemies.PiranhaPlantEnemy>();
+        }
+
+        private static void SpawnBoo(Transform parent, Vector2 pos) {
+            GameObject go = new GameObject("Boo");
+            go.transform.parent = parent;
+            go.transform.position = new Vector3(pos.x, pos.y, 0f);
+
+            Rigidbody2D rb = go.AddComponent<Rigidbody2D>();
+            rb.gravityScale = 0f;
+            rb.freezeRotation = true;
+
+            BoxCollider2D col = go.AddComponent<BoxCollider2D>();
+            col.isTrigger = true;
+
+            go.AddComponent<NSMB.Enemies.BooEnemy>();
+        }
+
+        private static void SpawnBobomb(Transform parent, Vector2 pos) {
+            GameObject go = new GameObject("Bobomb");
+            go.transform.parent = parent;
+            go.transform.position = new Vector3(pos.x, pos.y, 0f);
+
+            Rigidbody2D rb = go.AddComponent<Rigidbody2D>();
+            rb.gravityScale = 3.5f;
+            rb.freezeRotation = true;
+
+            go.AddComponent<BoxCollider2D>();
+
+            go.AddComponent<NSMB.Enemies.BobombEnemy>();
+        }
+
+        private static void SpawnSpinner(Transform parent, Vector2 pos) {
+            // Placeholder hazard: damages player on touch. Original uses a custom "spinner" entity.
+            GameObject go = new GameObject("Spinner");
+            go.transform.parent = parent;
+            go.transform.position = new Vector3(pos.x, pos.y, 0f);
+
+            CircleCollider2D col = go.AddComponent<CircleCollider2D>();
+            col.radius = 0.45f;
+            col.isTrigger = true;
+
+            SpriteRenderer sr = go.AddComponent<SpriteRenderer>();
+            sr.color = new Color(1f, 0.2f, 0.2f, 0.8f);
+            sr.sortingOrder = 0;
+
+            go.AddComponent<NSMB.World.DamageOnTouch>();
+        }
+
+        private static void SpawnEnterablePipe(Transform parent, StageEntity e) {
+            // Placeholder solid pipe collision. Warp/pipe logic is not yet ported.
+            GameObject go = new GameObject("EnterablePipe");
+            go.transform.parent = parent;
+            go.transform.position = new Vector3(e.position.x, e.position.y, 0f);
+
+            BoxCollider2D col = go.AddComponent<BoxCollider2D>();
+            Vector2 size = (e.size.sqrMagnitude > 0.0001f) ? e.size : new Vector2(1f, 2f);
+            col.size = size;
+            if (e.colliderOffset.sqrMagnitude > 0.000001f) {
+                col.offset = e.colliderOffset;
+            }
+            col.isTrigger = false;
+
+            SpriteRenderer sr = go.AddComponent<SpriteRenderer>();
+            sr.color = new Color(1f, 1f, 1f, 0.0f);
+            sr.sortingOrder = 0;
+        }
+
+        private static void SpawnMarioBrosPlatform(Transform parent, StageEntity e) {
+            // Placeholder static platform. Original has special bounce behavior; port later.
+            GameObject go = new GameObject("MarioBrosPlatform");
+            go.transform.parent = parent;
+            go.transform.position = new Vector3(e.position.x, e.position.y, 0f);
+
+            BoxCollider2D col = go.AddComponent<BoxCollider2D>();
+            Vector2 size = (e.size.sqrMagnitude > 0.0001f) ? e.size : new Vector2(3f, 0.5f);
+            col.size = size;
+            if (e.colliderOffset.sqrMagnitude > 0.000001f) {
+                col.offset = e.colliderOffset;
+            }
+            col.isTrigger = false;
 
             SpriteRenderer sr = go.AddComponent<SpriteRenderer>();
             sr.color = Color.white;
             sr.sortingOrder = 0;
-
-            go.AddComponent<NSMB.Enemies.PiranhaPlantEnemy>();
+            sr.sprite = NSMB.Visual.GameplaySprites.GetPlatformTile(0);
         }
 
         private sealed class RevealOnBump : MonoBehaviour {

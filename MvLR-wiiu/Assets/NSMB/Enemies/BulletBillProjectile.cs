@@ -10,12 +10,20 @@ namespace NSMB.Enemies {
 
         private Rigidbody2D _rb;
         private float _t;
+        private SpriteRenderer _sr;
 
         private void Awake() {
             _rb = GetComponent<Rigidbody2D>();
             if (_rb != null) {
                 _rb.gravityScale = 0f;
                 _rb.freezeRotation = true;
+            }
+
+            Transform graphics;
+            NSMB.Visual.SimpleSpriteAnimator anim;
+            Unity6EnemyPrototypes.ApplyBulletBill(gameObject, out graphics, out _sr, out anim);
+            if (_sr != null) {
+                _sr.flipX = (direction < 0);
             }
         }
 
@@ -27,6 +35,9 @@ namespace NSMB.Enemies {
                 _rb.velocity = v;
             } else {
                 transform.position += new Vector3(direction * speed * Time.fixedDeltaTime, 0f, 0f);
+            }
+            if (_sr != null) {
+                _sr.flipX = (direction < 0);
             }
         }
 
@@ -46,4 +57,3 @@ namespace NSMB.Enemies {
         }
     }
 }
-
