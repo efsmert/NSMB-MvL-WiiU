@@ -1,0 +1,4395 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58b0f85b9380aa24eb199045b20faa1a, type: 3}
+  m_Name: stage-ice
+  m_EditorClassIdentifier: 
+  stageKey: stage-ice
+  spawnPoint: {x: -60, y: -0.5}
+  cameraMin: {x: -2000, y: -7}
+  cameraMax: {x: 2000, y: 20}
+  isWrappingLevel: 1
+  tileLayers:
+  - name: Tilemap_Ground_animated-blocks
+    resourcesAtlasPath: NSMB/Sprites/Atlases/Terrain/animated-blocks
+    sortingOrder: -1000
+    position: {x: -20, y: 4, z: 0}
+    scale: {x: 1, y: 1, z: 1}
+    tiles:
+    - x: 61
+      y: -11
+      spriteIndex: 19
+      spriteName: animation_27
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: 63
+      y: -11
+      spriteIndex: 19
+      spriteName: animation_27
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -14
+      y: -10
+      spriteIndex: 19
+      spriteName: animation_27
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -13
+      y: -10
+      spriteIndex: 19
+      spriteName: animation_27
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -12
+      y: -10
+      spriteIndex: 19
+      spriteName: animation_27
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -11
+      y: -10
+      spriteIndex: 19
+      spriteName: animation_27
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -10
+      y: -10
+      spriteIndex: 19
+      spriteName: animation_27
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -9
+      y: -10
+      spriteIndex: 19
+      spriteName: animation_27
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: 61
+      y: -10
+      spriteIndex: 19
+      spriteName: animation_27
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: 63
+      y: -10
+      spriteIndex: 19
+      spriteName: animation_27
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: 55
+      y: -9
+      spriteIndex: 19
+      spriteName: animation_27
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: 59
+      y: -9
+      spriteIndex: 19
+      spriteName: animation_27
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: 61
+      y: -9
+      spriteIndex: 19
+      spriteName: animation_27
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: 63
+      y: -9
+      spriteIndex: 19
+      spriteName: animation_27
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: 65
+      y: -9
+      spriteIndex: 19
+      spriteName: animation_27
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: 59
+      y: -8
+      spriteIndex: 19
+      spriteName: animation_27
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: 61
+      y: -8
+      spriteIndex: 19
+      spriteName: animation_27
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: 63
+      y: -8
+      spriteIndex: 19
+      spriteName: animation_27
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: 65
+      y: -8
+      spriteIndex: 19
+      spriteName: animation_27
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: 76
+      y: -8
+      spriteIndex: 19
+      spriteName: animation_27
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: 79
+      y: -8
+      spriteIndex: 19
+      spriteName: animation_27
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: 61
+      y: -7
+      spriteIndex: 19
+      spriteName: animation_27
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: 63
+      y: -7
+      spriteIndex: 19
+      spriteName: animation_27
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: 65
+      y: -7
+      spriteIndex: 19
+      spriteName: animation_27
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: 76
+      y: -7
+      spriteIndex: 19
+      spriteName: animation_27
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: 79
+      y: -7
+      spriteIndex: 19
+      spriteName: animation_27
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: 6
+      y: -6
+      spriteIndex: 19
+      spriteName: animation_27
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: 7
+      y: -6
+      spriteIndex: 19
+      spriteName: animation_27
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: 8
+      y: -6
+      spriteIndex: 34
+      spriteName: animation_28
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: 9
+      y: -6
+      spriteIndex: 19
+      spriteName: animation_27
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: 10
+      y: -6
+      spriteIndex: 19
+      spriteName: animation_27
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: 23
+      y: -6
+      spriteIndex: 19
+      spriteName: animation_27
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: 34
+      y: -6
+      spriteIndex: 19
+      spriteName: animation_27
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: 35
+      y: -6
+      spriteIndex: 19
+      spriteName: animation_27
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: 63
+      y: -6
+      spriteIndex: 19
+      spriteName: animation_27
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: 79
+      y: -6
+      spriteIndex: 19
+      spriteName: animation_27
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -4
+      y: -5
+      spriteIndex: 19
+      spriteName: animation_27
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -3
+      y: -5
+      spriteIndex: 19
+      spriteName: animation_27
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: 23
+      y: -5
+      spriteIndex: 19
+      spriteName: animation_27
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -4
+      y: -4
+      spriteIndex: 19
+      spriteName: animation_27
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -3
+      y: -4
+      spriteIndex: 19
+      spriteName: animation_27
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -14
+      y: -3
+      spriteIndex: 19
+      spriteName: animation_27
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -13
+      y: -3
+      spriteIndex: 19
+      spriteName: animation_27
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -12
+      y: -3
+      spriteIndex: 19
+      spriteName: animation_27
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -11
+      y: -3
+      spriteIndex: 19
+      spriteName: animation_27
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -10
+      y: -3
+      spriteIndex: 19
+      spriteName: animation_27
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -9
+      y: -3
+      spriteIndex: 19
+      spriteName: animation_27
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -4
+      y: -3
+      spriteIndex: 19
+      spriteName: animation_27
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -3
+      y: -3
+      spriteIndex: 19
+      spriteName: animation_27
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -2
+      y: -3
+      spriteIndex: 19
+      spriteName: animation_27
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -1
+      y: -3
+      spriteIndex: 19
+      spriteName: animation_27
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: 9
+      y: -3
+      spriteIndex: 19
+      spriteName: animation_27
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: 10
+      y: -3
+      spriteIndex: 19
+      spriteName: animation_27
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: 11
+      y: -3
+      spriteIndex: 19
+      spriteName: animation_27
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: 12
+      y: -3
+      spriteIndex: 19
+      spriteName: animation_27
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: 13
+      y: -3
+      spriteIndex: 19
+      spriteName: animation_27
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -14
+      y: -2
+      spriteIndex: 19
+      spriteName: animation_27
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -13
+      y: -2
+      spriteIndex: 19
+      spriteName: animation_27
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -12
+      y: -2
+      spriteIndex: 19
+      spriteName: animation_27
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -11
+      y: -2
+      spriteIndex: 19
+      spriteName: animation_27
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -10
+      y: -2
+      spriteIndex: 19
+      spriteName: animation_27
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -9
+      y: -2
+      spriteIndex: 19
+      spriteName: animation_27
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -4
+      y: -2
+      spriteIndex: 19
+      spriteName: animation_27
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -3
+      y: -2
+      spriteIndex: 19
+      spriteName: animation_27
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -2
+      y: -2
+      spriteIndex: 19
+      spriteName: animation_27
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -1
+      y: -2
+      spriteIndex: 19
+      spriteName: animation_27
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: 0
+      y: -2
+      spriteIndex: 19
+      spriteName: animation_27
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: 1
+      y: -2
+      spriteIndex: 19
+      spriteName: animation_27
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -4
+      y: -1
+      spriteIndex: 19
+      spriteName: animation_27
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -3
+      y: -1
+      spriteIndex: 19
+      spriteName: animation_27
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: 6
+      y: 4
+      spriteIndex: 19
+      spriteName: animation_27
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: 7
+      y: 4
+      spriteIndex: 19
+      spriteName: animation_27
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: 8
+      y: 4
+      spriteIndex: 19
+      spriteName: animation_27
+      flipX: 0
+      flipY: 0
+      solid: 0
+  - name: Tilemap_Ground
+    resourcesAtlasPath: NSMB/Sprites/Atlases/Terrain/snow
+    sortingOrder: -1000
+    position: {x: -20, y: 4, z: 0}
+    scale: {x: 1, y: 1, z: 1}
+    tiles:
+    - x: 52
+      y: -14
+      spriteIndex: 0
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 55
+      y: -14
+      spriteIndex: 0
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 59
+      y: -14
+      spriteIndex: 0
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 65
+      y: -14
+      spriteIndex: 0
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 52
+      y: -13
+      spriteIndex: 0
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 55
+      y: -13
+      spriteIndex: 0
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 59
+      y: -13
+      spriteIndex: 0
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 65
+      y: -13
+      spriteIndex: 0
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -44
+      y: -12
+      spriteIndex: 1
+      spriteName: Snow (with ice)_16
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -43
+      y: -12
+      spriteIndex: 1
+      spriteName: Snow (with ice)_16
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -42
+      y: -12
+      spriteIndex: 1
+      spriteName: Snow (with ice)_16
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -41
+      y: -12
+      spriteIndex: 1
+      spriteName: Snow (with ice)_16
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -40
+      y: -12
+      spriteIndex: 1
+      spriteName: Snow (with ice)_16
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -39
+      y: -12
+      spriteIndex: 1
+      spriteName: Snow (with ice)_16
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -38
+      y: -12
+      spriteIndex: 1
+      spriteName: Snow (with ice)_16
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -37
+      y: -12
+      spriteIndex: 1
+      spriteName: Snow (with ice)_16
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -36
+      y: -12
+      spriteIndex: 1
+      spriteName: Snow (with ice)_16
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -35
+      y: -12
+      spriteIndex: 1
+      spriteName: Snow (with ice)_16
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -34
+      y: -12
+      spriteIndex: 1
+      spriteName: Snow (with ice)_16
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -33
+      y: -12
+      spriteIndex: 1
+      spriteName: Snow (with ice)_16
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -32
+      y: -12
+      spriteIndex: 1
+      spriteName: Snow (with ice)_16
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -31
+      y: -12
+      spriteIndex: 1
+      spriteName: Snow (with ice)_16
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -30
+      y: -12
+      spriteIndex: 1
+      spriteName: Snow (with ice)_16
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -29
+      y: -12
+      spriteIndex: 1
+      spriteName: Snow (with ice)_16
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -28
+      y: -12
+      spriteIndex: 1
+      spriteName: Snow (with ice)_16
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -27
+      y: -12
+      spriteIndex: 1
+      spriteName: Snow (with ice)_16
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -26
+      y: -12
+      spriteIndex: 1
+      spriteName: Snow (with ice)_16
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -25
+      y: -12
+      spriteIndex: 1
+      spriteName: Snow (with ice)_16
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -24
+      y: -12
+      spriteIndex: 1
+      spriteName: Snow (with ice)_16
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -23
+      y: -12
+      spriteIndex: 1
+      spriteName: Snow (with ice)_16
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -22
+      y: -12
+      spriteIndex: 1
+      spriteName: Snow (with ice)_16
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -21
+      y: -12
+      spriteIndex: 1
+      spriteName: Snow (with ice)_16
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -20
+      y: -12
+      spriteIndex: 1
+      spriteName: Snow (with ice)_16
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -19
+      y: -12
+      spriteIndex: 2
+      spriteName: Snow (with ice)_21
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -18
+      y: -12
+      spriteIndex: 3
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -17
+      y: -12
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -16
+      y: -12
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -15
+      y: -12
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -14
+      y: -12
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -13
+      y: -12
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -12
+      y: -12
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -11
+      y: -12
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -10
+      y: -12
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -9
+      y: -12
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -8
+      y: -12
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -7
+      y: -12
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -6
+      y: -12
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -5
+      y: -12
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -4
+      y: -12
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -3
+      y: -12
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -2
+      y: -12
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -1
+      y: -12
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 0
+      y: -12
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 1
+      y: -12
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 2
+      y: -12
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 3
+      y: -12
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 4
+      y: -12
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 5
+      y: -12
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 6
+      y: -12
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 7
+      y: -12
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 8
+      y: -12
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 9
+      y: -12
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 10
+      y: -12
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 11
+      y: -12
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 12
+      y: -12
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 13
+      y: -12
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 14
+      y: -12
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 15
+      y: -12
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 16
+      y: -12
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 17
+      y: -12
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 18
+      y: -12
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 19
+      y: -12
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 20
+      y: -12
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 21
+      y: -12
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 22
+      y: -12
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 23
+      y: -12
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 24
+      y: -12
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 25
+      y: -12
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 26
+      y: -12
+      spriteIndex: 5
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 27
+      y: -12
+      spriteIndex: 6
+      spriteName: Snow (with ice)_20
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 28
+      y: -12
+      spriteIndex: 1
+      spriteName: Snow (with ice)_16
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 29
+      y: -12
+      spriteIndex: 1
+      spriteName: Snow (with ice)_16
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 30
+      y: -12
+      spriteIndex: 1
+      spriteName: Snow (with ice)_16
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 31
+      y: -12
+      spriteIndex: 1
+      spriteName: Snow (with ice)_16
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 32
+      y: -12
+      spriteIndex: 1
+      spriteName: Snow (with ice)_16
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 33
+      y: -12
+      spriteIndex: 1
+      spriteName: Snow (with ice)_16
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 34
+      y: -12
+      spriteIndex: 1
+      spriteName: Snow (with ice)_16
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 35
+      y: -12
+      spriteIndex: 1
+      spriteName: Snow (with ice)_16
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 36
+      y: -12
+      spriteIndex: 1
+      spriteName: Snow (with ice)_16
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 37
+      y: -12
+      spriteIndex: 1
+      spriteName: Snow (with ice)_16
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 38
+      y: -12
+      spriteIndex: 1
+      spriteName: Snow (with ice)_16
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 39
+      y: -12
+      spriteIndex: 1
+      spriteName: Snow (with ice)_16
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 40
+      y: -12
+      spriteIndex: 1
+      spriteName: Snow (with ice)_16
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 41
+      y: -12
+      spriteIndex: 1
+      spriteName: Snow (with ice)_16
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 42
+      y: -12
+      spriteIndex: 1
+      spriteName: Snow (with ice)_16
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 43
+      y: -12
+      spriteIndex: 1
+      spriteName: Snow (with ice)_16
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 44
+      y: -12
+      spriteIndex: 2
+      spriteName: Snow (with ice)_21
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 45
+      y: -12
+      spriteIndex: 3
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 46
+      y: -12
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 47
+      y: -12
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 48
+      y: -12
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 49
+      y: -12
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 50
+      y: -12
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 51
+      y: -12
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 52
+      y: -12
+      spriteIndex: 7
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 55
+      y: -12
+      spriteIndex: 8
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 56
+      y: -12
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 57
+      y: -12
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 58
+      y: -12
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 59
+      y: -12
+      spriteIndex: 7
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 65
+      y: -12
+      spriteIndex: 8
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 66
+      y: -12
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 67
+      y: -12
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 68
+      y: -12
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 69
+      y: -12
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 70
+      y: -12
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 71
+      y: -12
+      spriteIndex: 5
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 72
+      y: -12
+      spriteIndex: 6
+      spriteName: Snow (with ice)_20
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 73
+      y: -12
+      spriteIndex: 1
+      spriteName: Snow (with ice)_16
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 74
+      y: -12
+      spriteIndex: 1
+      spriteName: Snow (with ice)_16
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 75
+      y: -12
+      spriteIndex: 1
+      spriteName: Snow (with ice)_16
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 76
+      y: -12
+      spriteIndex: 1
+      spriteName: Snow (with ice)_16
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 77
+      y: -12
+      spriteIndex: 1
+      spriteName: Snow (with ice)_16
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 78
+      y: -12
+      spriteIndex: 1
+      spriteName: Snow (with ice)_16
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 79
+      y: -12
+      spriteIndex: 1
+      spriteName: Snow (with ice)_16
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 80
+      y: -12
+      spriteIndex: 1
+      spriteName: Snow (with ice)_16
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 81
+      y: -12
+      spriteIndex: 1
+      spriteName: Snow (with ice)_16
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 82
+      y: -12
+      spriteIndex: 1
+      spriteName: Snow (with ice)_16
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 83
+      y: -12
+      spriteIndex: 1
+      spriteName: Snow (with ice)_16
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -44
+      y: -11
+      spriteIndex: 9
+      spriteName: Snow (with ice)_1
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -43
+      y: -11
+      spriteIndex: 10
+      spriteName: Snow (with ice)_0
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -42
+      y: -11
+      spriteIndex: 9
+      spriteName: Snow (with ice)_1
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -41
+      y: -11
+      spriteIndex: 9
+      spriteName: Snow (with ice)_1
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -40
+      y: -11
+      spriteIndex: 9
+      spriteName: Snow (with ice)_1
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -39
+      y: -11
+      spriteIndex: 9
+      spriteName: Snow (with ice)_1
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -38
+      y: -11
+      spriteIndex: 9
+      spriteName: Snow (with ice)_1
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -37
+      y: -11
+      spriteIndex: 9
+      spriteName: Snow (with ice)_1
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -36
+      y: -11
+      spriteIndex: 9
+      spriteName: Snow (with ice)_1
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -35
+      y: -11
+      spriteIndex: 9
+      spriteName: Snow (with ice)_1
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -34
+      y: -11
+      spriteIndex: 11
+      spriteName: Snow (with ice)_2
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -33
+      y: -11
+      spriteIndex: 10
+      spriteName: Snow (with ice)_0
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -32
+      y: -11
+      spriteIndex: 9
+      spriteName: Snow (with ice)_1
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -31
+      y: -11
+      spriteIndex: 9
+      spriteName: Snow (with ice)_1
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -30
+      y: -11
+      spriteIndex: 9
+      spriteName: Snow (with ice)_1
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -29
+      y: -11
+      spriteIndex: 10
+      spriteName: Snow (with ice)_0
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -28
+      y: -11
+      spriteIndex: 9
+      spriteName: Snow (with ice)_1
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -27
+      y: -11
+      spriteIndex: 11
+      spriteName: Snow (with ice)_2
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -26
+      y: -11
+      spriteIndex: 10
+      spriteName: Snow (with ice)_0
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -25
+      y: -11
+      spriteIndex: 9
+      spriteName: Snow (with ice)_1
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -24
+      y: -11
+      spriteIndex: 9
+      spriteName: Snow (with ice)_1
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -23
+      y: -11
+      spriteIndex: 9
+      spriteName: Snow (with ice)_1
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -22
+      y: -11
+      spriteIndex: 9
+      spriteName: Snow (with ice)_1
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -21
+      y: -11
+      spriteIndex: 9
+      spriteName: Snow (with ice)_1
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -20
+      y: -11
+      spriteIndex: 10
+      spriteName: Snow (with ice)_0
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -19
+      y: -11
+      spriteIndex: 12
+      spriteName: Snow (with ice)_6
+      flipX: 1
+      flipY: 0
+      solid: 1
+    - x: -18
+      y: -11
+      spriteIndex: 8
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -17
+      y: -11
+      spriteIndex: 13
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -16
+      y: -11
+      spriteIndex: 13
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -15
+      y: -11
+      spriteIndex: 14
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -14
+      y: -11
+      spriteIndex: 15
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -13
+      y: -11
+      spriteIndex: 15
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -12
+      y: -11
+      spriteIndex: 15
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -11
+      y: -11
+      spriteIndex: 15
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -10
+      y: -11
+      spriteIndex: 16
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -9
+      y: -11
+      spriteIndex: 15
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -8
+      y: -11
+      spriteIndex: 15
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -7
+      y: -11
+      spriteIndex: 15
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -6
+      y: -11
+      spriteIndex: 17
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -5
+      y: -11
+      spriteIndex: 15
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -4
+      y: -11
+      spriteIndex: 15
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -3
+      y: -11
+      spriteIndex: 17
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -2
+      y: -11
+      spriteIndex: 15
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -1
+      y: -11
+      spriteIndex: 15
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 0
+      y: -11
+      spriteIndex: 18
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 1
+      y: -11
+      spriteIndex: 13
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 2
+      y: -11
+      spriteIndex: 13
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 3
+      y: -11
+      spriteIndex: 13
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 4
+      y: -11
+      spriteIndex: 13
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 5
+      y: -11
+      spriteIndex: 13
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 6
+      y: -11
+      spriteIndex: 13
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 7
+      y: -11
+      spriteIndex: 13
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 8
+      y: -11
+      spriteIndex: 13
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 9
+      y: -11
+      spriteIndex: 13
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 10
+      y: -11
+      spriteIndex: 13
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 11
+      y: -11
+      spriteIndex: 13
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 12
+      y: -11
+      spriteIndex: 13
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 13
+      y: -11
+      spriteIndex: 13
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 14
+      y: -11
+      spriteIndex: 13
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 15
+      y: -11
+      spriteIndex: 13
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 16
+      y: -11
+      spriteIndex: 13
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 17
+      y: -11
+      spriteIndex: 13
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 18
+      y: -11
+      spriteIndex: 13
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 19
+      y: -11
+      spriteIndex: 13
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 20
+      y: -11
+      spriteIndex: 13
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 21
+      y: -11
+      spriteIndex: 13
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 22
+      y: -11
+      spriteIndex: 13
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 23
+      y: -11
+      spriteIndex: 13
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 24
+      y: -11
+      spriteIndex: 13
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 25
+      y: -11
+      spriteIndex: 13
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 26
+      y: -11
+      spriteIndex: 7
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 27
+      y: -11
+      spriteIndex: 12
+      spriteName: Snow (with ice)_6
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 28
+      y: -11
+      spriteIndex: 9
+      spriteName: Snow (with ice)_1
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 29
+      y: -11
+      spriteIndex: 9
+      spriteName: Snow (with ice)_1
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 30
+      y: -11
+      spriteIndex: 9
+      spriteName: Snow (with ice)_1
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 31
+      y: -11
+      spriteIndex: 11
+      spriteName: Snow (with ice)_2
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 32
+      y: -11
+      spriteIndex: 10
+      spriteName: Snow (with ice)_0
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 33
+      y: -11
+      spriteIndex: 9
+      spriteName: Snow (with ice)_1
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 34
+      y: -11
+      spriteIndex: 9
+      spriteName: Snow (with ice)_1
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 35
+      y: -11
+      spriteIndex: 9
+      spriteName: Snow (with ice)_1
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 36
+      y: -11
+      spriteIndex: 9
+      spriteName: Snow (with ice)_1
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 37
+      y: -11
+      spriteIndex: 9
+      spriteName: Snow (with ice)_1
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 38
+      y: -11
+      spriteIndex: 9
+      spriteName: Snow (with ice)_1
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 39
+      y: -11
+      spriteIndex: 10
+      spriteName: Snow (with ice)_0
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 40
+      y: -11
+      spriteIndex: 9
+      spriteName: Snow (with ice)_1
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 41
+      y: -11
+      spriteIndex: 9
+      spriteName: Snow (with ice)_1
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 42
+      y: -11
+      spriteIndex: 10
+      spriteName: Snow (with ice)_0
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 43
+      y: -11
+      spriteIndex: 9
+      spriteName: Snow (with ice)_1
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 44
+      y: -11
+      spriteIndex: 12
+      spriteName: Snow (with ice)_6
+      flipX: 1
+      flipY: 0
+      solid: 1
+    - x: 45
+      y: -11
+      spriteIndex: 8
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 46
+      y: -11
+      spriteIndex: 13
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 47
+      y: -11
+      spriteIndex: 13
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 48
+      y: -11
+      spriteIndex: 13
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 49
+      y: -11
+      spriteIndex: 13
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 50
+      y: -11
+      spriteIndex: 13
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 51
+      y: -11
+      spriteIndex: 13
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 52
+      y: -11
+      spriteIndex: 7
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 55
+      y: -11
+      spriteIndex: 8
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 56
+      y: -11
+      spriteIndex: 13
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 57
+      y: -11
+      spriteIndex: 13
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 58
+      y: -11
+      spriteIndex: 13
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 59
+      y: -11
+      spriteIndex: 7
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 65
+      y: -11
+      spriteIndex: 8
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 66
+      y: -11
+      spriteIndex: 13
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 67
+      y: -11
+      spriteIndex: 13
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 68
+      y: -11
+      spriteIndex: 13
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 69
+      y: -11
+      spriteIndex: 13
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 70
+      y: -11
+      spriteIndex: 13
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 71
+      y: -11
+      spriteIndex: 7
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 72
+      y: -11
+      spriteIndex: 12
+      spriteName: Snow (with ice)_6
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 73
+      y: -11
+      spriteIndex: 9
+      spriteName: Snow (with ice)_1
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 74
+      y: -11
+      spriteIndex: 9
+      spriteName: Snow (with ice)_1
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 75
+      y: -11
+      spriteIndex: 11
+      spriteName: Snow (with ice)_2
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 76
+      y: -11
+      spriteIndex: 9
+      spriteName: Snow (with ice)_1
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 77
+      y: -11
+      spriteIndex: 9
+      spriteName: Snow (with ice)_1
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 78
+      y: -11
+      spriteIndex: 9
+      spriteName: Snow (with ice)_1
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 79
+      y: -11
+      spriteIndex: 9
+      spriteName: Snow (with ice)_1
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 80
+      y: -11
+      spriteIndex: 10
+      spriteName: Snow (with ice)_0
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 81
+      y: -11
+      spriteIndex: 9
+      spriteName: Snow (with ice)_1
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 82
+      y: -11
+      spriteIndex: 11
+      spriteName: Snow (with ice)_2
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 83
+      y: -11
+      spriteIndex: 10
+      spriteName: Snow (with ice)_0
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -44
+      y: -10
+      spriteIndex: 9
+      spriteName: Snow (with ice)_1
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -43
+      y: -10
+      spriteIndex: 9
+      spriteName: Snow (with ice)_1
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -42
+      y: -10
+      spriteIndex: 9
+      spriteName: Snow (with ice)_1
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -41
+      y: -10
+      spriteIndex: 11
+      spriteName: Snow (with ice)_2
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -40
+      y: -10
+      spriteIndex: 9
+      spriteName: Snow (with ice)_1
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -39
+      y: -10
+      spriteIndex: 10
+      spriteName: Snow (with ice)_0
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -38
+      y: -10
+      spriteIndex: 11
+      spriteName: Snow (with ice)_2
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -37
+      y: -10
+      spriteIndex: 11
+      spriteName: Snow (with ice)_2
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -36
+      y: -10
+      spriteIndex: 9
+      spriteName: Snow (with ice)_1
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -35
+      y: -10
+      spriteIndex: 9
+      spriteName: Snow (with ice)_1
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -34
+      y: -10
+      spriteIndex: 9
+      spriteName: Snow (with ice)_1
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -33
+      y: -10
+      spriteIndex: 9
+      spriteName: Snow (with ice)_1
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -32
+      y: -10
+      spriteIndex: 9
+      spriteName: Snow (with ice)_1
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -31
+      y: -10
+      spriteIndex: 9
+      spriteName: Snow (with ice)_1
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -30
+      y: -10
+      spriteIndex: 9
+      spriteName: Snow (with ice)_1
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -29
+      y: -10
+      spriteIndex: 10
+      spriteName: Snow (with ice)_0
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -28
+      y: -10
+      spriteIndex: 9
+      spriteName: Snow (with ice)_1
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -27
+      y: -10
+      spriteIndex: 9
+      spriteName: Snow (with ice)_1
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -26
+      y: -10
+      spriteIndex: 9
+      spriteName: Snow (with ice)_1
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -25
+      y: -10
+      spriteIndex: 10
+      spriteName: Snow (with ice)_0
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -24
+      y: -10
+      spriteIndex: 9
+      spriteName: Snow (with ice)_1
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -23
+      y: -10
+      spriteIndex: 11
+      spriteName: Snow (with ice)_2
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -22
+      y: -10
+      spriteIndex: 9
+      spriteName: Snow (with ice)_1
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -21
+      y: -10
+      spriteIndex: 9
+      spriteName: Snow (with ice)_1
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -20
+      y: -10
+      spriteIndex: 10
+      spriteName: Snow (with ice)_0
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -19
+      y: -10
+      spriteIndex: 12
+      spriteName: Snow (with ice)_6
+      flipX: 1
+      flipY: 0
+      solid: 1
+    - x: -18
+      y: -10
+      spriteIndex: 20
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -17
+      y: -10
+      spriteIndex: 15
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -16
+      y: -10
+      spriteIndex: 17
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -15
+      y: -10
+      spriteIndex: 21
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 0
+      y: -10
+      spriteIndex: 20
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 1
+      y: -10
+      spriteIndex: 15
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 2
+      y: -10
+      spriteIndex: 15
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 3
+      y: -10
+      spriteIndex: 15
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 4
+      y: -10
+      spriteIndex: 17
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 5
+      y: -10
+      spriteIndex: 15
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 6
+      y: -10
+      spriteIndex: 17
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 7
+      y: -10
+      spriteIndex: 17
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 8
+      y: -10
+      spriteIndex: 15
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 9
+      y: -10
+      spriteIndex: 18
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 10
+      y: -10
+      spriteIndex: 13
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 11
+      y: -10
+      spriteIndex: 13
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 12
+      y: -10
+      spriteIndex: 13
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 13
+      y: -10
+      spriteIndex: 13
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 14
+      y: -10
+      spriteIndex: 13
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 15
+      y: -10
+      spriteIndex: 13
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 16
+      y: -10
+      spriteIndex: 13
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 17
+      y: -10
+      spriteIndex: 13
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 18
+      y: -10
+      spriteIndex: 13
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 19
+      y: -10
+      spriteIndex: 13
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 20
+      y: -10
+      spriteIndex: 13
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 21
+      y: -10
+      spriteIndex: 13
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 22
+      y: -10
+      spriteIndex: 13
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 23
+      y: -10
+      spriteIndex: 13
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 24
+      y: -10
+      spriteIndex: 13
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 25
+      y: -10
+      spriteIndex: 13
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 26
+      y: -10
+      spriteIndex: 7
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 27
+      y: -10
+      spriteIndex: 12
+      spriteName: Snow (with ice)_6
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 28
+      y: -10
+      spriteIndex: 10
+      spriteName: Snow (with ice)_0
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 29
+      y: -10
+      spriteIndex: 10
+      spriteName: Snow (with ice)_0
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 30
+      y: -10
+      spriteIndex: 9
+      spriteName: Snow (with ice)_1
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 31
+      y: -10
+      spriteIndex: 9
+      spriteName: Snow (with ice)_1
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 32
+      y: -10
+      spriteIndex: 10
+      spriteName: Snow (with ice)_0
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 33
+      y: -10
+      spriteIndex: 9
+      spriteName: Snow (with ice)_1
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 34
+      y: -10
+      spriteIndex: 10
+      spriteName: Snow (with ice)_0
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 35
+      y: -10
+      spriteIndex: 9
+      spriteName: Snow (with ice)_1
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 36
+      y: -10
+      spriteIndex: 9
+      spriteName: Snow (with ice)_1
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 37
+      y: -10
+      spriteIndex: 10
+      spriteName: Snow (with ice)_0
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 38
+      y: -10
+      spriteIndex: 9
+      spriteName: Snow (with ice)_1
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 39
+      y: -10
+      spriteIndex: 11
+      spriteName: Snow (with ice)_2
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 40
+      y: -10
+      spriteIndex: 9
+      spriteName: Snow (with ice)_1
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 41
+      y: -10
+      spriteIndex: 9
+      spriteName: Snow (with ice)_1
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 42
+      y: -10
+      spriteIndex: 10
+      spriteName: Snow (with ice)_0
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 43
+      y: -10
+      spriteIndex: 11
+      spriteName: Snow (with ice)_2
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 44
+      y: -10
+      spriteIndex: 12
+      spriteName: Snow (with ice)_6
+      flipX: 1
+      flipY: 0
+      solid: 1
+    - x: 45
+      y: -10
+      spriteIndex: 20
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 46
+      y: -10
+      spriteIndex: 15
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 47
+      y: -10
+      spriteIndex: 16
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 48
+      y: -10
+      spriteIndex: 15
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 49
+      y: -10
+      spriteIndex: 16
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 50
+      y: -10
+      spriteIndex: 15
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 51
+      y: -10
+      spriteIndex: 15
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 52
+      y: -10
+      spriteIndex: 21
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 55
+      y: -10
+      spriteIndex: 20
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 56
+      y: -10
+      spriteIndex: 17
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 57
+      y: -10
+      spriteIndex: 15
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 58
+      y: -10
+      spriteIndex: 16
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 59
+      y: -10
+      spriteIndex: 21
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 65
+      y: -10
+      spriteIndex: 20
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 66
+      y: -10
+      spriteIndex: 16
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 67
+      y: -10
+      spriteIndex: 16
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 68
+      y: -10
+      spriteIndex: 15
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 69
+      y: -10
+      spriteIndex: 15
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 70
+      y: -10
+      spriteIndex: 15
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 71
+      y: -10
+      spriteIndex: 21
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 72
+      y: -10
+      spriteIndex: 12
+      spriteName: Snow (with ice)_6
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 73
+      y: -10
+      spriteIndex: 10
+      spriteName: Snow (with ice)_0
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 74
+      y: -10
+      spriteIndex: 9
+      spriteName: Snow (with ice)_1
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 75
+      y: -10
+      spriteIndex: 9
+      spriteName: Snow (with ice)_1
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 76
+      y: -10
+      spriteIndex: 10
+      spriteName: Snow (with ice)_0
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 77
+      y: -10
+      spriteIndex: 9
+      spriteName: Snow (with ice)_1
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 78
+      y: -10
+      spriteIndex: 9
+      spriteName: Snow (with ice)_1
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 79
+      y: -10
+      spriteIndex: 9
+      spriteName: Snow (with ice)_1
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 80
+      y: -10
+      spriteIndex: 10
+      spriteName: Snow (with ice)_0
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 81
+      y: -10
+      spriteIndex: 10
+      spriteName: Snow (with ice)_0
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 82
+      y: -10
+      spriteIndex: 11
+      spriteName: Snow (with ice)_2
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 83
+      y: -10
+      spriteIndex: 9
+      spriteName: Snow (with ice)_1
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -44
+      y: -9
+      spriteIndex: 22
+      spriteName: Snow (with ice)_13
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -43
+      y: -9
+      spriteIndex: 22
+      spriteName: Snow (with ice)_13
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -42
+      y: -9
+      spriteIndex: 23
+      spriteName: Snow (with ice)_12
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -41
+      y: -9
+      spriteIndex: 24
+      spriteName: Snow (with ice)_11
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -40
+      y: -9
+      spriteIndex: 23
+      spriteName: Snow (with ice)_12
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -39
+      y: -9
+      spriteIndex: 22
+      spriteName: Snow (with ice)_13
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -38
+      y: -9
+      spriteIndex: 23
+      spriteName: Snow (with ice)_12
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -37
+      y: -9
+      spriteIndex: 23
+      spriteName: Snow (with ice)_12
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -36
+      y: -9
+      spriteIndex: 23
+      spriteName: Snow (with ice)_12
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -35
+      y: -9
+      spriteIndex: 25
+      spriteName: Snow (with ice)_14
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -34
+      y: -9
+      spriteIndex: 24
+      spriteName: Snow (with ice)_11
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -33
+      y: -9
+      spriteIndex: 23
+      spriteName: Snow (with ice)_12
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -32
+      y: -9
+      spriteIndex: 22
+      spriteName: Snow (with ice)_13
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -31
+      y: -9
+      spriteIndex: 22
+      spriteName: Snow (with ice)_13
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -30
+      y: -9
+      spriteIndex: 22
+      spriteName: Snow (with ice)_13
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -29
+      y: -9
+      spriteIndex: 23
+      spriteName: Snow (with ice)_12
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -28
+      y: -9
+      spriteIndex: 23
+      spriteName: Snow (with ice)_12
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -27
+      y: -9
+      spriteIndex: 23
+      spriteName: Snow (with ice)_12
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -26
+      y: -9
+      spriteIndex: 22
+      spriteName: Snow (with ice)_13
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -25
+      y: -9
+      spriteIndex: 22
+      spriteName: Snow (with ice)_13
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -24
+      y: -9
+      spriteIndex: 23
+      spriteName: Snow (with ice)_12
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -23
+      y: -9
+      spriteIndex: 22
+      spriteName: Snow (with ice)_13
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -22
+      y: -9
+      spriteIndex: 23
+      spriteName: Snow (with ice)_12
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -21
+      y: -9
+      spriteIndex: 23
+      spriteName: Snow (with ice)_12
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -20
+      y: -9
+      spriteIndex: 23
+      spriteName: Snow (with ice)_12
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -19
+      y: -9
+      spriteIndex: 26
+      spriteName: Snow (with ice)_10
+      flipX: 1
+      flipY: 0
+      solid: 1
+    - x: 9
+      y: -9
+      spriteIndex: 20
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 10
+      y: -9
+      spriteIndex: 15
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 11
+      y: -9
+      spriteIndex: 16
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 12
+      y: -9
+      spriteIndex: 15
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 13
+      y: -9
+      spriteIndex: 15
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 14
+      y: -9
+      spriteIndex: 15
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 15
+      y: -9
+      spriteIndex: 15
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 16
+      y: -9
+      spriteIndex: 15
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 17
+      y: -9
+      spriteIndex: 15
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 18
+      y: -9
+      spriteIndex: 16
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 19
+      y: -9
+      spriteIndex: 17
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 20
+      y: -9
+      spriteIndex: 15
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 21
+      y: -9
+      spriteIndex: 17
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 22
+      y: -9
+      spriteIndex: 17
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 23
+      y: -9
+      spriteIndex: 15
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 24
+      y: -9
+      spriteIndex: 15
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 25
+      y: -9
+      spriteIndex: 16
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 26
+      y: -9
+      spriteIndex: 21
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 27
+      y: -9
+      spriteIndex: 12
+      spriteName: Snow (with ice)_6
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 28
+      y: -9
+      spriteIndex: 11
+      spriteName: Snow (with ice)_2
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 29
+      y: -9
+      spriteIndex: 9
+      spriteName: Snow (with ice)_1
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 30
+      y: -9
+      spriteIndex: 11
+      spriteName: Snow (with ice)_2
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 31
+      y: -9
+      spriteIndex: 11
+      spriteName: Snow (with ice)_2
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 32
+      y: -9
+      spriteIndex: 9
+      spriteName: Snow (with ice)_1
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 33
+      y: -9
+      spriteIndex: 9
+      spriteName: Snow (with ice)_1
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 34
+      y: -9
+      spriteIndex: 9
+      spriteName: Snow (with ice)_1
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 35
+      y: -9
+      spriteIndex: 11
+      spriteName: Snow (with ice)_2
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 36
+      y: -9
+      spriteIndex: 9
+      spriteName: Snow (with ice)_1
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 37
+      y: -9
+      spriteIndex: 9
+      spriteName: Snow (with ice)_1
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 38
+      y: -9
+      spriteIndex: 10
+      spriteName: Snow (with ice)_0
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 39
+      y: -9
+      spriteIndex: 10
+      spriteName: Snow (with ice)_0
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 40
+      y: -9
+      spriteIndex: 10
+      spriteName: Snow (with ice)_0
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 41
+      y: -9
+      spriteIndex: 9
+      spriteName: Snow (with ice)_1
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 42
+      y: -9
+      spriteIndex: 9
+      spriteName: Snow (with ice)_1
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 43
+      y: -9
+      spriteIndex: 10
+      spriteName: Snow (with ice)_0
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 44
+      y: -9
+      spriteIndex: 12
+      spriteName: Snow (with ice)_6
+      flipX: 1
+      flipY: 0
+      solid: 1
+    - x: 72
+      y: -9
+      spriteIndex: 26
+      spriteName: Snow (with ice)_10
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 73
+      y: -9
+      spriteIndex: 23
+      spriteName: Snow (with ice)_12
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 74
+      y: -9
+      spriteIndex: 22
+      spriteName: Snow (with ice)_13
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 75
+      y: -9
+      spriteIndex: 25
+      spriteName: Snow (with ice)_14
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 76
+      y: -9
+      spriteIndex: 23
+      spriteName: Snow (with ice)_12
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 77
+      y: -9
+      spriteIndex: 23
+      spriteName: Snow (with ice)_12
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 78
+      y: -9
+      spriteIndex: 23
+      spriteName: Snow (with ice)_12
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 79
+      y: -9
+      spriteIndex: 22
+      spriteName: Snow (with ice)_13
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 80
+      y: -9
+      spriteIndex: 22
+      spriteName: Snow (with ice)_13
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 81
+      y: -9
+      spriteIndex: 23
+      spriteName: Snow (with ice)_12
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 82
+      y: -9
+      spriteIndex: 25
+      spriteName: Snow (with ice)_14
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 83
+      y: -9
+      spriteIndex: 24
+      spriteName: Snow (with ice)_11
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -21
+      y: -8
+      spriteIndex: 27
+      spriteName: Snow (with ice)_25
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -20
+      y: -8
+      spriteIndex: 28
+      spriteName: Snow (with ice)_26
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: 27
+      y: -8
+      spriteIndex: 26
+      spriteName: Snow (with ice)_10
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 28
+      y: -8
+      spriteIndex: 22
+      spriteName: Snow (with ice)_13
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 29
+      y: -8
+      spriteIndex: 23
+      spriteName: Snow (with ice)_12
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 30
+      y: -8
+      spriteIndex: 23
+      spriteName: Snow (with ice)_12
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 31
+      y: -8
+      spriteIndex: 23
+      spriteName: Snow (with ice)_12
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 32
+      y: -8
+      spriteIndex: 22
+      spriteName: Snow (with ice)_13
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 33
+      y: -8
+      spriteIndex: 23
+      spriteName: Snow (with ice)_12
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 34
+      y: -8
+      spriteIndex: 29
+      spriteName: Snow (with ice)_15
+      flipX: 1
+      flipY: 0
+      solid: 1
+    - x: 35
+      y: -8
+      spriteIndex: 9
+      spriteName: Snow (with ice)_1
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 36
+      y: -8
+      spriteIndex: 9
+      spriteName: Snow (with ice)_1
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 37
+      y: -8
+      spriteIndex: 9
+      spriteName: Snow (with ice)_1
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 38
+      y: -8
+      spriteIndex: 10
+      spriteName: Snow (with ice)_0
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 39
+      y: -8
+      spriteIndex: 11
+      spriteName: Snow (with ice)_2
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 40
+      y: -8
+      spriteIndex: 9
+      spriteName: Snow (with ice)_1
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 41
+      y: -8
+      spriteIndex: 10
+      spriteName: Snow (with ice)_0
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 42
+      y: -8
+      spriteIndex: 11
+      spriteName: Snow (with ice)_2
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 43
+      y: -8
+      spriteIndex: 9
+      spriteName: Snow (with ice)_1
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 44
+      y: -8
+      spriteIndex: 12
+      spriteName: Snow (with ice)_6
+      flipX: 1
+      flipY: 0
+      solid: 1
+    - x: 73
+      y: -8
+      spriteIndex: 27
+      spriteName: Snow (with ice)_25
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: 74
+      y: -8
+      spriteIndex: 28
+      spriteName: Snow (with ice)_26
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: 28
+      y: -7
+      spriteIndex: 30
+      spriteName: Snow (with ice)_76
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: 29
+      y: -7
+      spriteIndex: 31
+      spriteName: Snow (with ice)_77
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: 30
+      y: -7
+      spriteIndex: 31
+      spriteName: Snow (with ice)_77
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: 31
+      y: -7
+      spriteIndex: 32
+      spriteName: Snow (with ice)_78
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: 32
+      y: -7
+      spriteIndex: 33
+      spriteName: Snow (with ice)_79
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: 34
+      y: -7
+      spriteIndex: 26
+      spriteName: Snow (with ice)_10
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 35
+      y: -7
+      spriteIndex: 25
+      spriteName: Snow (with ice)_14
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 36
+      y: -7
+      spriteIndex: 23
+      spriteName: Snow (with ice)_12
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 37
+      y: -7
+      spriteIndex: 23
+      spriteName: Snow (with ice)_12
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 38
+      y: -7
+      spriteIndex: 24
+      spriteName: Snow (with ice)_11
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 39
+      y: -7
+      spriteIndex: 25
+      spriteName: Snow (with ice)_14
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 40
+      y: -7
+      spriteIndex: 23
+      spriteName: Snow (with ice)_12
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 41
+      y: -7
+      spriteIndex: 22
+      spriteName: Snow (with ice)_13
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 42
+      y: -7
+      spriteIndex: 22
+      spriteName: Snow (with ice)_13
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 43
+      y: -7
+      spriteIndex: 22
+      spriteName: Snow (with ice)_13
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 44
+      y: -7
+      spriteIndex: 26
+      spriteName: Snow (with ice)_10
+      flipX: 1
+      flipY: 0
+      solid: 1
+    - x: 11
+      y: -6
+      spriteIndex: 0
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 12
+      y: -6
+      spriteIndex: 0
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 13
+      y: -6
+      spriteIndex: 0
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 14
+      y: -6
+      spriteIndex: 0
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 15
+      y: -6
+      spriteIndex: 0
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 16
+      y: -6
+      spriteIndex: 0
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 17
+      y: -6
+      spriteIndex: 0
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 18
+      y: -6
+      spriteIndex: 0
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 19
+      y: -6
+      spriteIndex: 0
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 20
+      y: -6
+      spriteIndex: 0
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 21
+      y: -6
+      spriteIndex: 0
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 22
+      y: -6
+      spriteIndex: 0
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 42
+      y: -6
+      spriteIndex: 27
+      spriteName: Snow (with ice)_25
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: 43
+      y: -6
+      spriteIndex: 28
+      spriteName: Snow (with ice)_26
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -25
+      y: -5
+      spriteIndex: 0
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -24
+      y: -5
+      spriteIndex: 0
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -23
+      y: -5
+      spriteIndex: 0
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -22
+      y: -5
+      spriteIndex: 0
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -21
+      y: -5
+      spriteIndex: 0
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -20
+      y: -5
+      spriteIndex: 0
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -19
+      y: -5
+      spriteIndex: 0
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 14
+      y: -4
+      spriteIndex: 0
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 15
+      y: -4
+      spriteIndex: 0
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 16
+      y: -4
+      spriteIndex: 0
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 17
+      y: -4
+      spriteIndex: 0
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 18
+      y: -4
+      spriteIndex: 0
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 19
+      y: -4
+      spriteIndex: 0
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -2
+      y: -1
+      spriteIndex: 0
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -1
+      y: -1
+      spriteIndex: 0
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 0
+      y: -1
+      spriteIndex: 0
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 1
+      y: -1
+      spriteIndex: 0
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 2
+      y: -1
+      spriteIndex: 0
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 3
+      y: -1
+      spriteIndex: 0
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+  entities:
+  - kind: 1
+    position: {x: -2.5, y: -0.5}
+    variant: 0
+    size: {x: 0, y: 0}
+    colliderOffset: {x: 0, y: 0}
+    velocity: {x: 0, y: 0}
+    isTrigger: 1
+    path: []
+    loopMode: 0
+    startOffsetSeconds: 0
+    param0: 0
+    param1: 0
+    param2: 0
+  - kind: 1
+    position: {x: -3.5, y: -0.5}
+    variant: 0
+    size: {x: 0, y: 0}
+    colliderOffset: {x: 0, y: 0}
+    velocity: {x: 0, y: 0}
+    isTrigger: 1
+    path: []
+    loopMode: 0
+    startOffsetSeconds: 0
+    param0: 0
+    param1: 0
+    param2: 0
+  - kind: 1
+    position: {x: -26.439972, y: 5.5}
+    variant: 0
+    size: {x: 0, y: 0}
+    colliderOffset: {x: 0, y: 0}
+    velocity: {x: 0, y: 0}
+    isTrigger: 1
+    path: []
+    loopMode: 0
+    startOffsetSeconds: 0
+    param0: 0
+    param1: 0
+    param2: 0
+  - kind: 1
+    position: {x: -25.439972, y: 5.5}
+    variant: 0
+    size: {x: 0, y: 0}
+    colliderOffset: {x: 0, y: 0}
+    velocity: {x: 0, y: 0}
+    isTrigger: 1
+    path: []
+    loopMode: 0
+    startOffsetSeconds: 0
+    param0: 0
+    param1: 0
+    param2: 0
+  - kind: 1
+    position: {x: 10.5, y: 8.5}
+    variant: 0
+    size: {x: 0, y: 0}
+    colliderOffset: {x: 0, y: 0}
+    velocity: {x: 0, y: 0}
+    isTrigger: 1
+    path: []
+    loopMode: 0
+    startOffsetSeconds: 0
+    param0: 0
+    param1: 0
+    param2: 0
+  - kind: 1
+    position: {x: 10.5, y: 7.5}
+    variant: 0
+    size: {x: 0, y: 0}
+    colliderOffset: {x: 0, y: 0}
+    velocity: {x: 0, y: 0}
+    isTrigger: 1
+    path: []
+    loopMode: 0
+    startOffsetSeconds: 0
+    param0: 0
+    param1: 0
+    param2: 0
+  - kind: 1
+    position: {x: 10.5, y: 12.5}
+    variant: 0
+    size: {x: 0, y: 0}
+    colliderOffset: {x: 0, y: 0}
+    velocity: {x: 0, y: 0}
+    isTrigger: 1
+    path: []
+    loopMode: 0
+    startOffsetSeconds: 0
+    param0: 0
+    param1: 0
+    param2: 0
+  - kind: 1
+    position: {x: 10.5, y: 11.5}
+    variant: 0
+    size: {x: 0, y: 0}
+    colliderOffset: {x: 0, y: 0}
+    velocity: {x: 0, y: 0}
+    isTrigger: 1
+    path: []
+    loopMode: 0
+    startOffsetSeconds: 0
+    param0: 0
+    param1: 0
+    param2: 0
+  - kind: 1
+    position: {x: -3.5, y: 12.5}
+    variant: 0
+    size: {x: 0, y: 0}
+    colliderOffset: {x: 0, y: 0}
+    velocity: {x: 0, y: 0}
+    isTrigger: 1
+    path: []
+    loopMode: 0
+    startOffsetSeconds: 0
+    param0: 0
+    param1: 0
+    param2: 0
+  - kind: 1
+    position: {x: -2.5, y: 12.5}
+    variant: 0
+    size: {x: 0, y: 0}
+    colliderOffset: {x: 0, y: 0}
+    velocity: {x: 0, y: 0}
+    isTrigger: 1
+    path: []
+    loopMode: 0
+    startOffsetSeconds: 0
+    param0: 0
+    param1: 0
+    param2: 0
+  - kind: 1
+    position: {x: 4.5, y: 16.5}
+    variant: 0
+    size: {x: 0, y: 0}
+    colliderOffset: {x: 0, y: 0}
+    velocity: {x: 0, y: 0}
+    isTrigger: 1
+    path: []
+    loopMode: 0
+    startOffsetSeconds: 0
+    param0: 0
+    param1: 0
+    param2: 0
+  - kind: 1
+    position: {x: 5.5, y: 16.5}
+    variant: 0
+    size: {x: 0, y: 0}
+    colliderOffset: {x: 0, y: 0}
+    velocity: {x: 0, y: 0}
+    isTrigger: 1
+    path: []
+    loopMode: 0
+    startOffsetSeconds: 0
+    param0: 0
+    param1: 0
+    param2: 0
+  - kind: 1
+    position: {x: 23.5, y: 12.5}
+    variant: 0
+    size: {x: 0, y: 0}
+    colliderOffset: {x: 0, y: 0}
+    velocity: {x: 0, y: 0}
+    isTrigger: 1
+    path: []
+    loopMode: 0
+    startOffsetSeconds: 0
+    param0: 0
+    param1: 0
+    param2: 0
+  - kind: 1
+    position: {x: 22.5, y: 12.5}
+    variant: 0
+    size: {x: 0, y: 0}
+    colliderOffset: {x: 0, y: 0}
+    velocity: {x: 0, y: 0}
+    isTrigger: 1
+    path: []
+    loopMode: 0
+    startOffsetSeconds: 0
+    param0: 0
+    param1: 0
+    param2: 0
+  - kind: 1
+    position: {x: 21.5, y: 12.5}
+    variant: 0
+    size: {x: 0, y: 0}
+    colliderOffset: {x: 0, y: 0}
+    velocity: {x: 0, y: 0}
+    isTrigger: 1
+    path: []
+    loopMode: 0
+    startOffsetSeconds: 0
+    param0: 0
+    param1: 0
+    param2: 0
+  - kind: 1
+    position: {x: 29.5, y: 8.5}
+    variant: 0
+    size: {x: 0, y: 0}
+    colliderOffset: {x: 0, y: 0}
+    velocity: {x: 0, y: 0}
+    isTrigger: 1
+    path: []
+    loopMode: 0
+    startOffsetSeconds: 0
+    param0: 0
+    param1: 0
+    param2: 0
+  - kind: 1
+    position: {x: 30.5, y: 8.5}
+    variant: 0
+    size: {x: 0, y: 0}
+    colliderOffset: {x: 0, y: 0}
+    velocity: {x: 0, y: 0}
+    isTrigger: 1
+    path: []
+    loopMode: 0
+    startOffsetSeconds: 0
+    param0: 0
+    param1: 0
+    param2: 0
+  - kind: 1
+    position: {x: 38.5, y: 5.5}
+    variant: 0
+    size: {x: 0, y: 0}
+    colliderOffset: {x: 0, y: 0}
+    velocity: {x: 0, y: 0}
+    isTrigger: 1
+    path: []
+    loopMode: 0
+    startOffsetSeconds: 0
+    param0: 0
+    param1: 0
+    param2: 0
+  - kind: 1
+    position: {x: 39.5, y: 5.5}
+    variant: 0
+    size: {x: 0, y: 0}
+    colliderOffset: {x: 0, y: 0}
+    velocity: {x: 0, y: 0}
+    isTrigger: 1
+    path: []
+    loopMode: 0
+    startOffsetSeconds: 0
+    param0: 0
+    param1: 0
+    param2: 0
+  - kind: 1
+    position: {x: 51.5, y: 3.5}
+    variant: 0
+    size: {x: 0, y: 0}
+    colliderOffset: {x: 0, y: 0}
+    velocity: {x: 0, y: 0}
+    isTrigger: 1
+    path: []
+    loopMode: 0
+    startOffsetSeconds: 0
+    param0: 0
+    param1: 0
+    param2: 0
+  - kind: 1
+    position: {x: 52.5, y: 3.5}
+    variant: 0
+    size: {x: 0, y: 0}
+    colliderOffset: {x: 0, y: 0}
+    velocity: {x: 0, y: 0}
+    isTrigger: 1
+    path: []
+    loopMode: 0
+    startOffsetSeconds: 0
+    param0: 0
+    param1: 0
+    param2: 0
+  - kind: 7
+    position: {x: -38.5, y: 0}
+    variant: 0
+    size: {x: 1, y: 2}
+    colliderOffset: {x: 0, y: 1}
+    velocity: {x: 0, y: 0}
+    isTrigger: 0
+    path: []
+    loopMode: 0
+    startOffsetSeconds: 0
+    param0: 4
+    param1: 1.2000122
+    param2: 14
+  - kind: 7
+    position: {x: -5.5, y: 1}
+    variant: 0
+    size: {x: 1, y: 2}
+    colliderOffset: {x: 0, y: 1}
+    velocity: {x: 0, y: 0}
+    isTrigger: 0
+    path: []
+    loopMode: 0
+    startOffsetSeconds: 0
+    param0: 4
+    param1: 1.2000122
+    param2: 14
+  - kind: 3
+    position: {x: 28.5, y: -5}
+    variant: 0
+    size: {x: 0, y: 0}
+    colliderOffset: {x: 0, y: 0.45199585}
+    velocity: {x: 0, y: 0}
+    isTrigger: 0
+    path: []
+    loopMode: 0
+    startOffsetSeconds: 0
+    param0: 0
+    param1: 0
+    param2: 0
+  - kind: 3
+    position: {x: -17.5, y: 4}
+    variant: 0
+    size: {x: 0, y: 0}
+    colliderOffset: {x: 0, y: 0.45199585}
+    velocity: {x: 0, y: 0}
+    isTrigger: 0
+    path: []
+    loopMode: 0
+    startOffsetSeconds: 0
+    param0: 0
+    param1: 0
+    param2: 0
+  - kind: 6
+    position: {x: 10.5, y: -0.6686096}
+    variant: 0
+    size: {x: 1.5, y: 0.5999756}
+    colliderOffset: {x: 0, y: 0.2999878}
+    velocity: {x: 0, y: 0}
+    isTrigger: 0
+    path: []
+    loopMode: 0
+    startOffsetSeconds: 0
+    param0: 0
+    param1: 0
+    param2: 0

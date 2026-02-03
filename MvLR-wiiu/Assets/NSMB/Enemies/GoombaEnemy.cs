@@ -78,6 +78,29 @@ namespace NSMB.Enemies {
             }
         }
 
+        public void KillByShell() {
+            if (_dead) {
+                return;
+            }
+
+            _dead = true;
+            AddScore(scoreOnStomp);
+            PlaySfx(NSMB.Audio.SoundEffectId.Enemy_Generic_Stomp, 0.8f);
+
+            // Flatten visual and remove collisions; no player bounce.
+            Transform t = transform;
+            t.localScale = new Vector3(1f, 0.2f, 1f);
+
+            _rb.velocity = Vector2.zero;
+            _rb.isKinematic = true;
+            Collider2D c = GetComponent<Collider2D>();
+            if (c != null) {
+                c.enabled = false;
+            }
+
+            Destroy(gameObject, 0.4f);
+        }
+
         public bool TryStomp(NSMB.Player.PlayerMotor2D player) {
             if (_dead || player == null) {
                 return false;
@@ -86,18 +109,8 @@ namespace NSMB.Enemies {
             _dead = true;
 
             // Score + SFX
-            NSMB.Gameplay.GameManager gm = NSMB.Gameplay.GameManager.Instance;
-            if (gm != null) {
-                gm.AddScore(scoreOnStomp);
-            }
-
-            NSMB.Core.GameRoot root = NSMB.Core.GameRoot.Instance;
-            if (root != null) {
-                NSMB.Audio.AudioManager audio = root.GetComponent<NSMB.Audio.AudioManager>();
-                if (audio != null) {
-                    audio.PlayOneShot(NSMB.Audio.SoundEffectId.Enemy_Generic_Stomp, 0.9f);
-                }
-            }
+            AddScore(scoreOnStomp);
+            PlaySfx(NSMB.Audio.SoundEffectId.Enemy_Generic_Stomp, 0.9f);
 
             // Flatten visual (placeholder-friendly)
             Transform t = transform;
@@ -121,6 +134,23 @@ namespace NSMB.Enemies {
 
             Destroy(gameObject, 0.6f);
             return true;
+        }
+
+        private static void AddScore(int s) {
+            NSMB.Gameplay.GameManager gm = NSMB.Gameplay.GameManager.Instance;
+            if (gm != null) {
+                gm.AddScore(s);
+            }
+        }
+
+        private static void PlaySfx(NSMB.Audio.SoundEffectId id, float vol) {
+            NSMB.Core.GameRoot root = NSMB.Core.GameRoot.Instance;
+            if (root != null) {
+                NSMB.Audio.AudioManager audio = root.GetComponent<NSMB.Audio.AudioManager>();
+                if (audio != null) {
+                    audio.PlayOneShot(id, vol);
+                }
+            }
         }
     }
 }

@@ -146,7 +146,10 @@ public sealed class SyncSpriteImportFromOriginal : AssetPostprocessor {
                         inSpritesList = false;
                         // Continue parsing other parts of the meta (do not 'continue' here).
                     } else {
-                        if (line.StartsWith("- ", StringComparison.InvariantCulture)) {
+                        // Start of a new SpriteMetaData entry. Only treat list items at the same indentation
+                        // level as the "sprites:" key as sprite boundaries; nested lists (e.g. indices) must
+                        // not create empty sprite entries.
+                        if (indent == spritesKeyIndent && line.StartsWith("- ", StringComparison.InvariantCulture)) {
                             if (hasCurrentSprite) {
                                 sprites.Add(currentSprite);
                                 currentSprite = new SpriteMetaData();

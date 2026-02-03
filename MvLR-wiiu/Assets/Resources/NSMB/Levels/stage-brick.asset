@@ -1,0 +1,962 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58b0f85b9380aa24eb199045b20faa1a, type: 3}
+  m_Name: stage-brick
+  m_EditorClassIdentifier: 
+  stageKey: stage-brick
+  spawnPoint: {x: 10, y: -0.5}
+  cameraMin: {x: -2000, y: -5}
+  cameraMax: {x: 2000, y: 7}
+  isWrappingLevel: 1
+  tileLayers:
+  - name: Tilemap_Ground_animated-blocks
+    resourcesAtlasPath: NSMB/Sprites/Atlases/Terrain/animated-blocks
+    sortingOrder: -1000
+    position: {x: 10, y: 6, z: 0}
+    scale: {x: 1, y: 1, z: 1}
+    tiles:
+    - x: -24
+      y: -11
+      spriteIndex: 0
+      spriteName: animation_19
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -23
+      y: -11
+      spriteIndex: 0
+      spriteName: animation_19
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -22
+      y: -11
+      spriteIndex: 0
+      spriteName: animation_19
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -21
+      y: -11
+      spriteIndex: 0
+      spriteName: animation_19
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -20
+      y: -11
+      spriteIndex: 0
+      spriteName: animation_19
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -19
+      y: -11
+      spriteIndex: 0
+      spriteName: animation_19
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -18
+      y: -11
+      spriteIndex: 0
+      spriteName: animation_19
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -17
+      y: -11
+      spriteIndex: 0
+      spriteName: animation_19
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -16
+      y: -11
+      spriteIndex: 0
+      spriteName: animation_19
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -15
+      y: -11
+      spriteIndex: 0
+      spriteName: animation_19
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -14
+      y: -11
+      spriteIndex: 0
+      spriteName: animation_19
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -13
+      y: -11
+      spriteIndex: 0
+      spriteName: animation_19
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -12
+      y: -11
+      spriteIndex: 0
+      spriteName: animation_19
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -11
+      y: -11
+      spriteIndex: 0
+      spriteName: animation_19
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -10
+      y: -11
+      spriteIndex: 0
+      spriteName: animation_19
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -9
+      y: -11
+      spriteIndex: 0
+      spriteName: animation_19
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -8
+      y: -11
+      spriteIndex: 0
+      spriteName: animation_19
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -7
+      y: -11
+      spriteIndex: 0
+      spriteName: animation_19
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -6
+      y: -11
+      spriteIndex: 0
+      spriteName: animation_19
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -5
+      y: -11
+      spriteIndex: 0
+      spriteName: animation_19
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -17
+      y: -10
+      spriteIndex: 0
+      spriteName: animation_19
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -16
+      y: -10
+      spriteIndex: 0
+      spriteName: animation_19
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -15
+      y: -10
+      spriteIndex: 0
+      spriteName: animation_19
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -14
+      y: -10
+      spriteIndex: 0
+      spriteName: animation_19
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -5
+      y: -10
+      spriteIndex: 0
+      spriteName: animation_19
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -17
+      y: -9
+      spriteIndex: 0
+      spriteName: animation_19
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -16
+      y: -9
+      spriteIndex: 0
+      spriteName: animation_19
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -15
+      y: -9
+      spriteIndex: 0
+      spriteName: animation_19
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -14
+      y: -9
+      spriteIndex: 0
+      spriteName: animation_19
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -5
+      y: -9
+      spriteIndex: 0
+      spriteName: animation_19
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -23
+      y: -8
+      spriteIndex: 0
+      spriteName: animation_19
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -22
+      y: -8
+      spriteIndex: 0
+      spriteName: animation_19
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -21
+      y: -8
+      spriteIndex: 0
+      spriteName: animation_19
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -20
+      y: -8
+      spriteIndex: 1
+      spriteName: animation_20
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -17
+      y: -8
+      spriteIndex: 0
+      spriteName: animation_19
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -16
+      y: -8
+      spriteIndex: 0
+      spriteName: animation_19
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -15
+      y: -8
+      spriteIndex: 0
+      spriteName: animation_19
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -14
+      y: -8
+      spriteIndex: 0
+      spriteName: animation_19
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -9
+      y: -8
+      spriteIndex: 0
+      spriteName: animation_19
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -8
+      y: -8
+      spriteIndex: 0
+      spriteName: animation_19
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -5
+      y: -8
+      spriteIndex: 0
+      spriteName: animation_19
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -15
+      y: -7
+      spriteIndex: 0
+      spriteName: animation_19
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -14
+      y: -7
+      spriteIndex: 0
+      spriteName: animation_19
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -11
+      y: -7
+      spriteIndex: 0
+      spriteName: animation_19
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -10
+      y: -7
+      spriteIndex: 0
+      spriteName: animation_19
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -9
+      y: -7
+      spriteIndex: 0
+      spriteName: animation_19
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -8
+      y: -7
+      spriteIndex: 0
+      spriteName: animation_19
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -7
+      y: -7
+      spriteIndex: 0
+      spriteName: animation_19
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -6
+      y: -7
+      spriteIndex: 0
+      spriteName: animation_19
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -5
+      y: -7
+      spriteIndex: 0
+      spriteName: animation_19
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -23
+      y: -4
+      spriteIndex: 0
+      spriteName: animation_19
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -22
+      y: -4
+      spriteIndex: 1
+      spriteName: animation_20
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -21
+      y: -4
+      spriteIndex: 0
+      spriteName: animation_19
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -20
+      y: -4
+      spriteIndex: 0
+      spriteName: animation_19
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -19
+      y: -4
+      spriteIndex: 0
+      spriteName: animation_19
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -2
+      y: -2
+      spriteIndex: 0
+      spriteName: animation_19
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -1
+      y: -2
+      spriteIndex: 0
+      spriteName: animation_19
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: 0
+      y: -2
+      spriteIndex: 0
+      spriteName: animation_19
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: 1
+      y: -2
+      spriteIndex: 0
+      spriteName: animation_19
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -2
+      y: -1
+      spriteIndex: 0
+      spriteName: animation_19
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: 1
+      y: -1
+      spriteIndex: 0
+      spriteName: animation_19
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -24
+      y: 0
+      spriteIndex: 0
+      spriteName: animation_19
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -23
+      y: 0
+      spriteIndex: 0
+      spriteName: animation_19
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -22
+      y: 0
+      spriteIndex: 0
+      spriteName: animation_19
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -21
+      y: 0
+      spriteIndex: 0
+      spriteName: animation_19
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -20
+      y: 0
+      spriteIndex: 0
+      spriteName: animation_19
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -19
+      y: 0
+      spriteIndex: 0
+      spriteName: animation_19
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -18
+      y: 0
+      spriteIndex: 0
+      spriteName: animation_19
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -17
+      y: 0
+      spriteIndex: 0
+      spriteName: animation_19
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -16
+      y: 0
+      spriteIndex: 0
+      spriteName: animation_19
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -15
+      y: 0
+      spriteIndex: 0
+      spriteName: animation_19
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -12
+      y: 0
+      spriteIndex: 0
+      spriteName: animation_19
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -11
+      y: 0
+      spriteIndex: 0
+      spriteName: animation_19
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -10
+      y: 0
+      spriteIndex: 0
+      spriteName: animation_19
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -9
+      y: 0
+      spriteIndex: 0
+      spriteName: animation_19
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -8
+      y: 0
+      spriteIndex: 0
+      spriteName: animation_19
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -7
+      y: 0
+      spriteIndex: 0
+      spriteName: animation_19
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -6
+      y: 0
+      spriteIndex: 0
+      spriteName: animation_19
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -5
+      y: 0
+      spriteIndex: 0
+      spriteName: animation_19
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -4
+      y: 0
+      spriteIndex: 0
+      spriteName: animation_19
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -3
+      y: 0
+      spriteIndex: 0
+      spriteName: animation_19
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -2
+      y: 0
+      spriteIndex: 0
+      spriteName: animation_19
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: 1
+      y: 0
+      spriteIndex: 0
+      spriteName: animation_19
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: 2
+      y: 0
+      spriteIndex: 0
+      spriteName: animation_19
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: 3
+      y: 0
+      spriteIndex: 0
+      spriteName: animation_19
+      flipX: 0
+      flipY: 0
+      solid: 0
+  - name: Tilemap_Ground
+    resourcesAtlasPath: NSMB/Sprites/Atlases/Terrain/underground
+    sortingOrder: -1000
+    position: {x: 10, y: 6, z: 0}
+    scale: {x: 1, y: 1, z: 1}
+    tiles:
+    - x: -4
+      y: -13
+      spriteIndex: 4
+      spriteName: Underground_22
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -3
+      y: -13
+      spriteIndex: 11
+      spriteName: Underground_26
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -2
+      y: -13
+      spriteIndex: 10
+      spriteName: Underground_25
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -1
+      y: -13
+      spriteIndex: 10
+      spriteName: Underground_25
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 0
+      y: -13
+      spriteIndex: 5
+      spriteName: Underground_24
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 1
+      y: -13
+      spriteIndex: 10
+      spriteName: Underground_25
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 2
+      y: -13
+      spriteIndex: 11
+      spriteName: Underground_26
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 3
+      y: -13
+      spriteIndex: 3
+      spriteName: Underground_23
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -4
+      y: -12
+      spriteIndex: 14
+      spriteName: Underground_8
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -3
+      y: -12
+      spriteIndex: 2
+      spriteName: Underground_1
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -2
+      y: -12
+      spriteIndex: 2
+      spriteName: Underground_1
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -1
+      y: -12
+      spriteIndex: 2
+      spriteName: Underground_1
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 0
+      y: -12
+      spriteIndex: 2
+      spriteName: Underground_1
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 1
+      y: -12
+      spriteIndex: 2
+      spriteName: Underground_1
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 2
+      y: -12
+      spriteIndex: 2
+      spriteName: Underground_1
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 3
+      y: -12
+      spriteIndex: 13
+      spriteName: Underground_7
+      flipX: 1
+      flipY: 0
+      solid: 1
+    - x: -4
+      y: -11
+      spriteIndex: 12
+      spriteName: Underground_10
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -3
+      y: -11
+      spriteIndex: 9
+      spriteName: Underground_12
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -2
+      y: -11
+      spriteIndex: 6
+      spriteName: Underground_14
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -1
+      y: -11
+      spriteIndex: 6
+      spriteName: Underground_14
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 0
+      y: -11
+      spriteIndex: 6
+      spriteName: Underground_14
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 1
+      y: -11
+      spriteIndex: 6
+      spriteName: Underground_14
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 2
+      y: -11
+      spriteIndex: 8
+      spriteName: Underground_13
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 3
+      y: -11
+      spriteIndex: 7
+      spriteName: Underground_11
+      flipX: 0
+      flipY: 0
+      solid: 1
+  entities:
+  - kind: 1
+    position: {x: -1.5, y: 3.5}
+    variant: 0
+    size: {x: 0, y: 0}
+    colliderOffset: {x: 0, y: 0}
+    velocity: {x: 0, y: 0}
+    isTrigger: 1
+    path: []
+    loopMode: 0
+    startOffsetSeconds: 0
+    param0: 0
+    param1: 0
+    param2: 0
+  - kind: 1
+    position: {x: -0.5, y: 3.5}
+    variant: 0
+    size: {x: 0, y: 0}
+    colliderOffset: {x: 0, y: 0}
+    velocity: {x: 0, y: 0}
+    isTrigger: 1
+    path: []
+    loopMode: 0
+    startOffsetSeconds: 0
+    param0: 0
+    param1: 0
+    param2: 0
+  - kind: 1
+    position: {x: -7.5, y: 7.5}
+    variant: 0
+    size: {x: 0, y: 0}
+    colliderOffset: {x: 0, y: 0}
+    velocity: {x: 0, y: 0}
+    isTrigger: 1
+    path: []
+    loopMode: 0
+    startOffsetSeconds: 0
+    param0: 0
+    param1: 0
+    param2: 0
+  - kind: 1
+    position: {x: -8.5, y: 7.5}
+    variant: 0
+    size: {x: 0, y: 0}
+    colliderOffset: {x: 0, y: 0}
+    velocity: {x: 0, y: 0}
+    isTrigger: 1
+    path: []
+    loopMode: 0
+    startOffsetSeconds: 0
+    param0: 0
+    param1: 0
+    param2: 0
+  - kind: 1
+    position: {x: 15.5, y: 1.5}
+    variant: 0
+    size: {x: 0, y: 0}
+    colliderOffset: {x: 0, y: 0}
+    velocity: {x: 0, y: 0}
+    isTrigger: 1
+    path: []
+    loopMode: 0
+    startOffsetSeconds: 0
+    param0: 0
+    param1: 0
+    param2: 0
+  - kind: 1
+    position: {x: -15.5, y: 1.5}
+    variant: 0
+    size: {x: 0, y: 0}
+    colliderOffset: {x: 0, y: 0}
+    velocity: {x: 0, y: 0}
+    isTrigger: 1
+    path: []
+    loopMode: 0
+    startOffsetSeconds: 0
+    param0: 0
+    param1: 0
+    param2: 0
+  - kind: 3
+    position: {x: -11.5, y: 3}
+    variant: 0
+    size: {x: 0, y: 0}
+    colliderOffset: {x: 0, y: 0.45199585}
+    velocity: {x: 0, y: 0}
+    isTrigger: 0
+    path: []
+    loopMode: 0
+    startOffsetSeconds: 0
+    param0: 0
+    param1: 0
+    param2: 0
+  - kind: 2
+    position: {x: 3.5, y: -4}
+    variant: 0
+    size: {x: 0, y: 0}
+    colliderOffset: {x: 0, y: 0.40200806}
+    velocity: {x: 0, y: 0}
+    isTrigger: 0
+    path: []
+    loopMode: 0
+    startOffsetSeconds: 0
+    param0: 0
+    param1: 0
+    param2: 0
+  - kind: 6
+    position: {x: 16, y: -11}
+    variant: 0
+    size: {x: 0, y: 0}
+    colliderOffset: {x: -32, y: 1}
+    velocity: {x: 0, y: 0}
+    isTrigger: 0
+    path:
+    - position: {x: 0, y: 84}
+      travelDurationSeconds: 0
+      easeIn: 0
+      easeOut: 0
+    - position: {x: 0, y: 0}
+      travelDurationSeconds: 0
+      easeIn: 0
+      easeOut: 0
+    loopMode: 1
+    startOffsetSeconds: 0
+    param0: 0
+    param1: 0
+    param2: 0
+  - kind: 6
+    position: {x: 16, y: -4}
+    variant: 0
+    size: {x: 0, y: 0}
+    colliderOffset: {x: -32, y: 1}
+    velocity: {x: 0, y: 0}
+    isTrigger: 0
+    path:
+    - position: {x: 0, y: 84}
+      travelDurationSeconds: 0
+      easeIn: 0
+      easeOut: 0
+    - position: {x: 0, y: 0}
+      travelDurationSeconds: 0
+      easeIn: 0
+      easeOut: 0
+    loopMode: 1
+    startOffsetSeconds: 3.5
+    param0: 0
+    param1: 0
+    param2: 0
+  - kind: 6
+    position: {x: 16, y: 3}
+    variant: 0
+    size: {x: 0, y: 0}
+    colliderOffset: {x: -32, y: 1}
+    velocity: {x: 0, y: 0}
+    isTrigger: 0
+    path:
+    - position: {x: 0, y: 84}
+      travelDurationSeconds: 0
+      easeIn: 0
+      easeOut: 0
+    - position: {x: 0, y: 0}
+      travelDurationSeconds: 0
+      easeIn: 0
+      easeOut: 0
+    loopMode: 1
+    startOffsetSeconds: 7
+    param0: 0
+    param1: 0
+    param2: 0

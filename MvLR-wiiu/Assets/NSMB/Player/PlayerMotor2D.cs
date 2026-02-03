@@ -360,6 +360,26 @@ namespace NSMB.Player {
                 return;
             }
 
+            // Let enemies own their interaction logic where possible (Koopas have shell/kick states).
+            NSMB.Enemies.KoopaEnemy koopaDirect = collision.collider.GetComponent<NSMB.Enemies.KoopaEnemy>();
+            if (koopaDirect != null) {
+                if (_rb == null) {
+                    return;
+                }
+
+                // Running into an enemy while moving upward is damage.
+                if (_rb.velocity.y > 0.01f) {
+                    PlayerHealth phUpKoopa = GetComponent<PlayerHealth>();
+                    if (phUpKoopa != null) {
+                        phUpKoopa.TakeHit();
+                    }
+                    return;
+                }
+
+                koopaDirect.HandlePlayerCollision(this, collision);
+                return;
+            }
+
             NSMB.Enemies.GoombaEnemy goomba = collision.collider.GetComponent<NSMB.Enemies.GoombaEnemy>();
             if (goomba == null) {
                 return;
@@ -381,7 +401,9 @@ namespace NSMB.Player {
 
             float dy = transform.position.y - collision.collider.transform.position.y;
             if (dy > 0.25f) {
-                goomba.TryStomp(this);
+                if (goomba != null) {
+                    goomba.TryStomp(this);
+                }
             } else {
                 PlayerHealth ph = GetComponent<PlayerHealth>();
                 if (ph != null) {

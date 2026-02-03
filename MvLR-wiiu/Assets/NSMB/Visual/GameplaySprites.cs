@@ -7,6 +7,7 @@ namespace NSMB.Visual {
         private static bool _warnedPlatforms;
         private static bool _warnedAnimatedBlocks;
         private static bool _warnedDottedCoins;
+        private static bool _warnedKoopa;
 
         public static Sprite GetGoombaIdle() {
             Sprite s = NSMB.Content.ResourceSpriteCache.FindSprite(NSMB.Content.GameplayAtlasPaths.Goomba, "goomba_0");
@@ -27,6 +28,18 @@ namespace NSMB.Visual {
                 WarnOnce(ref _warnedGoomba, NSMB.Content.GameplayAtlasPaths.Goomba, "goomba_0/goomba_1");
             }
             return NSMB.Content.ResourceSpriteCache.FindSpritesByPrefix(NSMB.Content.GameplayAtlasPaths.Goomba, "goomba_");
+        }
+
+        public static Sprite[] GetKoopaWalkFrames() {
+            Sprite a = NSMB.Content.ResourceSpriteCache.FindSprite(NSMB.Content.GameplayAtlasPaths.Koopa, "koopa_0");
+            Sprite b = NSMB.Content.ResourceSpriteCache.FindSprite(NSMB.Content.GameplayAtlasPaths.Koopa, "koopa_1");
+            if (a != null && b != null) {
+                return new Sprite[] { a, b };
+            }
+            if (a == null || b == null) {
+                WarnOnce(ref _warnedKoopa, NSMB.Content.GameplayAtlasPaths.Koopa, "koopa_0/koopa_1");
+            }
+            return NSMB.Content.ResourceSpriteCache.FindSpritesByPrefix(NSMB.Content.GameplayAtlasPaths.Koopa, "koopa_");
         }
 
         public static Sprite[] GetCoinSpinFrames() {

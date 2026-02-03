@@ -1,0 +1,5815 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58b0f85b9380aa24eb199045b20faa1a, type: 3}
+  m_Name: stage-beach
+  m_EditorClassIdentifier: 
+  stageKey: stage-beach
+  spawnPoint: {x: -23, y: -0.5}
+  cameraMin: {x: -2000, y: -9}
+  cameraMax: {x: 2000, y: 18}
+  isWrappingLevel: 1
+  tileLayers:
+  - name: Tilemap_Dark_grass
+    resourcesAtlasPath: NSMB/Sprites/Atlases/Terrain/grass
+    sortingOrder: -1002
+    position: {x: -4, y: 0, z: 0}
+    scale: {x: 1, y: 1, z: 1}
+    tiles:
+    - x: 6
+      y: -8
+      spriteIndex: 43
+      spriteName: Grassland_48
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 2
+      y: -7
+      spriteIndex: 42
+      spriteName: Grassland_49
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -27
+      y: -6
+      spriteIndex: 17
+      spriteName: Grassland_176
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -26
+      y: -6
+      spriteIndex: 16
+      spriteName: Grassland_177
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -25
+      y: -6
+      spriteIndex: 17
+      spriteName: Grassland_176
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -24
+      y: -6
+      spriteIndex: 16
+      spriteName: Grassland_177
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -27
+      y: -5
+      spriteIndex: 15
+      spriteName: Grassland_178
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -26
+      y: -5
+      spriteIndex: 14
+      spriteName: Grassland_179
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -25
+      y: -5
+      spriteIndex: 15
+      spriteName: Grassland_178
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -24
+      y: -5
+      spriteIndex: 14
+      spriteName: Grassland_179
+      flipX: 0
+      flipY: 0
+      solid: 1
+  - name: Tilemap_Dark
+    resourcesAtlasPath: NSMB/Sprites/Atlases/Terrain/underground
+    sortingOrder: -1002
+    position: {x: -4, y: 0, z: 0}
+    scale: {x: 1, y: 1, z: 1}
+    tiles:
+    - x: 2
+      y: -12
+      spriteIndex: 58
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 3
+      y: -12
+      spriteIndex: 44
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 4
+      y: -12
+      spriteIndex: 41
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 5
+      y: -12
+      spriteIndex: 41
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 6
+      y: -12
+      spriteIndex: 53
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 14
+      y: -12
+      spriteIndex: 58
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 15
+      y: -12
+      spriteIndex: 44
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 16
+      y: -12
+      spriteIndex: 44
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 17
+      y: -12
+      spriteIndex: 39
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 18
+      y: -12
+      spriteIndex: 53
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 2
+      y: -11
+      spriteIndex: 45
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 3
+      y: -11
+      spriteIndex: 55
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 4
+      y: -11
+      spriteIndex: 40
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 5
+      y: -11
+      spriteIndex: 55
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 6
+      y: -11
+      spriteIndex: 46
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 14
+      y: -11
+      spriteIndex: 48
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 15
+      y: -11
+      spriteIndex: 56
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 16
+      y: -11
+      spriteIndex: 56
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 17
+      y: -11
+      spriteIndex: 56
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 18
+      y: -11
+      spriteIndex: 46
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 2
+      y: -10
+      spriteIndex: 48
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 3
+      y: -10
+      spriteIndex: 56
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 4
+      y: -10
+      spriteIndex: 59
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 5
+      y: -10
+      spriteIndex: 55
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 6
+      y: -10
+      spriteIndex: 52
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 14
+      y: -10
+      spriteIndex: 48
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 15
+      y: -10
+      spriteIndex: 40
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 16
+      y: -10
+      spriteIndex: 59
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 17
+      y: -10
+      spriteIndex: 40
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 18
+      y: -10
+      spriteIndex: 46
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 2
+      y: -9
+      spriteIndex: 48
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 3
+      y: -9
+      spriteIndex: 54
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 4
+      y: -9
+      spriteIndex: 56
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 5
+      y: -9
+      spriteIndex: 59
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 6
+      y: -9
+      spriteIndex: 50
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 14
+      y: -9
+      spriteIndex: 48
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 15
+      y: -9
+      spriteIndex: 56
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 16
+      y: -9
+      spriteIndex: 55
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 17
+      y: -9
+      spriteIndex: 55
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 18
+      y: -9
+      spriteIndex: 38
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 2
+      y: -8
+      spriteIndex: 45
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 3
+      y: -8
+      spriteIndex: 56
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 4
+      y: -8
+      spriteIndex: 55
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 5
+      y: -8
+      spriteIndex: 59
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 7
+      y: -8
+      spriteIndex: 53
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 14
+      y: -8
+      spriteIndex: 48
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 15
+      y: -8
+      spriteIndex: 56
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 16
+      y: -8
+      spriteIndex: 56
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 17
+      y: -8
+      spriteIndex: 56
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 18
+      y: -8
+      spriteIndex: 38
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 1
+      y: -7
+      spriteIndex: 58
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 3
+      y: -7
+      spriteIndex: 59
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 4
+      y: -7
+      spriteIndex: 56
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 5
+      y: -7
+      spriteIndex: 55
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 6
+      y: -7
+      spriteIndex: 59
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 7
+      y: -7
+      spriteIndex: 46
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 14
+      y: -7
+      spriteIndex: 48
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 15
+      y: -7
+      spriteIndex: 55
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 16
+      y: -7
+      spriteIndex: 56
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 17
+      y: -7
+      spriteIndex: 59
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 18
+      y: -7
+      spriteIndex: 46
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 1
+      y: -6
+      spriteIndex: 49
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 2
+      y: -6
+      spriteIndex: 59
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 3
+      y: -6
+      spriteIndex: 54
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 4
+      y: -6
+      spriteIndex: 55
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 5
+      y: -6
+      spriteIndex: 56
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 6
+      y: -6
+      spriteIndex: 54
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 7
+      y: -6
+      spriteIndex: 50
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 14
+      y: -6
+      spriteIndex: 45
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 15
+      y: -6
+      spriteIndex: 59
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 16
+      y: -6
+      spriteIndex: 54
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 17
+      y: -6
+      spriteIndex: 55
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 18
+      y: -6
+      spriteIndex: 38
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 1
+      y: -5
+      spriteIndex: 51
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 2
+      y: -5
+      spriteIndex: 47
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 3
+      y: -5
+      spriteIndex: 47
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 4
+      y: -5
+      spriteIndex: 47
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 5
+      y: -5
+      spriteIndex: 47
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 6
+      y: -5
+      spriteIndex: 47
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 7
+      y: -5
+      spriteIndex: 57
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 14
+      y: -5
+      spriteIndex: 51
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 15
+      y: -5
+      spriteIndex: 47
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 16
+      y: -5
+      spriteIndex: 47
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 17
+      y: -5
+      spriteIndex: 47
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 18
+      y: -5
+      spriteIndex: 57
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -22
+      y: -4
+      spriteIndex: 37
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -21
+      y: -4
+      spriteIndex: 36
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -20
+      y: -4
+      spriteIndex: 35
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -19
+      y: -4
+      spriteIndex: 34
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -18
+      y: -4
+      spriteIndex: 33
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -17
+      y: -4
+      spriteIndex: 32
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 15
+      y: -4
+      spriteIndex: 61
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 16
+      y: -4
+      spriteIndex: 60
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -22
+      y: -3
+      spriteIndex: 31
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -21
+      y: -3
+      spriteIndex: 30
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -20
+      y: -3
+      spriteIndex: 29
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -19
+      y: -3
+      spriteIndex: 28
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -18
+      y: -3
+      spriteIndex: 27
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -17
+      y: -3
+      spriteIndex: 26
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -21
+      y: -2
+      spriteIndex: 25
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -20
+      y: -2
+      spriteIndex: 24
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -19
+      y: -2
+      spriteIndex: 23
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -18
+      y: -2
+      spriteIndex: 22
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+  - name: Tilemap_Background
+    resourcesAtlasPath: NSMB/Sprites/Atlases/Terrain/beach-blue
+    sortingOrder: -1001
+    position: {x: -4, y: 0, z: 0}
+    scale: {x: 1, y: 1, z: 1}
+    tiles:
+    - x: -10
+      y: -12
+      spriteIndex: 10
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -3
+      y: -12
+      spriteIndex: 9
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -3
+      y: -11
+      spriteIndex: 10
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -8
+      y: -10
+      spriteIndex: 10
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -3
+      y: -10
+      spriteIndex: 10
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -3
+      y: -9
+      spriteIndex: 9
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 28
+      y: -9
+      spriteIndex: 9
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -8
+      y: -7
+      spriteIndex: 10
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -27
+      y: -6
+      spriteIndex: 55
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -26
+      y: -6
+      spriteIndex: 54
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -8
+      y: -6
+      spriteIndex: 9
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -27
+      y: -5
+      spriteIndex: 28
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -26
+      y: -5
+      spriteIndex: 29
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 14
+      y: -5
+      spriteIndex: 59
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: 18
+      y: -5
+      spriteIndex: 56
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -27
+      y: -4
+      spriteIndex: 30
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -26
+      y: -4
+      spriteIndex: 31
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -17
+      y: -4
+      spriteIndex: 6
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -14
+      y: -4
+      spriteIndex: 8
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -13
+      y: -4
+      spriteIndex: 7
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: 14
+      y: -4
+      spriteIndex: 23
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 15
+      y: -4
+      spriteIndex: 22
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 15
+      y: -4
+      spriteIndex: 61
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 16
+      y: -4
+      spriteIndex: 60
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 17
+      y: -4
+      spriteIndex: 28
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: 18
+      y: -4
+      spriteIndex: 29
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 28
+      y: -4
+      spriteIndex: 10
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -28
+      y: -3
+      spriteIndex: 34
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -27
+      y: -3
+      spriteIndex: 35
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -26
+      y: -3
+      spriteIndex: 36
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -25
+      y: -3
+      spriteIndex: 37
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 6
+      y: -3
+      spriteIndex: 23
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 7
+      y: -3
+      spriteIndex: 22
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 14
+      y: -3
+      spriteIndex: 21
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 15
+      y: -3
+      spriteIndex: 20
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 17
+      y: -3
+      spriteIndex: 30
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 18
+      y: -3
+      spriteIndex: 31
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -28
+      y: -2
+      spriteIndex: 38
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -27
+      y: -2
+      spriteIndex: 39
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -26
+      y: -2
+      spriteIndex: 40
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -25
+      y: -2
+      spriteIndex: 41
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 1
+      y: -2
+      spriteIndex: 55
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 2
+      y: -2
+      spriteIndex: 54
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 3
+      y: -2
+      spriteIndex: 19
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: 4
+      y: -2
+      spriteIndex: 18
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 6
+      y: -2
+      spriteIndex: 23
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 7
+      y: -2
+      spriteIndex: 22
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 14
+      y: -2
+      spriteIndex: 27
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: 15
+      y: -2
+      spriteIndex: 26
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 17
+      y: -2
+      spriteIndex: 32
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 18
+      y: -2
+      spriteIndex: 33
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -28
+      y: -1
+      spriteIndex: 42
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 1
+      y: -1
+      spriteIndex: 28
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: 2
+      y: -1
+      spriteIndex: 29
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 3
+      y: -1
+      spriteIndex: 17
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: 6
+      y: -1
+      spriteIndex: 21
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 7
+      y: -1
+      spriteIndex: 20
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 14
+      y: -1
+      spriteIndex: 27
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: 15
+      y: -1
+      spriteIndex: 26
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 16
+      y: -1
+      spriteIndex: 34
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 17
+      y: -1
+      spriteIndex: 35
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 18
+      y: -1
+      spriteIndex: 36
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 19
+      y: -1
+      spriteIndex: 37
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 28
+      y: -1
+      spriteIndex: 10
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 31
+      y: -1
+      spriteIndex: 10
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -8
+      y: 0
+      spriteIndex: 10
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 1
+      y: 0
+      spriteIndex: 30
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 2
+      y: 0
+      spriteIndex: 31
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 6
+      y: 0
+      spriteIndex: 27
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: 7
+      y: 0
+      spriteIndex: 26
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 14
+      y: 0
+      spriteIndex: 25
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 15
+      y: 0
+      spriteIndex: 24
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 16
+      y: 0
+      spriteIndex: 38
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 17
+      y: 0
+      spriteIndex: 39
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 18
+      y: 0
+      spriteIndex: 40
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 19
+      y: 0
+      spriteIndex: 41
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 34
+      y: 0
+      spriteIndex: 10
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -5
+      y: 1
+      spriteIndex: 10
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 1
+      y: 1
+      spriteIndex: 32
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 2
+      y: 1
+      spriteIndex: 33
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 6
+      y: 1
+      spriteIndex: 25
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 7
+      y: 1
+      spriteIndex: 24
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 14
+      y: 1
+      spriteIndex: 32
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 15
+      y: 1
+      spriteIndex: 33
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 16
+      y: 1
+      spriteIndex: 42
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 31
+      y: 1
+      spriteIndex: 10
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 1
+      y: 2
+      spriteIndex: 32
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 2
+      y: 2
+      spriteIndex: 33
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 6
+      y: 2
+      spriteIndex: 27
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: 7
+      y: 2
+      spriteIndex: 26
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 14
+      y: 2
+      spriteIndex: 32
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 15
+      y: 2
+      spriteIndex: 33
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 34
+      y: 2
+      spriteIndex: 9
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 0
+      y: 3
+      spriteIndex: 34
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 1
+      y: 3
+      spriteIndex: 35
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 2
+      y: 3
+      spriteIndex: 36
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 3
+      y: 3
+      spriteIndex: 37
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 6
+      y: 3
+      spriteIndex: 25
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 7
+      y: 3
+      spriteIndex: 24
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 13
+      y: 3
+      spriteIndex: 34
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 14
+      y: 3
+      spriteIndex: 35
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 15
+      y: 3
+      spriteIndex: 36
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 16
+      y: 3
+      spriteIndex: 37
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 0
+      y: 4
+      spriteIndex: 38
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 1
+      y: 4
+      spriteIndex: 39
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 2
+      y: 4
+      spriteIndex: 40
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 3
+      y: 4
+      spriteIndex: 41
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 6
+      y: 4
+      spriteIndex: 32
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 7
+      y: 4
+      spriteIndex: 33
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 13
+      y: 4
+      spriteIndex: 38
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 14
+      y: 4
+      spriteIndex: 39
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 15
+      y: 4
+      spriteIndex: 40
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 16
+      y: 4
+      spriteIndex: 41
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 34
+      y: 4
+      spriteIndex: 10
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 0
+      y: 5
+      spriteIndex: 42
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 6
+      y: 5
+      spriteIndex: 32
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 7
+      y: 5
+      spriteIndex: 33
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 13
+      y: 5
+      spriteIndex: 42
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -12
+      y: 6
+      spriteIndex: 55
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -11
+      y: 6
+      spriteIndex: 54
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 5
+      y: 6
+      spriteIndex: 34
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 6
+      y: 6
+      spriteIndex: 35
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 7
+      y: 6
+      spriteIndex: 36
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 8
+      y: 6
+      spriteIndex: 37
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -12
+      y: 7
+      spriteIndex: 28
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -11
+      y: 7
+      spriteIndex: 29
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 5
+      y: 7
+      spriteIndex: 38
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 6
+      y: 7
+      spriteIndex: 39
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 7
+      y: 7
+      spriteIndex: 40
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 8
+      y: 7
+      spriteIndex: 41
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -28
+      y: 8
+      spriteIndex: 23
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -27
+      y: 8
+      spriteIndex: 22
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -18
+      y: 8
+      spriteIndex: 53
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -17
+      y: 8
+      spriteIndex: 52
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -12
+      y: 8
+      spriteIndex: 30
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -11
+      y: 8
+      spriteIndex: 31
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 5
+      y: 8
+      spriteIndex: 42
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -28
+      y: 9
+      spriteIndex: 21
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -27
+      y: 9
+      spriteIndex: 20
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -18
+      y: 9
+      spriteIndex: 51
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -12
+      y: 9
+      spriteIndex: 32
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -11
+      y: 9
+      spriteIndex: 33
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -28
+      y: 10
+      spriteIndex: 27
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -27
+      y: 10
+      spriteIndex: 26
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -24
+      y: 10
+      spriteIndex: 55
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -23
+      y: 10
+      spriteIndex: 54
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -23
+      y: 10
+      spriteIndex: 19
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -22
+      y: 10
+      spriteIndex: 18
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -13
+      y: 10
+      spriteIndex: 34
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -12
+      y: 10
+      spriteIndex: 35
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -11
+      y: 10
+      spriteIndex: 36
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -10
+      y: 10
+      spriteIndex: 37
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -28
+      y: 11
+      spriteIndex: 25
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -27
+      y: 11
+      spriteIndex: 24
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -24
+      y: 11
+      spriteIndex: 28
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -23
+      y: 11
+      spriteIndex: 29
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -23
+      y: 11
+      spriteIndex: 17
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -13
+      y: 11
+      spriteIndex: 38
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -12
+      y: 11
+      spriteIndex: 39
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -11
+      y: 11
+      spriteIndex: 40
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -10
+      y: 11
+      spriteIndex: 41
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -28
+      y: 12
+      spriteIndex: 32
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -27
+      y: 12
+      spriteIndex: 33
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -24
+      y: 12
+      spriteIndex: 30
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -23
+      y: 12
+      spriteIndex: 31
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -13
+      y: 12
+      spriteIndex: 42
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -28
+      y: 13
+      spriteIndex: 35
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -27
+      y: 13
+      spriteIndex: 36
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -26
+      y: 13
+      spriteIndex: 37
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -24
+      y: 13
+      spriteIndex: 32
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -23
+      y: 13
+      spriteIndex: 33
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 35
+      y: 13
+      spriteIndex: 34
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -28
+      y: 14
+      spriteIndex: 39
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -27
+      y: 14
+      spriteIndex: 40
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -26
+      y: 14
+      spriteIndex: 41
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -25
+      y: 14
+      spriteIndex: 34
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -24
+      y: 14
+      spriteIndex: 35
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -23
+      y: 14
+      spriteIndex: 36
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -22
+      y: 14
+      spriteIndex: 37
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 35
+      y: 14
+      spriteIndex: 38
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -25
+      y: 15
+      spriteIndex: 38
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -24
+      y: 15
+      spriteIndex: 39
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -23
+      y: 15
+      spriteIndex: 40
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -22
+      y: 15
+      spriteIndex: 41
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 35
+      y: 15
+      spriteIndex: 42
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -25
+      y: 16
+      spriteIndex: 42
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+  - name: Tilemap_Background_grass
+    resourcesAtlasPath: NSMB/Sprites/Atlases/Terrain/grass
+    sortingOrder: -1001
+    position: {x: -4, y: 0, z: 0}
+    scale: {x: 1, y: 1, z: 1}
+    tiles:
+    - x: -8
+      y: -12
+      spriteIndex: 12
+      spriteName: Grassland_55
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -5
+      y: -12
+      spriteIndex: 12
+      spriteName: Grassland_55
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 20
+      y: -12
+      spriteIndex: 12
+      spriteName: Grassland_55
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 23
+      y: -12
+      spriteIndex: 12
+      spriteName: Grassland_55
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -10
+      y: -11
+      spriteIndex: 11
+      spriteName: Grassland_56
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -8
+      y: -11
+      spriteIndex: 11
+      spriteName: Grassland_56
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -5
+      y: -11
+      spriteIndex: 12
+      spriteName: Grassland_55
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 20
+      y: -11
+      spriteIndex: 12
+      spriteName: Grassland_55
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 23
+      y: -11
+      spriteIndex: 11
+      spriteName: Grassland_56
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -10
+      y: -10
+      spriteIndex: 11
+      spriteName: Grassland_56
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -5
+      y: -10
+      spriteIndex: 11
+      spriteName: Grassland_56
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 20
+      y: -10
+      spriteIndex: 11
+      spriteName: Grassland_56
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 23
+      y: -10
+      spriteIndex: 11
+      spriteName: Grassland_56
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 28
+      y: -10
+      spriteIndex: 12
+      spriteName: Grassland_55
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -10
+      y: -9
+      spriteIndex: 12
+      spriteName: Grassland_55
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -8
+      y: -9
+      spriteIndex: 11
+      spriteName: Grassland_56
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -5
+      y: -9
+      spriteIndex: 12
+      spriteName: Grassland_55
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 20
+      y: -9
+      spriteIndex: 12
+      spriteName: Grassland_55
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 23
+      y: -9
+      spriteIndex: 12
+      spriteName: Grassland_55
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 31
+      y: -9
+      spriteIndex: 11
+      spriteName: Grassland_56
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -10
+      y: -8
+      spriteIndex: 12
+      spriteName: Grassland_55
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -8
+      y: -8
+      spriteIndex: 12
+      spriteName: Grassland_55
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -5
+      y: -8
+      spriteIndex: 12
+      spriteName: Grassland_55
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -3
+      y: -8
+      spriteIndex: 12
+      spriteName: Grassland_55
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 20
+      y: -8
+      spriteIndex: 12
+      spriteName: Grassland_55
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 23
+      y: -8
+      spriteIndex: 12
+      spriteName: Grassland_55
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 28
+      y: -8
+      spriteIndex: 11
+      spriteName: Grassland_56
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 31
+      y: -8
+      spriteIndex: 12
+      spriteName: Grassland_55
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -10
+      y: -7
+      spriteIndex: 13
+      spriteName: Grassland_120
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -5
+      y: -7
+      spriteIndex: 11
+      spriteName: Grassland_56
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -3
+      y: -7
+      spriteIndex: 12
+      spriteName: Grassland_55
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 20
+      y: -7
+      spriteIndex: 13
+      spriteName: Grassland_120
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 23
+      y: -7
+      spriteIndex: 13
+      spriteName: Grassland_120
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 28
+      y: -7
+      spriteIndex: 12
+      spriteName: Grassland_55
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 31
+      y: -7
+      spriteIndex: 12
+      spriteName: Grassland_55
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 34
+      y: -7
+      spriteIndex: 12
+      spriteName: Grassland_55
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -5
+      y: -6
+      spriteIndex: 12
+      spriteName: Grassland_55
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -3
+      y: -6
+      spriteIndex: 13
+      spriteName: Grassland_120
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 28
+      y: -6
+      spriteIndex: 12
+      spriteName: Grassland_55
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 31
+      y: -6
+      spriteIndex: 11
+      spriteName: Grassland_56
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 34
+      y: -6
+      spriteIndex: 12
+      spriteName: Grassland_55
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -14
+      y: -5
+      spriteIndex: 15
+      spriteName: Grassland_134
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -13
+      y: -5
+      spriteIndex: 14
+      spriteName: Grassland_119
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -8
+      y: -5
+      spriteIndex: 12
+      spriteName: Grassland_55
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -5
+      y: -5
+      spriteIndex: 12
+      spriteName: Grassland_55
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 15
+      y: -5
+      spriteIndex: 58
+      spriteName: Grassland_48
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: 17
+      y: -5
+      spriteIndex: 57
+      spriteName: Grassland_49
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: 28
+      y: -5
+      spriteIndex: 11
+      spriteName: Grassland_56
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 31
+      y: -5
+      spriteIndex: 12
+      spriteName: Grassland_55
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 34
+      y: -5
+      spriteIndex: 12
+      spriteName: Grassland_55
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -23
+      y: -4
+      spriteIndex: 49
+      spriteName: Grassland_52
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -22
+      y: -4
+      spriteIndex: 48
+      spriteName: Grassland_35
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -16
+      y: -4
+      spriteIndex: 5
+      spriteName: Grassland_39
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -8
+      y: -4
+      spriteIndex: 12
+      spriteName: Grassland_55
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -5
+      y: -4
+      spriteIndex: 11
+      spriteName: Grassland_56
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 31
+      y: -4
+      spriteIndex: 11
+      spriteName: Grassland_56
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 34
+      y: -4
+      spriteIndex: 11
+      spriteName: Grassland_56
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -23
+      y: -3
+      spriteIndex: 47
+      spriteName: Grassland_36
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -22
+      y: -3
+      spriteIndex: 46
+      spriteName: Grassland_57
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -17
+      y: -3
+      spriteIndex: 4
+      spriteName: Grassland_40
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -16
+      y: -3
+      spriteIndex: 3
+      spriteName: Grassland_53
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -8
+      y: -3
+      spriteIndex: 12
+      spriteName: Grassland_55
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -5
+      y: -3
+      spriteIndex: 12
+      spriteName: Grassland_55
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 28
+      y: -3
+      spriteIndex: 12
+      spriteName: Grassland_55
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 31
+      y: -3
+      spriteIndex: 12
+      spriteName: Grassland_55
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 34
+      y: -3
+      spriteIndex: 11
+      spriteName: Grassland_56
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -8
+      y: -2
+      spriteIndex: 11
+      spriteName: Grassland_56
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -5
+      y: -2
+      spriteIndex: 12
+      spriteName: Grassland_55
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 28
+      y: -2
+      spriteIndex: 12
+      spriteName: Grassland_55
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 31
+      y: -2
+      spriteIndex: 12
+      spriteName: Grassland_55
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 34
+      y: -2
+      spriteIndex: 12
+      spriteName: Grassland_55
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -27
+      y: -1
+      spriteIndex: 43
+      spriteName: Grassland_42
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -26
+      y: -1
+      spriteIndex: 44
+      spriteName: Grassland_41
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -25
+      y: -1
+      spriteIndex: 45
+      spriteName: Grassland_58
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -8
+      y: -1
+      spriteIndex: 12
+      spriteName: Grassland_55
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -5
+      y: -1
+      spriteIndex: 12
+      spriteName: Grassland_55
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 4
+      y: -1
+      spriteIndex: 16
+      spriteName: Grassland_133
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: 34
+      y: -1
+      spriteIndex: 11
+      spriteName: Grassland_56
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -5
+      y: 0
+      spriteIndex: 11
+      spriteName: Grassland_56
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 28
+      y: 0
+      spriteIndex: 12
+      spriteName: Grassland_55
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 31
+      y: 0
+      spriteIndex: 12
+      spriteName: Grassland_55
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -8
+      y: 1
+      spriteIndex: 11
+      spriteName: Grassland_56
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 17
+      y: 1
+      spriteIndex: 43
+      spriteName: Grassland_42
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 18
+      y: 1
+      spriteIndex: 44
+      spriteName: Grassland_41
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 19
+      y: 1
+      spriteIndex: 45
+      spriteName: Grassland_58
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: 28
+      y: 1
+      spriteIndex: 12
+      spriteName: Grassland_55
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 34
+      y: 1
+      spriteIndex: 12
+      spriteName: Grassland_55
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -8
+      y: 2
+      spriteIndex: 11
+      spriteName: Grassland_56
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -5
+      y: 2
+      spriteIndex: 12
+      spriteName: Grassland_55
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 28
+      y: 2
+      spriteIndex: 12
+      spriteName: Grassland_55
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 31
+      y: 2
+      spriteIndex: 12
+      spriteName: Grassland_55
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -8
+      y: 3
+      spriteIndex: 13
+      spriteName: Grassland_120
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -5
+      y: 3
+      spriteIndex: 13
+      spriteName: Grassland_120
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 28
+      y: 3
+      spriteIndex: 13
+      spriteName: Grassland_120
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 31
+      y: 3
+      spriteIndex: 11
+      spriteName: Grassland_56
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 34
+      y: 3
+      spriteIndex: 11
+      spriteName: Grassland_56
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 31
+      y: 4
+      spriteIndex: 13
+      spriteName: Grassland_120
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 1
+      y: 5
+      spriteIndex: 43
+      spriteName: Grassland_42
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 2
+      y: 5
+      spriteIndex: 44
+      spriteName: Grassland_41
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 3
+      y: 5
+      spriteIndex: 45
+      spriteName: Grassland_58
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: 14
+      y: 5
+      spriteIndex: 43
+      spriteName: Grassland_42
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 15
+      y: 5
+      spriteIndex: 44
+      spriteName: Grassland_41
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 16
+      y: 5
+      spriteIndex: 45
+      spriteName: Grassland_58
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: 34
+      y: 5
+      spriteIndex: 13
+      spriteName: Grassland_120
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -16
+      y: 8
+      spriteIndex: 49
+      spriteName: Grassland_52
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -15
+      y: 8
+      spriteIndex: 48
+      spriteName: Grassland_35
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: 6
+      y: 8
+      spriteIndex: 43
+      spriteName: Grassland_42
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 7
+      y: 8
+      spriteIndex: 44
+      spriteName: Grassland_41
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 8
+      y: 8
+      spriteIndex: 45
+      spriteName: Grassland_58
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -17
+      y: 9
+      spriteIndex: 50
+      spriteName: Grassland_51
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -16
+      y: 9
+      spriteIndex: 47
+      spriteName: Grassland_36
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -15
+      y: 9
+      spriteIndex: 46
+      spriteName: Grassland_57
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -22
+      y: 11
+      spriteIndex: 16
+      spriteName: Grassland_133
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -12
+      y: 12
+      spriteIndex: 43
+      spriteName: Grassland_42
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -11
+      y: 12
+      spriteIndex: 44
+      spriteName: Grassland_41
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -10
+      y: 12
+      spriteIndex: 45
+      spriteName: Grassland_58
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -28
+      y: 15
+      spriteIndex: 43
+      spriteName: Grassland_42
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -27
+      y: 15
+      spriteIndex: 44
+      spriteName: Grassland_41
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -26
+      y: 15
+      spriteIndex: 45
+      spriteName: Grassland_58
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -24
+      y: 16
+      spriteIndex: 43
+      spriteName: Grassland_42
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -23
+      y: 16
+      spriteIndex: 44
+      spriteName: Grassland_41
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -22
+      y: 16
+      spriteIndex: 45
+      spriteName: Grassland_58
+      flipX: 0
+      flipY: 0
+      solid: 0
+  - name: Tilemap_Ground_animated-blocks
+    resourcesAtlasPath: NSMB/Sprites/Atlases/Terrain/animated-blocks
+    sortingOrder: -1000
+    position: {x: -4, y: 0, z: 0}
+    scale: {x: 1, y: 1, z: 1}
+    tiles:
+    - x: 5
+      y: -3
+      spriteIndex: 12
+      spriteName: animation_0
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -4
+      y: -1
+      spriteIndex: 12
+      spriteName: animation_0
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -3
+      y: -1
+      spriteIndex: 12
+      spriteName: animation_0
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: 25
+      y: 0
+      spriteIndex: 13
+      spriteName: animation_7
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: 26
+      y: 0
+      spriteIndex: 12
+      spriteName: animation_0
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: 32
+      y: 0
+      spriteIndex: 12
+      spriteName: animation_0
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: 33
+      y: 0
+      spriteIndex: 13
+      spriteName: animation_7
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: 1
+      y: 6
+      spriteIndex: 13
+      spriteName: animation_7
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: 2
+      y: 6
+      spriteIndex: 13
+      spriteName: animation_7
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: 20
+      y: 6
+      spriteIndex: 13
+      spriteName: animation_7
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: 21
+      y: 6
+      spriteIndex: 13
+      spriteName: animation_7
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -18
+      y: 11
+      spriteIndex: 13
+      spriteName: animation_7
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -17
+      y: 11
+      spriteIndex: 12
+      spriteName: animation_0
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -16
+      y: 11
+      spriteIndex: 12
+      spriteName: animation_0
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -15
+      y: 11
+      spriteIndex: 13
+      spriteName: animation_7
+      flipX: 0
+      flipY: 0
+      solid: 0
+  - name: Tilemap_Ground
+    resourcesAtlasPath: NSMB/Sprites/Atlases/Terrain/beach-yellow
+    sortingOrder: -1000
+    position: {x: -4, y: 0, z: 0}
+    scale: {x: 1, y: 1, z: 1}
+    tiles:
+    - x: -28
+      y: -12
+      spriteIndex: 23
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -27
+      y: -12
+      spriteIndex: 22
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -26
+      y: -12
+      spriteIndex: 23
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -25
+      y: -12
+      spriteIndex: 26
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -24
+      y: -12
+      spriteIndex: 27
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -23
+      y: -12
+      spriteIndex: 26
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -23
+      y: -12
+      spriteIndex: 0
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -22
+      y: -12
+      spriteIndex: 2
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -21
+      y: -12
+      spriteIndex: 2
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -20
+      y: -12
+      spriteIndex: 1
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -19
+      y: -12
+      spriteIndex: 2
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -18
+      y: -12
+      spriteIndex: 2
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -17
+      y: -12
+      spriteIndex: 2
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -16
+      y: -12
+      spriteIndex: 1
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -15
+      y: -12
+      spriteIndex: 2
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -14
+      y: -12
+      spriteIndex: 2
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -13
+      y: -12
+      spriteIndex: 3
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 24
+      y: -12
+      spriteIndex: 21
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 25
+      y: -12
+      spriteIndex: 20
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 26
+      y: -12
+      spriteIndex: 19
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 27
+      y: -12
+      spriteIndex: 24
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 28
+      y: -12
+      spriteIndex: 25
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 29
+      y: -12
+      spriteIndex: 24
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 30
+      y: -12
+      spriteIndex: 25
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 31
+      y: -12
+      spriteIndex: 26
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 32
+      y: -12
+      spriteIndex: 27
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 33
+      y: -12
+      spriteIndex: 26
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 34
+      y: -12
+      spriteIndex: 27
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 35
+      y: -12
+      spriteIndex: 22
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -28
+      y: -11
+      spriteIndex: 27
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -27
+      y: -11
+      spriteIndex: 22
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -26
+      y: -11
+      spriteIndex: 23
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -25
+      y: -11
+      spriteIndex: 22
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -24
+      y: -11
+      spriteIndex: 23
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -23
+      y: -11
+      spriteIndex: 22
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -23
+      y: -11
+      spriteIndex: 29
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -22
+      y: -11
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -21
+      y: -11
+      spriteIndex: 16
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -20
+      y: -11
+      spriteIndex: 38
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -19
+      y: -11
+      spriteIndex: 16
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -18
+      y: -11
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -17
+      y: -11
+      spriteIndex: 16
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -16
+      y: -11
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -15
+      y: -11
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -14
+      y: -11
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -13
+      y: -11
+      spriteIndex: 37
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 26
+      y: -11
+      spriteIndex: 21
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 27
+      y: -11
+      spriteIndex: 20
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 28
+      y: -11
+      spriteIndex: 19
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 29
+      y: -11
+      spriteIndex: 22
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 30
+      y: -11
+      spriteIndex: 23
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 31
+      y: -11
+      spriteIndex: 26
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 32
+      y: -11
+      spriteIndex: 27
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 33
+      y: -11
+      spriteIndex: 24
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 34
+      y: -11
+      spriteIndex: 25
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 35
+      y: -11
+      spriteIndex: 26
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -28
+      y: -10
+      spriteIndex: 27
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -27
+      y: -10
+      spriteIndex: 24
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -26
+      y: -10
+      spriteIndex: 25
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -25
+      y: -10
+      spriteIndex: 26
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -24
+      y: -10
+      spriteIndex: 27
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -23
+      y: -10
+      spriteIndex: 26
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -23
+      y: -10
+      spriteIndex: 31
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -22
+      y: -10
+      spriteIndex: 16
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -21
+      y: -10
+      spriteIndex: 16
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -20
+      y: -10
+      spriteIndex: 28
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -19
+      y: -10
+      spriteIndex: 16
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -18
+      y: -10
+      spriteIndex: 16
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -17
+      y: -10
+      spriteIndex: 16
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -16
+      y: -10
+      spriteIndex: 28
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -15
+      y: -10
+      spriteIndex: 28
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -14
+      y: -10
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -13
+      y: -10
+      spriteIndex: 32
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 28
+      y: -10
+      spriteIndex: 21
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 29
+      y: -10
+      spriteIndex: 20
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 30
+      y: -10
+      spriteIndex: 19
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 31
+      y: -10
+      spriteIndex: 24
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 32
+      y: -10
+      spriteIndex: 25
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 33
+      y: -10
+      spriteIndex: 26
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 34
+      y: -10
+      spriteIndex: 27
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 35
+      y: -10
+      spriteIndex: 26
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -28
+      y: -9
+      spriteIndex: 23
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -27
+      y: -9
+      spriteIndex: 22
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -26
+      y: -9
+      spriteIndex: 23
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -25
+      y: -9
+      spriteIndex: 24
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -24
+      y: -9
+      spriteIndex: 25
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -23
+      y: -9
+      spriteIndex: 24
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -23
+      y: -9
+      spriteIndex: 31
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -22
+      y: -9
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -21
+      y: -9
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -20
+      y: -9
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -19
+      y: -9
+      spriteIndex: 43
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -18
+      y: -9
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -17
+      y: -9
+      spriteIndex: 16
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -16
+      y: -9
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -15
+      y: -9
+      spriteIndex: 39
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -14
+      y: -9
+      spriteIndex: 28
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -13
+      y: -9
+      spriteIndex: 37
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 30
+      y: -9
+      spriteIndex: 21
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 31
+      y: -9
+      spriteIndex: 20
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 32
+      y: -9
+      spriteIndex: 19
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 33
+      y: -9
+      spriteIndex: 24
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 34
+      y: -9
+      spriteIndex: 25
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 35
+      y: -9
+      spriteIndex: 22
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -28
+      y: -8
+      spriteIndex: 25
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -27
+      y: -8
+      spriteIndex: 26
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -26
+      y: -8
+      spriteIndex: 27
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -25
+      y: -8
+      spriteIndex: 26
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -24
+      y: -8
+      spriteIndex: 27
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -23
+      y: -8
+      spriteIndex: 26
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -23
+      y: -8
+      spriteIndex: 29
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -22
+      y: -8
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -21
+      y: -8
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -20
+      y: -8
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -19
+      y: -8
+      spriteIndex: 16
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -18
+      y: -8
+      spriteIndex: 16
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -17
+      y: -8
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -16
+      y: -8
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -15
+      y: -8
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -14
+      y: -8
+      spriteIndex: 16
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -13
+      y: -8
+      spriteIndex: 37
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 32
+      y: -8
+      spriteIndex: 21
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 33
+      y: -8
+      spriteIndex: 20
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 34
+      y: -8
+      spriteIndex: 19
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 35
+      y: -8
+      spriteIndex: 24
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -28
+      y: -7
+      spriteIndex: 18
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -27
+      y: -7
+      spriteIndex: 5
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -26
+      y: -7
+      spriteIndex: 18
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -25
+      y: -7
+      spriteIndex: 5
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -24
+      y: -7
+      spriteIndex: 18
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -23
+      y: -7
+      spriteIndex: 5
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -23
+      y: -7
+      spriteIndex: 31
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -22
+      y: -7
+      spriteIndex: 28
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -21
+      y: -7
+      spriteIndex: 28
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -20
+      y: -7
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -19
+      y: -7
+      spriteIndex: 28
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -18
+      y: -7
+      spriteIndex: 16
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -17
+      y: -7
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -16
+      y: -7
+      spriteIndex: 28
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -15
+      y: -7
+      spriteIndex: 16
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -14
+      y: -7
+      spriteIndex: 28
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -13
+      y: -7
+      spriteIndex: 32
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -10
+      y: -7
+      spriteIndex: 15
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: 20
+      y: -7
+      spriteIndex: 15
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: 23
+      y: -7
+      spriteIndex: 15
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: 34
+      y: -7
+      spriteIndex: 21
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 35
+      y: -7
+      spriteIndex: 20
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -23
+      y: -6
+      spriteIndex: 31
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -22
+      y: -6
+      spriteIndex: 39
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -21
+      y: -6
+      spriteIndex: 39
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -20
+      y: -6
+      spriteIndex: 39
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -19
+      y: -6
+      spriteIndex: 28
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -18
+      y: -6
+      spriteIndex: 16
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -17
+      y: -6
+      spriteIndex: 39
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -16
+      y: -6
+      spriteIndex: 33
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -15
+      y: -6
+      spriteIndex: 9
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -14
+      y: -6
+      spriteIndex: 9
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -13
+      y: -6
+      spriteIndex: 11
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -12
+      y: -6
+      spriteIndex: 7
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -11
+      y: -6
+      spriteIndex: 14
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -10
+      y: -6
+      spriteIndex: 6
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -9
+      y: -6
+      spriteIndex: 8
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -3
+      y: -6
+      spriteIndex: 15
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: 4
+      y: -6
+      spriteIndex: 0
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 5
+      y: -6
+      spriteIndex: 2
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 6
+      y: -6
+      spriteIndex: 17
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 7
+      y: -6
+      spriteIndex: 1
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 8
+      y: -6
+      spriteIndex: 3
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 14
+      y: -6
+      spriteIndex: 0
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 15
+      y: -6
+      spriteIndex: 30
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 16
+      y: -6
+      spriteIndex: 17
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 17
+      y: -6
+      spriteIndex: 1
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 18
+      y: -6
+      spriteIndex: 3
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 19
+      y: -6
+      spriteIndex: 7
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 20
+      y: -6
+      spriteIndex: 6
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 21
+      y: -6
+      spriteIndex: 14
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 22
+      y: -6
+      spriteIndex: 14
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 23
+      y: -6
+      spriteIndex: 6
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 24
+      y: -6
+      spriteIndex: 8
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 34
+      y: -6
+      spriteIndex: 41
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -23
+      y: -5
+      spriteIndex: 10
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -22
+      y: -5
+      spriteIndex: 9
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -21
+      y: -5
+      spriteIndex: 9
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -20
+      y: -5
+      spriteIndex: 9
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -19
+      y: -5
+      spriteIndex: 9
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -18
+      y: -5
+      spriteIndex: 9
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -17
+      y: -5
+      spriteIndex: 9
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -16
+      y: -5
+      spriteIndex: 11
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -5
+      y: -5
+      spriteIndex: 7
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -4
+      y: -5
+      spriteIndex: 14
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -3
+      y: -5
+      spriteIndex: 6
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -2
+      y: -5
+      spriteIndex: 14
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -1
+      y: -5
+      spriteIndex: 8
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 0
+      y: -5
+      spriteIndex: 0
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 1
+      y: -5
+      spriteIndex: 2
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 2
+      y: -5
+      spriteIndex: 1
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 3
+      y: -5
+      spriteIndex: 1
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 4
+      y: -5
+      spriteIndex: 34
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 5
+      y: -5
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 6
+      y: -5
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 7
+      y: -5
+      spriteIndex: 28
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 8
+      y: -5
+      spriteIndex: 32
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 14
+      y: -5
+      spriteIndex: 10
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 15
+      y: -5
+      spriteIndex: 9
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 16
+      y: -5
+      spriteIndex: 9
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 17
+      y: -5
+      spriteIndex: 9
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 18
+      y: -5
+      spriteIndex: 11
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 28
+      y: -5
+      spriteIndex: 15
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: 31
+      y: -5
+      spriteIndex: 15
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: 34
+      y: -5
+      spriteIndex: 15
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: 0
+      y: -4
+      spriteIndex: 31
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 1
+      y: -4
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 2
+      y: -4
+      spriteIndex: 16
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 3
+      y: -4
+      spriteIndex: 16
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 4
+      y: -4
+      spriteIndex: 33
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 5
+      y: -4
+      spriteIndex: 9
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 6
+      y: -4
+      spriteIndex: 9
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 7
+      y: -4
+      spriteIndex: 9
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 8
+      y: -4
+      spriteIndex: 11
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 24
+      y: -4
+      spriteIndex: 7
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 25
+      y: -4
+      spriteIndex: 14
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 26
+      y: -4
+      spriteIndex: 14
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 27
+      y: -4
+      spriteIndex: 14
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 28
+      y: -4
+      spriteIndex: 6
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 29
+      y: -4
+      spriteIndex: 14
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 30
+      y: -4
+      spriteIndex: 14
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 31
+      y: -4
+      spriteIndex: 6
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 32
+      y: -4
+      spriteIndex: 14
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 33
+      y: -4
+      spriteIndex: 14
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 34
+      y: -4
+      spriteIndex: 6
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 35
+      y: -4
+      spriteIndex: 8
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 0
+      y: -3
+      spriteIndex: 10
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 1
+      y: -3
+      spriteIndex: 9
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 2
+      y: -3
+      spriteIndex: 9
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 3
+      y: -3
+      spriteIndex: 9
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 4
+      y: -3
+      spriteIndex: 11
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -28
+      y: 1
+      spriteIndex: 0
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -27
+      y: 1
+      spriteIndex: 2
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -26
+      y: 1
+      spriteIndex: 30
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -25
+      y: 1
+      spriteIndex: 3
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -14
+      y: 1
+      spriteIndex: 0
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -13
+      y: 1
+      spriteIndex: 2
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -12
+      y: 1
+      spriteIndex: 1
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -11
+      y: 1
+      spriteIndex: 1
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -10
+      y: 1
+      spriteIndex: 3
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -28
+      y: 2
+      spriteIndex: 31
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -27
+      y: 2
+      spriteIndex: 28
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -26
+      y: 2
+      spriteIndex: 39
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -25
+      y: 2
+      spriteIndex: 37
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -14
+      y: 2
+      spriteIndex: 31
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -13
+      y: 2
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -12
+      y: 2
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -11
+      y: 2
+      spriteIndex: 16
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -10
+      y: 2
+      spriteIndex: 37
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -28
+      y: 3
+      spriteIndex: 31
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -27
+      y: 3
+      spriteIndex: 39
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -26
+      y: 3
+      spriteIndex: 28
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -25
+      y: 3
+      spriteIndex: 36
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -24
+      y: 3
+      spriteIndex: 1
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -23
+      y: 3
+      spriteIndex: 2
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -22
+      y: 3
+      spriteIndex: 2
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -21
+      y: 3
+      spriteIndex: 3
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -14
+      y: 3
+      spriteIndex: 29
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -13
+      y: 3
+      spriteIndex: 16
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -12
+      y: 3
+      spriteIndex: 28
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -11
+      y: 3
+      spriteIndex: 16
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -10
+      y: 3
+      spriteIndex: 37
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -8
+      y: 3
+      spriteIndex: 15
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -5
+      y: 3
+      spriteIndex: 15
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: 28
+      y: 3
+      spriteIndex: 15
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -28
+      y: 4
+      spriteIndex: 40
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -27
+      y: 4
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -26
+      y: 4
+      spriteIndex: 28
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -25
+      y: 4
+      spriteIndex: 28
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -24
+      y: 4
+      spriteIndex: 16
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -23
+      y: 4
+      spriteIndex: 28
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -22
+      y: 4
+      spriteIndex: 16
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -21
+      y: 4
+      spriteIndex: 42
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -18
+      y: 4
+      spriteIndex: 0
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -17
+      y: 4
+      spriteIndex: 1
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -16
+      y: 4
+      spriteIndex: 2
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -15
+      y: 4
+      spriteIndex: 1
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -14
+      y: 4
+      spriteIndex: 34
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -13
+      y: 4
+      spriteIndex: 39
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -12
+      y: 4
+      spriteIndex: 39
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -11
+      y: 4
+      spriteIndex: 38
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -10
+      y: 4
+      spriteIndex: 32
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -9
+      y: 4
+      spriteIndex: 7
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -8
+      y: 4
+      spriteIndex: 6
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -7
+      y: 4
+      spriteIndex: 14
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -6
+      y: 4
+      spriteIndex: 14
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -5
+      y: 4
+      spriteIndex: 6
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -4
+      y: 4
+      spriteIndex: 8
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 27
+      y: 4
+      spriteIndex: 7
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 28
+      y: 4
+      spriteIndex: 6
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 29
+      y: 4
+      spriteIndex: 8
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 31
+      y: 4
+      spriteIndex: 15
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -28
+      y: 5
+      spriteIndex: 29
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -27
+      y: 5
+      spriteIndex: 39
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -26
+      y: 5
+      spriteIndex: 16
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -25
+      y: 5
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -24
+      y: 5
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -23
+      y: 5
+      spriteIndex: 38
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -22
+      y: 5
+      spriteIndex: 16
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -21
+      y: 5
+      spriteIndex: 32
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -18
+      y: 5
+      spriteIndex: 31
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -17
+      y: 5
+      spriteIndex: 16
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -16
+      y: 5
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -15
+      y: 5
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -14
+      y: 5
+      spriteIndex: 33
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -13
+      y: 5
+      spriteIndex: 9
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -12
+      y: 5
+      spriteIndex: 9
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -11
+      y: 5
+      spriteIndex: 9
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -10
+      y: 5
+      spriteIndex: 11
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 30
+      y: 5
+      spriteIndex: 7
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 31
+      y: 5
+      spriteIndex: 6
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 32
+      y: 5
+      spriteIndex: 8
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 34
+      y: 5
+      spriteIndex: 15
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 0
+    - x: -28
+      y: 6
+      spriteIndex: 31
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -27
+      y: 6
+      spriteIndex: 28
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -26
+      y: 6
+      spriteIndex: 16
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -25
+      y: 6
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -24
+      y: 6
+      spriteIndex: 16
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -23
+      y: 6
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -22
+      y: 6
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -21
+      y: 6
+      spriteIndex: 37
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -18
+      y: 6
+      spriteIndex: 31
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -17
+      y: 6
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -16
+      y: 6
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -15
+      y: 6
+      spriteIndex: 16
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -14
+      y: 6
+      spriteIndex: 37
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 33
+      y: 6
+      spriteIndex: 7
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 34
+      y: 6
+      spriteIndex: 6
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: 35
+      y: 6
+      spriteIndex: 8
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -28
+      y: 7
+      spriteIndex: 10
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -27
+      y: 7
+      spriteIndex: 9
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -26
+      y: 7
+      spriteIndex: 9
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -25
+      y: 7
+      spriteIndex: 35
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -24
+      y: 7
+      spriteIndex: 39
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -23
+      y: 7
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -22
+      y: 7
+      spriteIndex: 39
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -21
+      y: 7
+      spriteIndex: 37
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -18
+      y: 7
+      spriteIndex: 10
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -17
+      y: 7
+      spriteIndex: 9
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -16
+      y: 7
+      spriteIndex: 9
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -15
+      y: 7
+      spriteIndex: 9
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -14
+      y: 7
+      spriteIndex: 11
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -25
+      y: 8
+      spriteIndex: 29
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -24
+      y: 8
+      spriteIndex: 39
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -23
+      y: 8
+      spriteIndex: 28
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -22
+      y: 8
+      spriteIndex: 4
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -21
+      y: 8
+      spriteIndex: 32
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -25
+      y: 9
+      spriteIndex: 10
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -24
+      y: 9
+      spriteIndex: 9
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -23
+      y: 9
+      spriteIndex: 9
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -22
+      y: 9
+      spriteIndex: 9
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+    - x: -21
+      y: 9
+      spriteIndex: 11
+      spriteName: 
+      flipX: 0
+      flipY: 0
+      solid: 1
+  entities:
+  - kind: 1
+    position: {x: 4.5, y: 11.5}
+    variant: 0
+    size: {x: 0, y: 0}
+    colliderOffset: {x: 0, y: 0}
+    velocity: {x: 0, y: 0}
+    isTrigger: 1
+    path: []
+    loopMode: 0
+    startOffsetSeconds: 0
+    param0: 0
+    param1: 0
+    param2: 0
+  - kind: 1
+    position: {x: 10.5, y: 11.5}
+    variant: 0
+    size: {x: 0, y: 0}
+    colliderOffset: {x: 0, y: 0}
+    velocity: {x: 0, y: 0}
+    isTrigger: 1
+    path: []
+    loopMode: 0
+    startOffsetSeconds: 0
+    param0: 0
+    param1: 0
+    param2: 0
+  - kind: 1
+    position: {x: 12.5, y: 10.5}
+    variant: 0
+    size: {x: 0, y: 0}
+    colliderOffset: {x: 0, y: 0}
+    velocity: {x: 0, y: 0}
+    isTrigger: 1
+    path: []
+    loopMode: 0
+    startOffsetSeconds: 0
+    param0: 0
+    param1: 0
+    param2: 0
+  - kind: 1
+    position: {x: 14.5, y: 9.5}
+    variant: 0
+    size: {x: 0, y: 0}
+    colliderOffset: {x: 0, y: 0}
+    velocity: {x: 0, y: 0}
+    isTrigger: 1
+    path: []
+    loopMode: 0
+    startOffsetSeconds: 0
+    param0: 0
+    param1: 0
+    param2: 0
+  - kind: 1
+    position: {x: 2.5, y: 10.5}
+    variant: 0
+    size: {x: 0, y: 0}
+    colliderOffset: {x: 0, y: 0}
+    velocity: {x: 0, y: 0}
+    isTrigger: 1
+    path: []
+    loopMode: 0
+    startOffsetSeconds: 0
+    param0: 0
+    param1: 0
+    param2: 0
+  - kind: 1
+    position: {x: 0.5, y: 9.5}
+    variant: 0
+    size: {x: 0, y: 0}
+    colliderOffset: {x: 0, y: 0}
+    velocity: {x: 0, y: 0}
+    isTrigger: 1
+    path: []
+    loopMode: 0
+    startOffsetSeconds: 0
+    param0: 0
+    param1: 0
+    param2: 0
+  - kind: 1
+    position: {x: 3.5, y: -6.5}
+    variant: 0
+    size: {x: 0, y: 0}
+    colliderOffset: {x: 0, y: 0}
+    velocity: {x: 0, y: 0}
+    isTrigger: 1
+    path: []
+    loopMode: 0
+    startOffsetSeconds: 0
+    param0: 0
+    param1: 0
+    param2: 0
+  - kind: 1
+    position: {x: 1.5, y: -6.5}
+    variant: 0
+    size: {x: 0, y: 0}
+    colliderOffset: {x: 0, y: 0}
+    velocity: {x: 0, y: 0}
+    isTrigger: 1
+    path: []
+    loopMode: 0
+    startOffsetSeconds: 0
+    param0: 0
+    param1: 0
+    param2: 0
+  - kind: 1
+    position: {x: 11.5, y: -6.5}
+    variant: 0
+    size: {x: 0, y: 0}
+    colliderOffset: {x: 0, y: 0}
+    velocity: {x: 0, y: 0}
+    isTrigger: 1
+    path: []
+    loopMode: 0
+    startOffsetSeconds: 0
+    param0: 0
+    param1: 0
+    param2: 0
+  - kind: 1
+    position: {x: 13.5, y: -6.5}
+    variant: 0
+    size: {x: 0, y: 0}
+    colliderOffset: {x: 0, y: 0}
+    velocity: {x: 0, y: 0}
+    isTrigger: 1
+    path: []
+    loopMode: 0
+    startOffsetSeconds: 0
+    param0: 0
+    param1: 0
+    param2: 0
+  - kind: 1
+    position: {x: -10.5, y: -1.5}
+    variant: 0
+    size: {x: 0, y: 0}
+    colliderOffset: {x: 0, y: 0}
+    velocity: {x: 0, y: 0}
+    isTrigger: 1
+    path: []
+    loopMode: 0
+    startOffsetSeconds: 0
+    param0: 0
+    param1: 0
+    param2: 0
+  - kind: 1
+    position: {x: -11.5, y: -2.5}
+    variant: 0
+    size: {x: 0, y: 0}
+    colliderOffset: {x: 0, y: 0}
+    velocity: {x: 0, y: 0}
+    isTrigger: 1
+    path: []
+    loopMode: 0
+    startOffsetSeconds: 0
+    param0: 0
+    param1: 0
+    param2: 0
+  - kind: 3
+    position: {x: -12.5, y: 5}
+    variant: 0
+    size: {x: 0, y: 0}
+    colliderOffset: {x: 0, y: 0.45199585}
+    velocity: {x: 0, y: 0}
+    isTrigger: 0
+    path: []
+    loopMode: 0
+    startOffsetSeconds: 0
+    param0: 0
+    param1: 0
+    param2: 0
+  - kind: 3
+    position: {x: 28.5, y: -3}
+    variant: 0
+    size: {x: 0, y: 0}
+    colliderOffset: {x: 0, y: 0.45199585}
+    velocity: {x: 0, y: 0}
+    isTrigger: 0
+    path: []
+    loopMode: 0
+    startOffsetSeconds: 0
+    param0: 0
+    param1: 0
+    param2: 0
+  - kind: 3
+    position: {x: 31.5, y: -3}
+    variant: 0
+    size: {x: 0, y: 0}
+    colliderOffset: {x: 0, y: 0.45199585}
+    velocity: {x: 0, y: 0}
+    isTrigger: 0
+    path: []
+    loopMode: 0
+    startOffsetSeconds: 0
+    param0: 0
+    param1: 0
+    param2: 0
+  - kind: 6
+    position: {x: 7.5, y: -4.8685913}
+    variant: 0
+    size: {x: 1.5, y: 0.5999756}
+    colliderOffset: {x: 0, y: 0.2999878}
+    velocity: {x: 0, y: 0}
+    isTrigger: 0
+    path: []
+    loopMode: 0
+    startOffsetSeconds: 0
+    param0: 0
+    param1: 0
+    param2: 0

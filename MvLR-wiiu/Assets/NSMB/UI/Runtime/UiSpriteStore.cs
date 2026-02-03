@@ -10,7 +10,13 @@ namespace NSMB.UI {
         public Sprite LoadSingle(string resourcePath) {
             Sprite cached;
             if (_singleSprites.TryGetValue(resourcePath, out cached)) {
+                #if UNITY_EDITOR
+                if (cached != null) {
+                    return cached;
+                }
+                #else
                 return cached;
+                #endif
             }
 
             Sprite sprite = Resources.Load(resourcePath) as Sprite;
@@ -24,7 +30,14 @@ namespace NSMB.UI {
                     sprite = Sprite.Create(tex, rect, new Vector2(0.5f, 0.5f), 100f);
                 }
             }
+            #if UNITY_EDITOR
+            // Don't negatively cache missing sprites while iterating on imports.
+            if (sprite != null) {
+                _singleSprites[resourcePath] = sprite;
+            }
+            #else
             _singleSprites[resourcePath] = sprite;
+            #endif
             return sprite;
         }
 
@@ -33,7 +46,13 @@ namespace NSMB.UI {
 
             Sprite cached;
             if (_namedSprites.TryGetValue(key, out cached)) {
+                #if UNITY_EDITOR
+                if (cached != null) {
+                    return cached;
+                }
+                #else
                 return cached;
+                #endif
             }
 
             Sprite[] sprites = Resources.LoadAll<Sprite>(sheetResourcePath);
@@ -48,7 +67,13 @@ namespace NSMB.UI {
                 }
             }
 
+            #if UNITY_EDITOR
+            if (found != null) {
+                _namedSprites[key] = found;
+            }
+            #else
             _namedSprites[key] = found;
+            #endif
             return found;
         }
     }

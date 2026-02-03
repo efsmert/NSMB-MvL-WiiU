@@ -18,6 +18,8 @@ namespace NSMB.Gameplay {
         private NSMB.UI.HudController _hud;
         private NSMB.UI.PauseMenuController _pause;
         private GameObject _levelRoot;
+        private GameObject _menuBackdrop;
+        private GameObject _menuCameraTarget;
         private string _selectedStageKey = "stage-grassland";
 
         private void Awake() {
@@ -53,13 +55,18 @@ namespace NSMB.Gameplay {
             _state = GameFlowState.Menu;
             Time.timeScale = 1f;
 
+            EnsureMenuBackdrop();
+            EnsureMenuMusic();
+
             if (_menu != null) _menu.SetVisible(true);
             if (_hud != null) _hud.SetVisible(false);
             if (_pause != null) _pause.SetVisible(false);
         }
 
         public void StartGame() {
+            DestroyMenuBackdrop();
             EnsureGameplayWorld(_selectedStageKey);
+            StopMenuMusic();
             EnterInGame();
         }
 
@@ -101,6 +108,85 @@ namespace NSMB.Gameplay {
             EnterMenu();
         }
 
+        private void EnsureMenuBackdrop() {
+            if (_menuBackdrop != null) {
+                return;
+            }
+
+            // Use a stage as an animated backdrop for the main menu (matches original feel better than static UI sprites).
+            // Keep it lightweight: tiles only, no entities/colliders.
+            _menuBackdrop = new GameObject("MenuBackdrop");
+
+            string stageKey = "stage-fortress";
+            NSMB.World.StageDefinition def = Resources.Load<NSMB.World.StageDefinition>("NSMB/Levels/" + stageKey);
+            if (def == null) {
+                stageKey = "stage-grassland";
+                def = Resources.Load<NSMB.World.StageDefinition>("NSMB/Levels/" + stageKey);
+            }
+
+            if (def != null) {
+                NSMB.World.StageRuntimeBuilder.Build(def, _menuBackdrop.transform, false, false);
+
+                UnityEngine.Camera cam = UnityEngine.Camera.main;
+                if (cam != null) {
+                    NSMB.Camera.CameraFollow2D follow = cam.GetComponent<NSMB.Camera.CameraFollow2D>();
+                    if (follow != null) {
+                        if (_menuCameraTarget == null) {
+                            _menuCameraTarget = new GameObject("MenuCameraTarget");
+                        }
+
+                        Vector2 min = def.cameraMin;
+                        Vector2 max = def.cameraMax;
+                        Vector3 targetPos;
+                        if (min != max) {
+                            targetPos = new Vector3((min.x + max.x) * 0.5f, (min.y + max.y) * 0.5f, 0f);
+                            follow.SetBounds(min, max);
+                        } else {
+                            targetPos = new Vector3(def.spawnPoint.x, def.spawnPoint.y, 0f);
+                            follow.clampToBounds = false;
+                        }
+
+                        _menuCameraTarget.transform.position = targetPos;
+                        follow.target = _menuCameraTarget.transform;
+                        follow.offset = Vector2.zero;
+                        follow.smoothTime = 0.10f;
+                    }
+                }
+            }
+        }
+
+        private void DestroyMenuBackdrop() {
+            if (_menuBackdrop != null) {
+                Destroy(_menuBackdrop);
+                _menuBackdrop = null;
+            }
+
+            if (_menuCameraTarget != null) {
+                Destroy(_menuCameraTarget);
+                _menuCameraTarget = null;
+            }
+        }
+
+        private static void EnsureMenuMusic() {
+            NSMB.Core.GameRoot root = NSMB.Core.GameRoot.Instance;
+            if (root == null) return;
+
+            NSMB.Audio.AudioManager audio = root.GetComponent<NSMB.Audio.AudioManager>();
+            if (audio == null) return;
+
+            audio.PlayMusicResources("NSMB/AudioClips/Resources/Sound/music/mainmenu", 0.75f, true);
+        }
+
+        private static void StopMenuMusic() {
+            NSMB.Core.GameRoot root = NSMB.Core.GameRoot.Instance;
+            if (root == null) return;
+
+            NSMB.Audio.AudioManager audio = root.GetComponent<NSMB.Audio.AudioManager>();
+            if (audio == null) return;
+
+            audio.StopMusic();
+        }
+
         private void EnsureGameplayWorld(string stageKey) {
             if (_levelRoot != null) {
                 Destroy(_levelRoot);
@@ -110,10 +196,23 @@ namespace NSMB.Gameplay {
             _levelRoot = NSMB.World.LevelRegistry.Spawn(stageKey);
             EnsureBackground(_levelRoot);
 
-            NSMB.World.StageDefinition imported = Resources.Load(typeof(NSMB.World.StageDefinition), "NSMB/Levels/" + stageKey) as NSMB.World.StageDefinition;
+            NSMB.World.StageDefinition imported = Resources.Load<NSMB.World.StageDefinition>("NSMB/Levels/" + stageKey);
             Vector3 spawn = Vector3.zero;
             if (imported != null) {
                 spawn = new Vector3(imported.spawnPoint.x, imported.spawnPoint.y, 0f);
+            }
+
+            // Camera bounds from stage definition (if any).
+            UnityEngine.Camera cam = UnityEngine.Camera.main;
+            if (cam != null) {
+                NSMB.Camera.CameraFollow2D follow = cam.GetComponent<NSMB.Camera.CameraFollow2D>();
+                if (follow != null) {
+                    if (imported != null && imported.cameraMin != imported.cameraMax) {
+                        follow.SetBounds(imported.cameraMin, imported.cameraMax);
+                    } else {
+                        follow.clampToBounds = false;
+                    }
+                }
             }
 
             NSMB.Player.PlayerMotor2D existing = Object.FindObjectOfType(typeof(NSMB.Player.PlayerMotor2D)) as NSMB.Player.PlayerMotor2D;

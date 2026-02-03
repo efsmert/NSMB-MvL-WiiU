@@ -97,5 +97,6 @@ These are Unity Editor menu items (top menu bar), not terminal commands:
    - `NSMB/Resync Sprite Import Settings (From Original)`
 3. Import a playable stage definition (first milestone):
    - `NSMB/Import/Import Default Grass Stage (Tilemap + Entities)`
+   - or `NSMB/Import/Import All Stages (Tilemap + Entities)`
 4. Press Play and start the game from the menu:
    - The runtime loads `Resources/NSMB/Levels/<stageKey>.asset` when present (e.g. `stage-grassland`), otherwise it falls back to test bootstraps.

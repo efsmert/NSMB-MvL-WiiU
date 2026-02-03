@@ -915,3 +915,7 @@ using Unity.Entities;
 
 **All sounds MUST be in PCM compression format**
 1. When setting properties of the sounds, PCM MUST be selected as the compression format, please keep this in mind when porting.
+
+**What folders are what**
+1. 'NSMB-MarioVsLuigi/' is the original Unity 6.0.0 project that we are trying to downgrade to Unity 2017.1.2p3. ALWAYS INSPECT CODE / SCRIPTS HERE BEFORE DOWNGRADING SO WE CAN ACHIEVE AS MUCH PARITY AS POSSIBLE. TRY TO KEEP AS MUCH CODE AS CLOSE AS POSSIBLE TO ORIGINAL WHILE KEEPING COMPATIBILITY WITH THE OLDER C# 4.0 LANGUAGE (Unity 2017.1.2p3 only supports C# 4.0)
+2. 'MvLR-wiiu/' is the directory containing the Unity 2017.1.2p3 project that we are building now.

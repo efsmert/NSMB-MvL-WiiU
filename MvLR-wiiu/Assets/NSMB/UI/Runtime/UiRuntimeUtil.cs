@@ -55,13 +55,18 @@ namespace NSMB.UI {
             colors.disabledColor = new Color(1f, 1f, 1f, 0.4f);
             b.colors = colors;
 
-            Text t = CreateText(go.transform, "Label", font, fontSize, TextAnchor.MiddleCenter, Color.black);
+            Text t = CreateText(go.transform, "Label", font, fontSize, TextAnchor.MiddleCenter, Color.white);
             RectTransform tr = t.rectTransform;
             tr.anchorMin = Vector2.zero;
             tr.anchorMax = Vector2.one;
             tr.offsetMin = Vector2.zero;
             tr.offsetMax = Vector2.zero;
             t.text = label;
+
+            // Ensure readability on both light/dark button sprites (Unity 2017-friendly).
+            Shadow shadow = t.gameObject.AddComponent<Shadow>();
+            shadow.effectColor = new Color(0f, 0f, 0f, 0.85f);
+            shadow.effectDistance = new Vector2(1.5f, -1.5f);
 
             return b;
         }

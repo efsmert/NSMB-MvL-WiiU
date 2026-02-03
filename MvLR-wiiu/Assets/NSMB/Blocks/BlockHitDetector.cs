@@ -12,10 +12,28 @@ namespace NSMB.Blocks {
                 return;
             }
 
-            // Player hits the block from below: normal points down (from block perspective, contact normal points from block to player).
-            // We want "player is below block" => normal.y < -0.5.
-            ContactPoint2D cp = collision.contacts[0];
-            if (cp.normal.y < -0.5f) {
+            // Player hits the block from below: require that the player is below the block and moving upwards.
+            Rigidbody2D prb = motor.GetComponent<Rigidbody2D>();
+            float vy = prb != null ? prb.velocity.y : 0f;
+            if (vy <= 0.01f) {
+                return;
+            }
+
+            if (motor.transform.position.y > transform.position.y) {
+                return;
+            }
+
+            bool hitFromBelow = false;
+            ContactPoint2D[] contacts = collision.contacts;
+            for (int i = 0; i < contacts.Length; i++) {
+                // From the block's perspective, a hit from below produces a downward normal.
+                if (contacts[i].normal.y < -0.35f) {
+                    hitFromBelow = true;
+                    break;
+                }
+            }
+
+            if (hitFromBelow) {
                 BlockBump bump = GetComponent<BlockBump>();
                 if (bump != null) {
                     bump.TriggerBump();
@@ -24,4 +42,3 @@ namespace NSMB.Blocks {
         }
     }
 }
-

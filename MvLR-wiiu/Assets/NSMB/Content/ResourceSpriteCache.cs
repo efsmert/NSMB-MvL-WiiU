@@ -14,7 +14,15 @@ namespace NSMB.Content {
 
             Sprite[] cached;
             if (SpriteCache.TryGetValue(resourcesPath, out cached) && cached != null) {
+                // Don't "negatively cache" missing sprites in the editor: we frequently import/reslice assets
+                // while the editor is running, and we want Resources.LoadAll to see new results.
+                #if UNITY_EDITOR
+                if (cached.Length > 0) {
+                    return cached;
+                }
+                #else
                 return cached;
+                #endif
             }
 
             Sprite[] sprites = Resources.LoadAll<Sprite>(resourcesPath);
@@ -26,14 +34,17 @@ namespace NSMB.Content {
             // Fallback: texture isn't imported as multiple sprites yet. Create a single sprite at runtime.
             Texture2D tex = LoadTexture(resourcesPath);
             if (tex == null) {
+                #if !UNITY_EDITOR
                 SpriteCache[resourcesPath] = new Sprite[0];
+                #endif
                 return new Sprite[0];
             }
 
             Rect rect = new Rect(0f, 0f, tex.width, tex.height);
             Sprite single = Sprite.Create(tex, rect, new Vector2(0.5f, 0.5f), 100f);
-            SpriteCache[resourcesPath] = new Sprite[] { single };
-            return SpriteCache[resourcesPath];
+            Sprite[] singleArr = new Sprite[] { single };
+            SpriteCache[resourcesPath] = singleArr;
+            return singleArr;
         }
 
         public static Sprite FindSprite(string resourcesPath, string spriteName) {
@@ -116,4 +127,3 @@ namespace NSMB.Content {
         }
     }
 }
-

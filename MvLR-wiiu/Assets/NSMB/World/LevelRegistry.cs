@@ -8,10 +8,15 @@ namespace NSMB.World {
                 stageKey = "stage-grassland";
             }
 
+            // Alias for stages not yet imported as distinct scenes.
+            if (string.Equals(stageKey, "stage-bonus-2", StringComparison.InvariantCultureIgnoreCase)) {
+                stageKey = "stage-bonus";
+            }
+
             GameObject root = new GameObject("Level");
 
             // Preferred path: load an imported StageDefinition from Resources.
-            NSMB.World.StageDefinition imported = Resources.Load(typeof(NSMB.World.StageDefinition), "NSMB/Levels/" + stageKey) as NSMB.World.StageDefinition;
+            NSMB.World.StageDefinition imported = Resources.Load<NSMB.World.StageDefinition>("NSMB/Levels/" + stageKey);
             if (imported != null) {
                 NSMB.World.StageRuntimeBuilder.Build(imported, root.transform);
                 return root;
