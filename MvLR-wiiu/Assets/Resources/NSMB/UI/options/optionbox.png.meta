@@ -3,7 +3,15 @@ guid: 821f8124f0c05024681006caa8517449
 timeCreated: 1770064885
 licenseType: Pro
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: optionbox_0
+    21300002: optionbox_1
+    21300004: optionbox_2
+    21300006: optionbox_3
+    21300008: optionbox_4
+    21300010: optionbox_5
+    21300012: optionbox_6
+    21300014: optionbox_7
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -67,7 +75,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: 
+      name: optionbox_0
       rect:
         serializedVersion: 2
         x: 0
@@ -81,7 +89,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: 
+      name: optionbox_1
       rect:
         serializedVersion: 2
         x: 0
@@ -95,7 +103,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: 
+      name: optionbox_2
       rect:
         serializedVersion: 2
         x: 8
@@ -109,7 +117,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: 
+      name: optionbox_3
       rect:
         serializedVersion: 2
         x: 16
@@ -123,7 +131,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: 
+      name: optionbox_4
       rect:
         serializedVersion: 2
         x: 25
@@ -137,7 +145,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: 
+      name: optionbox_5
       rect:
         serializedVersion: 2
         x: 33
@@ -151,7 +159,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: 
+      name: optionbox_6
       rect:
         serializedVersion: 2
         x: 41
@@ -165,7 +173,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: 
+      name: optionbox_7
       rect:
         serializedVersion: 2
         x: 4

@@ -3,7 +3,11 @@ guid: 99b64b7167c55b0418c30df39e28548e
 timeCreated: 1770064890
 licenseType: Pro
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: slider_0
+    21300002: slider_1
+    21300004: slider_2
+    21300006: slider_3
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -67,7 +71,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: 
+      name: slider_0
       rect:
         serializedVersion: 2
         x: 0
@@ -81,7 +85,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: 
+      name: slider_1
       rect:
         serializedVersion: 2
         x: 4
@@ -95,7 +99,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: 
+      name: slider_2
       rect:
         serializedVersion: 2
         x: 0
@@ -109,7 +113,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: 
+      name: slider_3
       rect:
         serializedVersion: 2
         x: 17

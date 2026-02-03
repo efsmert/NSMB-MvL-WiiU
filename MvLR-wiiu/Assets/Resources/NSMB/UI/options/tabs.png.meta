@@ -3,7 +3,13 @@ guid: 28fb0640cf499b845a8c82d1909e36a0
 timeCreated: 1770064885
 licenseType: Pro
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: tabs_0
+    21300002: tabs_1
+    21300004: tabs_3
+    21300006: tabs_4
+    21300008: tabs_2
+    21300010: tabs_5
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -67,7 +73,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: 
+      name: tabs_0
       rect:
         serializedVersion: 2
         x: 0
@@ -81,7 +87,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: 
+      name: tabs_1
       rect:
         serializedVersion: 2
         x: 16
@@ -95,7 +101,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: 
+      name: tabs_3
       rect:
         serializedVersion: 2
         x: 47
@@ -109,7 +115,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: 
+      name: tabs_4
       rect:
         serializedVersion: 2
         x: 60
@@ -123,7 +129,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: 
+      name: tabs_2
       rect:
         serializedVersion: 2
         x: 31
@@ -137,7 +143,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: 
+      name: tabs_5
       rect:
         serializedVersion: 2
         x: 74

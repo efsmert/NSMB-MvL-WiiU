@@ -3,7 +3,23 @@ guid: 1c5769df5262ded4587bf33cc8774e0e
 timeCreated: 1770071273
 licenseType: Pro
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: results_0
+    21300002: results_1
+    21300004: results_2
+    21300006: results_3
+    21300008: results_4
+    21300010: results_5
+    21300012: results_6
+    21300014: results_7
+    21300016: results_8
+    21300018: results_9
+    21300020: results_10
+    21300022: results_11
+    21300024: results_12
+    21300026: results_13
+    21300028: results_14
+    21300030: results_15
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -67,7 +83,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: 
+      name: results_0
       rect:
         serializedVersion: 2
         x: 1
@@ -81,7 +97,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: 
+      name: results_1
       rect:
         serializedVersion: 2
         x: 0
@@ -95,7 +111,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: 
+      name: results_2
       rect:
         serializedVersion: 2
         x: 28
@@ -109,7 +125,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: 
+      name: results_3
       rect:
         serializedVersion: 2
         x: 37
@@ -123,7 +139,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: 
+      name: results_4
       rect:
         serializedVersion: 2
         x: 48
@@ -137,7 +153,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: 
+      name: results_5
       rect:
         serializedVersion: 2
         x: 0
@@ -151,7 +167,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: 
+      name: results_6
       rect:
         serializedVersion: 2
         x: 9
@@ -165,7 +181,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: 
+      name: results_7
       rect:
         serializedVersion: 2
         x: 16
@@ -179,7 +195,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: 
+      name: results_8
       rect:
         serializedVersion: 2
         x: 25
@@ -193,7 +209,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: 
+      name: results_9
       rect:
         serializedVersion: 2
         x: 34
@@ -207,7 +223,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: 
+      name: results_10
       rect:
         serializedVersion: 2
         x: 43
@@ -221,7 +237,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: 
+      name: results_11
       rect:
         serializedVersion: 2
         x: 52
@@ -235,7 +251,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: 
+      name: results_12
       rect:
         serializedVersion: 2
         x: 61
@@ -249,7 +265,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: 
+      name: results_13
       rect:
         serializedVersion: 2
         x: 70
@@ -263,7 +279,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: 
+      name: results_14
       rect:
         serializedVersion: 2
         x: 79
@@ -277,7 +293,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: 
+      name: results_15
       rect:
         serializedVersion: 2
         x: 64

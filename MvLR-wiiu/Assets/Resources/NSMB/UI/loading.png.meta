@@ -3,7 +3,15 @@ guid: f566e53dc632c1a48bca5ad318a03066
 timeCreated: 1770071274
 licenseType: Pro
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: loading_0
+    21300002: loading_1
+    21300004: loading_2
+    21300006: loading_3
+    21300008: loading_4
+    21300010: loading_5
+    21300012: loading_6
+    21300014: loading_7
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -67,7 +75,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: 
+      name: loading_0
       rect:
         serializedVersion: 2
         x: 0
@@ -81,7 +89,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: 
+      name: loading_1
       rect:
         serializedVersion: 2
         x: 6
@@ -95,7 +103,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: 
+      name: loading_2
       rect:
         serializedVersion: 2
         x: 12
@@ -109,7 +117,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: 
+      name: loading_3
       rect:
         serializedVersion: 2
         x: 18
@@ -123,7 +131,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: 
+      name: loading_4
       rect:
         serializedVersion: 2
         x: 24
@@ -137,7 +145,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: 
+      name: loading_5
       rect:
         serializedVersion: 2
         x: 30
@@ -151,7 +159,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: 
+      name: loading_6
       rect:
         serializedVersion: 2
         x: 36
@@ -165,7 +173,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: 
+      name: loading_7
       rect:
         serializedVersion: 2
         x: 42

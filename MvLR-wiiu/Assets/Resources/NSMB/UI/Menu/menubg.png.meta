@@ -3,7 +3,12 @@ guid: 7b783b6804e44744484eef8615f13d7a
 timeCreated: 1770064889
 licenseType: Pro
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: menubg_0
+    21300002: menubg_1
+    21300004: menubg_2
+    21300006: menubg_3
+    21300008: menubg_4
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -67,7 +72,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: 
+      name: menubg_0
       rect:
         serializedVersion: 2
         x: 0
@@ -81,7 +86,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: 
+      name: menubg_1
       rect:
         serializedVersion: 2
         x: 256
@@ -95,7 +100,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: 
+      name: menubg_2
       rect:
         serializedVersion: 2
         x: 512
@@ -109,7 +114,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: 
+      name: menubg_3
       rect:
         serializedVersion: 2
         x: 768
@@ -123,7 +128,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: 
+      name: menubg_4
       rect:
         serializedVersion: 2
         x: 1024

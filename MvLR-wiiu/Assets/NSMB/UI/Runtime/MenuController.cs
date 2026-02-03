@@ -6,13 +6,15 @@ namespace NSMB.UI {
         private enum MenuMode {
             PressStart = 0,
             MainButtons = 1,
-            Options = 2,
+            StageSelect = 2,
+            Options = 3,
         }
 
         private GameObject _root;
         private GameObject _mainPanel;
         private GameObject _optionsPanel;
         private GameObject _pressStartPanel;
+        private GameObject _stageSelectPanel;
         private Image _selectionHighlight;
         private Button[] _mainButtons;
         private int _selectedIndex;
@@ -50,6 +52,11 @@ namespace NSMB.UI {
 
             if (_mode == MenuMode.MainButtons) {
                 TickMainButtons();
+                return;
+            }
+
+            if (_mode == MenuMode.StageSelect) {
+                TickStageSelect();
                 return;
             }
 
@@ -114,17 +121,6 @@ namespace NSMB.UI {
             logoRt.anchoredPosition = new Vector2(0f, -40f);
             logoRt.sizeDelta = new Vector2(700f, 220f);
 
-            Sprite marioLuigiSprite = _sprites.LoadSingle("NSMB/UI/Menu/marioluigi");
-            if (marioLuigiSprite != null) {
-                Image ml = UiRuntimeUtil.CreateImage(_mainPanel.transform, "MarioLuigi", marioLuigiSprite);
-                RectTransform mlRt = ml.rectTransform;
-                mlRt.anchorMin = new Vector2(0.5f, 0f);
-                mlRt.anchorMax = new Vector2(0.5f, 0f);
-                mlRt.pivot = new Vector2(0.5f, 0f);
-                mlRt.anchoredPosition = new Vector2(-360f, 10f);
-                mlRt.sizeDelta = new Vector2(420f, 260f);
-            }
-
             Sprite buttonSprite = _sprites.LoadSingle("NSMB/UI/Menu/Elements/rounded-rect-5px");
             if (buttonSprite == null) {
                 buttonSprite = _sprites.LoadSingle("NSMB/UI/Menu/Elements/rounded-rect");
@@ -156,7 +152,7 @@ namespace NSMB.UI {
             SetButtonSize(options, 420f, 72f);
             SetButtonSize(quit, 420f, 72f);
 
-            play.onClick.AddListener(OnPlay);
+            play.onClick.AddListener(ShowStageSelect);
             options.onClick.AddListener(ShowOptions);
             quit.onClick.AddListener(OnQuit);
 
@@ -183,6 +179,7 @@ namespace NSMB.UI {
             hintRt.sizeDelta = new Vector2(900f, 28f);
 
             BuildPressStart();
+            BuildStageSelect(buttonSprite);
             BuildOptionsPanel(buttonSprite);
             ResetToPressStart();
         }
@@ -197,14 +194,19 @@ namespace NSMB.UI {
                 #if UNITY_EDITOR
                 Debug.LogWarning("[NSMB] Menu background sprites not found (menubg_0). Run NSMB/Resync Sprite Import Settings (From Original) to import slicing.");
                 #endif
-                // Fallback: use a single image background so we never end up with a white screen.
-                Sprite bgSprite = _sprites.LoadSingle("NSMB/UI/uibackground");
+                // Fallback: use a dark solid background or a single image background.
+                // Note: "uibackground" in this repo is a diagonal white stripe used as a design element,
+                // not a full-screen background. Prefer the gradient here.
+                Sprite bgSprite = _sprites.LoadSingle("NSMB/UI/bggradient");
                 if (bgSprite == null) {
                     bgSprite = _sprites.LoadSingle(sheet);
                 }
 
                 Image bg = UiRuntimeUtil.CreateImage(_root.transform, "Background", bgSprite);
                 bg.preserveAspect = false;
+                if (bgSprite == null) {
+                    bg.color = new Color(0.10f, 0.10f, 0.14f, 1f);
+                }
                 RectTransform bgRt = bg.rectTransform;
                 bgRt.anchorMin = Vector2.zero;
                 bgRt.anchorMax = Vector2.one;
@@ -248,22 +250,35 @@ namespace NSMB.UI {
         private void BuildPressStart() {
             Sprite startPrompt = _sprites.LoadSingle("NSMB/UI/Menu/Elements/start-prompt");
             Sprite aPrompt = _sprites.LoadSingle("NSMB/UI/Menu/Elements/a-prompt");
+            Sprite stripe = _sprites.LoadSingle("NSMB/UI/Menu/Elements/marioluigi");
+
+            if (stripe != null) {
+                Image stripeImg = UiRuntimeUtil.CreateImage(_pressStartPanel.transform, "Stripe", stripe);
+                stripeImg.preserveAspect = false;
+                RectTransform sRt = stripeImg.rectTransform;
+                sRt.anchorMin = new Vector2(0.5f, 0.55f);
+                sRt.anchorMax = new Vector2(0.5f, 0.55f);
+                sRt.pivot = new Vector2(0.5f, 0.5f);
+                sRt.anchoredPosition = new Vector2(140f, 60f);
+                sRt.sizeDelta = new Vector2(2200f, 520f);
+                sRt.localEulerAngles = new Vector3(0f, 0f, 24f);
+            }
 
             Image prompt = UiRuntimeUtil.CreateImage(_pressStartPanel.transform, "StartPrompt", startPrompt);
             RectTransform pRt = prompt.rectTransform;
             pRt.anchorMin = new Vector2(0.5f, 0f);
             pRt.anchorMax = new Vector2(0.5f, 0f);
             pRt.pivot = new Vector2(0.5f, 0f);
-            pRt.anchoredPosition = new Vector2(0f, 70f);
-            pRt.sizeDelta = new Vector2(520f, 64f);
+            pRt.anchoredPosition = new Vector2(0f, 52f);
+            pRt.sizeDelta = new Vector2(54f, 54f);
 
             Image a = UiRuntimeUtil.CreateImage(_pressStartPanel.transform, "APrompt", aPrompt);
             RectTransform aRt = a.rectTransform;
             aRt.anchorMin = new Vector2(0.5f, 0f);
             aRt.anchorMax = new Vector2(0.5f, 0f);
             aRt.pivot = new Vector2(0.5f, 0f);
-            aRt.anchoredPosition = new Vector2(-300f, 66f);
-            aRt.sizeDelta = new Vector2(64f, 64f);
+            aRt.anchoredPosition = new Vector2(-340f, 50f);
+            aRt.sizeDelta = new Vector2(54f, 54f);
 
             Text t = UiRuntimeUtil.CreateText(_pressStartPanel.transform, "PressStartText", UiRuntimeUtil.LoadFontOrDefault("Fonts/TTFs/PixelMplus12-Bold"), 22, TextAnchor.LowerCenter, Color.white);
             t.text = "PRESS START";
@@ -271,7 +286,7 @@ namespace NSMB.UI {
             tRt.anchorMin = new Vector2(0.5f, 0f);
             tRt.anchorMax = new Vector2(0.5f, 0f);
             tRt.pivot = new Vector2(0.5f, 0f);
-            tRt.anchoredPosition = new Vector2(0f, 30f);
+            tRt.anchoredPosition = new Vector2(0f, 24f);
             tRt.sizeDelta = new Vector2(500f, 28f);
 
             // Small build string
@@ -283,6 +298,123 @@ namespace NSMB.UI {
             verRt.pivot = new Vector2(1f, 0f);
             verRt.anchoredPosition = new Vector2(-16f, 10f);
             verRt.sizeDelta = new Vector2(520f, 22f);
+        }
+
+        private void BuildStageSelect(Sprite buttonSprite) {
+            _stageSelectPanel = UiRuntimeUtil.CreateUiObject("StageSelectPanel", _root.transform);
+            RectTransform rt = _stageSelectPanel.GetComponent<RectTransform>();
+            rt.anchorMin = Vector2.zero;
+            rt.anchorMax = Vector2.one;
+            rt.offsetMin = Vector2.zero;
+            rt.offsetMax = Vector2.zero;
+
+            Sprite panelSprite = _sprites.LoadSingle("NSMB/UI/options/optionbox");
+            if (panelSprite == null) {
+                panelSprite = _sprites.LoadSingle("NSMB/UI/Menu/Elements/rounded-rect-5px");
+            }
+
+            Image panel = UiRuntimeUtil.CreateImage(_stageSelectPanel.transform, "Panel", panelSprite);
+            panel.type = Image.Type.Sliced;
+            RectTransform prt = panel.rectTransform;
+            prt.anchorMin = new Vector2(0.5f, 0.5f);
+            prt.anchorMax = new Vector2(0.5f, 0.5f);
+            prt.pivot = new Vector2(0.5f, 0.5f);
+            prt.anchoredPosition = Vector2.zero;
+            prt.sizeDelta = new Vector2(980f, 560f);
+
+            Text title = UiRuntimeUtil.CreateText(panel.transform, "Title", _font, 36, TextAnchor.UpperCenter, Color.black);
+            title.text = "SELECT STAGE";
+            RectTransform titleRt = title.rectTransform;
+            titleRt.anchorMin = new Vector2(0.5f, 1f);
+            titleRt.anchorMax = new Vector2(0.5f, 1f);
+            titleRt.pivot = new Vector2(0.5f, 1f);
+            titleRt.anchoredPosition = new Vector2(0f, -22f);
+            titleRt.sizeDelta = new Vector2(600f, 50f);
+
+            GameObject gridGo = UiRuntimeUtil.CreateUiObject("Grid", panel.transform);
+            RectTransform gridRt = gridGo.GetComponent<RectTransform>();
+            gridRt.anchorMin = new Vector2(0.5f, 0.5f);
+            gridRt.anchorMax = new Vector2(0.5f, 0.5f);
+            gridRt.pivot = new Vector2(0.5f, 0.5f);
+            gridRt.anchoredPosition = new Vector2(0f, -10f);
+            gridRt.sizeDelta = new Vector2(880f, 420f);
+
+            GridLayoutGroup glg = gridGo.AddComponent<GridLayoutGroup>();
+            glg.cellSize = new Vector2(200f, 96f);
+            glg.spacing = new Vector2(18f, 18f);
+            glg.startAxis = GridLayoutGroup.Axis.Horizontal;
+            glg.startCorner = GridLayoutGroup.Corner.UpperLeft;
+            glg.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
+            glg.constraintCount = 4;
+
+            string[] stages = new[] {
+                "stage-grassland",
+                "stage-beach",
+                "stage-jungle",
+                "stage-ice",
+                "stage-desert",
+                "stage-pipes",
+                "stage-sky",
+                "stage-volcano",
+                "stage-ghosthouse",
+                "stage-fortress",
+                "stage-brick",
+                "stage-bonus",
+                "stage-bonus-2",
+                "stage-unknown",
+            };
+
+            _stageButtons = new Button[stages.Length];
+            for (int i = 0; i < stages.Length; i++) {
+                string stageKey = stages[i];
+                Sprite icon = _sprites.LoadSingle("NSMB/UI/Menu/" + stageKey);
+                if (icon == null) {
+                    icon = _sprites.LoadSingle("NSMB/UI/Menu/stage-unknown");
+                }
+
+                Button b = UiRuntimeUtil.CreateButton(gridGo.transform, "Stage_" + stageKey, buttonSprite, _font, "", 20);
+                _stageButtons[i] = b;
+
+                Text label = b.transform.Find("Label").GetComponent<Text>();
+                if (label != null) {
+                    label.enabled = false;
+                }
+
+                Image iconImg = UiRuntimeUtil.CreateImage(b.transform, "Icon", icon);
+                RectTransform irt = iconImg.rectTransform;
+                irt.anchorMin = Vector2.zero;
+                irt.anchorMax = Vector2.one;
+                irt.offsetMin = new Vector2(10f, 10f);
+                irt.offsetMax = new Vector2(-10f, -10f);
+                iconImg.preserveAspect = true;
+
+                int captured = i;
+                b.onClick.AddListener(delegate { StartSelectedStage(captured); });
+            }
+
+            Sprite selSprite = _sprites.LoadSingle("NSMB/UI/selected");
+            _stageSelection = UiRuntimeUtil.CreateImage(gridGo.transform, "Selection", selSprite);
+            _stageSelection.transform.SetAsFirstSibling();
+            _stageSelection.preserveAspect = false;
+            RectTransform srt = _stageSelection.rectTransform;
+            srt.anchorMin = new Vector2(0.5f, 0.5f);
+            srt.anchorMax = new Vector2(0.5f, 0.5f);
+            srt.pivot = new Vector2(0.5f, 0.5f);
+            srt.sizeDelta = new Vector2(216f, 110f);
+
+            Button back = UiRuntimeUtil.CreateButton(panel.transform, "BackButton", buttonSprite, _font, "BACK", 24);
+            RectTransform backRt = back.GetComponent<RectTransform>();
+            backRt.anchorMin = new Vector2(0.5f, 0f);
+            backRt.anchorMax = new Vector2(0.5f, 0f);
+            backRt.pivot = new Vector2(0.5f, 0f);
+            backRt.anchoredPosition = new Vector2(0f, 18f);
+            backRt.sizeDelta = new Vector2(260f, 60f);
+            back.onClick.AddListener(delegate {
+                PlayUi(NSMB.Audio.SoundEffectId.UI_WindowClose);
+                ShowMain();
+            });
+
+            _stageSelectPanel.SetActive(false);
         }
 
         private static void SetButtonSize(Button b, float w, float h) {
@@ -297,6 +429,7 @@ namespace NSMB.UI {
             if (_pressStartPanel != null) _pressStartPanel.SetActive(true);
             if (_mainPanel != null) _mainPanel.SetActive(false);
             if (_optionsPanel != null) _optionsPanel.SetActive(false);
+            if (_stageSelectPanel != null) _stageSelectPanel.SetActive(false);
         }
 
         private void TickPressStart() {
@@ -311,7 +444,7 @@ namespace NSMB.UI {
                 if (prompt != null) {
                     RectTransform p = prompt.GetComponent<RectTransform>();
                     if (p != null) {
-                        float y = 70f + Mathf.Sin(Time.unscaledTime * 3.2f) * 6f;
+                        float y = 52f + Mathf.Sin(Time.unscaledTime * 3.2f) * 6f;
                         p.anchoredPosition = new Vector2(0f, y);
                     }
                 }
@@ -418,7 +551,120 @@ namespace NSMB.UI {
             _mode = MenuMode.MainButtons;
             if (_mainPanel != null) _mainPanel.SetActive(true);
             if (_optionsPanel != null) _optionsPanel.SetActive(false);
+            if (_stageSelectPanel != null) _stageSelectPanel.SetActive(false);
             SelectIndex(_selectedIndex, false);
+        }
+
+        // -------- Stage select (local) --------
+        private Button[] _stageButtons;
+        private Image _stageSelection;
+        private int _stageIndex;
+
+        private void ShowStageSelect() {
+            _mode = MenuMode.StageSelect;
+            PlayUi(NSMB.Audio.SoundEffectId.UI_Decide);
+            PlayUi(NSMB.Audio.SoundEffectId.UI_WindowOpen);
+            if (_mainPanel != null) _mainPanel.SetActive(false);
+            if (_optionsPanel != null) _optionsPanel.SetActive(false);
+            if (_stageSelectPanel != null) _stageSelectPanel.SetActive(true);
+            SelectStageIndex(0, false);
+        }
+
+        private void TickStageSelect() {
+            if (_stageSelectPanel == null || !_stageSelectPanel.activeSelf) {
+                return;
+            }
+
+            if (_moveCooldown > 0f) {
+                _moveCooldown -= Time.unscaledDeltaTime;
+                if (_moveCooldown < 0f) _moveCooldown = 0f;
+            }
+
+            Vector2 move = NSMB.Input.LegacyInput.GetMovement();
+            if (_moveCooldown <= 0f) {
+                if (move.x < -0.5f) {
+                    SelectStageIndex(_stageIndex - 1, true);
+                    _moveCooldown = 0.12f;
+                } else if (move.x > 0.5f) {
+                    SelectStageIndex(_stageIndex + 1, true);
+                    _moveCooldown = 0.12f;
+                } else if (move.y > 0.5f) {
+                    SelectStageIndex(_stageIndex - 4, true);
+                    _moveCooldown = 0.12f;
+                } else if (move.y < -0.5f) {
+                    SelectStageIndex(_stageIndex + 4, true);
+                    _moveCooldown = 0.12f;
+                }
+            }
+
+            if (NSMB.Input.LegacyInput.GetSubmitDown()) {
+                StartSelectedStage(_stageIndex);
+            } else if (NSMB.Input.LegacyInput.GetBackDown()) {
+                PlayUi(NSMB.Audio.SoundEffectId.UI_Back);
+                PlayUi(NSMB.Audio.SoundEffectId.UI_WindowClose);
+                ShowMain();
+            }
+
+            UpdateStageSelection();
+        }
+
+        private void SelectStageIndex(int index, bool playSound) {
+            if (_stageButtons == null || _stageButtons.Length == 0) {
+                return;
+            }
+
+            if (index < 0) index = _stageButtons.Length - 1;
+            if (index >= _stageButtons.Length) index = 0;
+
+            if (index != _stageIndex && playSound) {
+                PlayUi(NSMB.Audio.SoundEffectId.UI_Cursor);
+            }
+
+            _stageIndex = index;
+            UpdateStageSelection();
+
+            Button b = _stageButtons[_stageIndex];
+            if (b != null) {
+                b.Select();
+            }
+        }
+
+        private void UpdateStageSelection() {
+            if (_stageSelection == null || _stageButtons == null || _stageIndex < 0 || _stageIndex >= _stageButtons.Length) {
+                return;
+            }
+
+            RectTransform btnRt = _stageButtons[_stageIndex].GetComponent<RectTransform>();
+            RectTransform selRt = _stageSelection.rectTransform;
+            if (btnRt != null && selRt != null) {
+                selRt.anchoredPosition = btnRt.anchoredPosition;
+            }
+        }
+
+        private void StartSelectedStage(int index) {
+            PlayUi(NSMB.Audio.SoundEffectId.UI_Decide);
+            PlayUi(NSMB.Audio.SoundEffectId.UI_WindowClose);
+
+            NSMB.Gameplay.GameFlow flow = NSMB.Gameplay.GameFlow.Instance;
+            if (flow != null) {
+                if (_stageButtons != null && index >= 0 && index < _stageButtons.Length) {
+                    string stageKey = GetStageKeyFromButton(_stageButtons[index]);
+                    flow.StartGame(stageKey);
+                } else {
+                    flow.StartGame("stage-grassland");
+                }
+            }
+        }
+
+        private static string GetStageKeyFromButton(Button b) {
+            if (b == null) return "stage-grassland";
+            string name = b.gameObject.name;
+            // name is "Stage_stage-grassland"
+            int idx = name.IndexOf("Stage_", System.StringComparison.InvariantCulture);
+            if (idx >= 0) {
+                return name.Substring(idx + "Stage_".Length);
+            }
+            return "stage-grassland";
         }
 
         private void ShowOptions() {
@@ -427,6 +673,7 @@ namespace NSMB.UI {
             PlayUi(NSMB.Audio.SoundEffectId.UI_WindowOpen);
             if (_mainPanel != null) _mainPanel.SetActive(false);
             if (_optionsPanel != null) _optionsPanel.SetActive(true);
+            if (_stageSelectPanel != null) _stageSelectPanel.SetActive(false);
         }
 
         private void BuildOptionsPanel(Sprite buttonSprite) {

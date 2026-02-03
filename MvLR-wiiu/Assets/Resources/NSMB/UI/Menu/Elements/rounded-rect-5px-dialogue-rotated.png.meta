@@ -3,7 +3,8 @@ guid: 884bb5631f9d629419cbef2edfa0a24b
 timeCreated: 1770064888
 licenseType: Pro
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: rounded-rect-5px-dialogue-rotated_0
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -67,7 +68,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: 
+      name: rounded-rect-5px-dialogue-rotated_0
       rect:
         serializedVersion: 2
         x: 0

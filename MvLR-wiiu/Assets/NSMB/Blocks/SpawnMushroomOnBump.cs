@@ -31,19 +31,10 @@ namespace NSMB.Blocks {
             col.isTrigger = false;
 
             SpriteRenderer sr = mush.AddComponent<SpriteRenderer>();
-            sr.sprite = CreatePlaceholderSprite();
-            sr.color = new Color(1f, 0.2f, 0.2f, 1f);
+            sr.color = Color.white;
             sr.sortingOrder = 0;
 
             mush.AddComponent<NSMB.Items.MushroomPowerup>();
         }
-
-        private static Sprite CreatePlaceholderSprite() {
-            Texture2D tex = Texture2D.whiteTexture;
-            Rect rect = new Rect(0f, 0f, tex.width, tex.height);
-            Vector2 pivot = new Vector2(0.5f, 0.5f);
-            return Sprite.Create(tex, rect, pivot, 100f);
-        }
     }
 }
-

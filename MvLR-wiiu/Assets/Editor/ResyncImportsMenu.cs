@@ -10,6 +10,7 @@ public static class ResyncImportsMenu {
             "Assets/NSMB/Sprites/Sprites",
             "Assets/NSMB/Sprites/Gizmos",
             "Assets/Resources/NSMB/UI",
+            "Assets/Resources/NSMB/Sprites",
         };
 
         List<string> texturePaths = new List<string>();

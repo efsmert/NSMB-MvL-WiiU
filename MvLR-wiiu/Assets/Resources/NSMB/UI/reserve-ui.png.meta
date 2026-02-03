@@ -3,7 +3,19 @@ guid: 6f5240e91e6580c43aa8f2e3e29d93f2
 timeCreated: 1770071274
 licenseType: Pro
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: reserve-frame
+    21300002: reserve-bg
+    21300004: reserve-empty
+    21300006: reserve-mushroom
+    21300008: reserve-fireflower
+    21300010: reserve-blueshell
+    21300012: reserve-mini
+    21300014: reserve-mega
+    21300016: reserve-propeller
+    21300018: reserve-ice
+    21300020: reserve-ui_10
+    21300022: reserve-Hammer
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -67,7 +79,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: 
+      name: reserve-frame
       rect:
         serializedVersion: 2
         x: 0
@@ -81,7 +93,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: 
+      name: reserve-bg
       rect:
         serializedVersion: 2
         x: 64
@@ -95,7 +107,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: 
+      name: reserve-empty
       rect:
         serializedVersion: 2
         x: 128
@@ -109,7 +121,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: 
+      name: reserve-mushroom
       rect:
         serializedVersion: 2
         x: 0
@@ -123,7 +135,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: 
+      name: reserve-fireflower
       rect:
         serializedVersion: 2
         x: 64
@@ -137,7 +149,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: 
+      name: reserve-blueshell
       rect:
         serializedVersion: 2
         x: 128
@@ -151,7 +163,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: 
+      name: reserve-mini
       rect:
         serializedVersion: 2
         x: 192
@@ -165,7 +177,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: 
+      name: reserve-mega
       rect:
         serializedVersion: 2
         x: 0
@@ -179,21 +191,21 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: 
+      name: reserve-propeller
       rect:
         serializedVersion: 2
         x: 64
         y: 0
         width: 64
         height: 64
-      alignment: 0
+      alignment: 9
       pivot: {x: 0.5, y: 0.59375}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: 
+      name: reserve-ice
       rect:
         serializedVersion: 2
         x: 128
@@ -207,7 +219,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: 
+      name: reserve-ui_10
       rect:
         serializedVersion: 2
         x: 192
@@ -221,7 +233,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: 
+      name: reserve-Hammer
       rect:
         serializedVersion: 2
         x: 192

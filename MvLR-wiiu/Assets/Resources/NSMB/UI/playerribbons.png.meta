@@ -3,7 +3,13 @@ guid: 3bdb53fdec1891c4db982368b45ec61b
 timeCreated: 1770071273
 licenseType: Pro
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: playerribbons_0
+    21300002: playerribbons_1
+    21300004: playerribbons_2
+    21300006: playerribbons_3
+    21300008: playerribbons_4
+    21300010: playerribbons_5
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -67,7 +73,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: 
+      name: playerribbons_p1
       rect:
         serializedVersion: 2
         x: 0
@@ -81,7 +87,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: 
+      name: playerribbons_0
       rect:
         serializedVersion: 2
         x: 0
@@ -95,7 +101,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: 
+      name: playerribbons_1
       rect:
         serializedVersion: 2
         x: 14
@@ -109,7 +115,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: 
+      name: playerribbons_2
       rect:
         serializedVersion: 2
         x: 28
@@ -123,7 +129,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: 
+      name: playerribbons_3
       rect:
         serializedVersion: 2
         x: 28
@@ -137,7 +143,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: 
+      name: playerribbons_4
       rect:
         serializedVersion: 2
         x: 46
@@ -151,7 +157,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: 
+      name: playerribbons_5
       rect:
         serializedVersion: 2
         x: 65

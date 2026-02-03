@@ -57,20 +57,42 @@ namespace NSMB.WiiU {
             GameObject player = new GameObject("Player");
             player.transform.position = Vector3.zero;
 
-            var renderer = player.AddComponent<SpriteRenderer>();
+            // Placeholder sprite (hidden once the 3D model loads).
+            SpriteRenderer renderer = player.GetComponent<SpriteRenderer>();
+            if (renderer == null) {
+                renderer = player.AddComponent<SpriteRenderer>();
+            }
             renderer.sprite = CreatePlaceholderSprite();
-            renderer.sortingOrder = 0;
+            renderer.color = Color.white;
+            renderer.sortingOrder = 10;
 
-            Rigidbody2D rb = player.AddComponent<Rigidbody2D>();
+            // Rigidbody2D (also required by PlayerVisualFromOriginal).
+            Rigidbody2D rb = player.GetComponent<Rigidbody2D>();
+            if (rb == null) {
+                rb = player.AddComponent<Rigidbody2D>();
+            }
             rb.gravityScale = 3f;
             rb.freezeRotation = true;
 
-            BoxCollider2D col = player.AddComponent<BoxCollider2D>();
+            BoxCollider2D col = player.GetComponent<BoxCollider2D>();
+            if (col == null) {
+                col = player.AddComponent<BoxCollider2D>();
+            }
             col.size = new Vector2(0.9f, 0.9f);
 
-            player.AddComponent<NSMB.Player.PlayerMotor2D>();
-            player.AddComponent<NSMB.Player.PlayerSfx>();
-            player.AddComponent<NSMB.Player.PlayerHealth>();
+            // Movement/visuals.
+            if (player.GetComponent<NSMB.Player.PlayerMotor2D>() == null) {
+                player.AddComponent<NSMB.Player.PlayerMotor2D>();
+            }
+            if (player.GetComponent<NSMB.Player.PlayerVisualFromOriginal>() == null) {
+                player.AddComponent<NSMB.Player.PlayerVisualFromOriginal>();
+            }
+            if (player.GetComponent<NSMB.Player.PlayerSfx>() == null) {
+                player.AddComponent<NSMB.Player.PlayerSfx>();
+            }
+            if (player.GetComponent<NSMB.Player.PlayerHealth>() == null) {
+                player.AddComponent<NSMB.Player.PlayerHealth>();
+            }
             BindCameraTarget(player.transform);
         }
 
@@ -87,10 +109,36 @@ namespace NSMB.WiiU {
         }
 
         private static Sprite CreatePlaceholderSprite() {
-            Texture2D tex = Texture2D.whiteTexture;
-            Rect rect = new Rect(0f, 0f, tex.width, tex.height);
-            Vector2 pivot = new Vector2(0.5f, 0.5f);
-            return Sprite.Create(tex, rect, pivot, 100f);
+            // Texture2D.whiteTexture is 1x1, which makes the sprite effectively invisible in world space.
+            // Use a tiny pixel-art placeholder that renders at 1 tile (16px) = 1 world unit.
+            const int size = 16;
+            Texture2D tex = new Texture2D(size, size, TextureFormat.RGBA32, false);
+            tex.filterMode = FilterMode.Point;
+            tex.wrapMode = TextureWrapMode.Clamp;
+
+            // Simple "Mario-ish" block: red cap + blue body.
+            for (int y = 0; y < size; y++) {
+                for (int x = 0; x < size; x++) {
+                    Color c = new Color(0f, 0f, 0f, 0f);
+
+                    // outline
+                    if (x == 0 || y == 0 || x == size - 1 || y == size - 1) {
+                        c = Color.black;
+                    } else if (y >= 11) {
+                        c = new Color(0.80f, 0.10f, 0.10f, 1f); // red
+                    } else if (y >= 5) {
+                        c = new Color(0.10f, 0.30f, 0.80f, 1f); // blue
+                    } else {
+                        c = new Color(0.95f, 0.80f, 0.65f, 1f); // skin-ish
+                    }
+
+                    tex.SetPixel(x, y, c);
+                }
+            }
+            tex.Apply(false, true);
+
+            Rect rect = new Rect(0f, 0f, size, size);
+            return Sprite.Create(tex, rect, new Vector2(0.5f, 0.0f), 16f);
         }
     }
 }

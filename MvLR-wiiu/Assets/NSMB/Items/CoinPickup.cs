@@ -7,9 +7,38 @@ namespace NSMB.Items {
         public int scoreValue = 200;
         public float sfxVolume = 0.8f;
 
+        private void Awake() {
+            EnsureVisuals();
+        }
+
         private void Reset() {
             Collider2D c = GetComponent<Collider2D>();
             c.isTrigger = true;
+        }
+
+        private void EnsureVisuals() {
+            SpriteRenderer sr = GetComponent<SpriteRenderer>();
+            if (sr == null) {
+                return;
+            }
+
+            bool placeholder = (sr.sprite == null) || (sr.sprite.texture == Texture2D.whiteTexture);
+            if (!placeholder) {
+                return;
+            }
+
+            Sprite[] frames = NSMB.Visual.GameplaySprites.GetCoinSpinFrames();
+            if (frames != null && frames.Length > 0) {
+                sr.sprite = frames[0];
+                sr.color = Color.white;
+                sr.sortingOrder = 0;
+
+                NSMB.Visual.SimpleSpriteAnimator anim = GetComponent<NSMB.Visual.SimpleSpriteAnimator>();
+                if (anim == null) {
+                    anim = gameObject.AddComponent<NSMB.Visual.SimpleSpriteAnimator>();
+                }
+                anim.SetFrames(frames, 12f, true);
+            }
         }
 
         private void OnTriggerEnter2D(Collider2D other) {

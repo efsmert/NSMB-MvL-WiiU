@@ -23,6 +23,8 @@ namespace NSMB.Player {
 
         private Rigidbody2D _rb;
         private Collider2D _col;
+        private ContactFilter2D _groundFilter;
+        private RaycastHit2D[] _groundHits = new RaycastHit2D[4];
 
         private float _coyoteTimer;
         private float _jumpBufferTimer;
@@ -40,6 +42,11 @@ namespace NSMB.Player {
             _rb.gravityScale = gravityScale;
             _rb.freezeRotation = true;
             _rb.interpolation = RigidbodyInterpolation2D.Interpolate;
+
+            _groundFilter = new ContactFilter2D();
+            _groundFilter.useLayerMask = true;
+            _groundFilter.layerMask = groundMask;
+            _groundFilter.useTriggers = false;
         }
 
         private void Update() {
@@ -114,10 +121,15 @@ namespace NSMB.Player {
         }
 
         private void UpdateGrounded() {
-            Bounds b = _col.bounds;
-            Vector2 origin = new Vector2(b.center.x, b.min.y + 0.01f);
-            RaycastHit2D hit = Physics2D.Raycast(origin, Vector2.down, groundCheckDistance, groundMask);
-            _isGrounded = hit.collider != null;
+            if (_col == null) {
+                _isGrounded = false;
+                return;
+            }
+
+            // Use Collider2D.Cast rather than a single ray to avoid false negatives at ledges / during contact offsets.
+            _groundFilter.layerMask = groundMask;
+            int count = _col.Cast(Vector2.down, _groundFilter, _groundHits, Mathf.Max(0.02f, groundCheckDistance));
+            _isGrounded = count > 0;
         }
 
         private void OnCollisionEnter2D(Collision2D collision) {

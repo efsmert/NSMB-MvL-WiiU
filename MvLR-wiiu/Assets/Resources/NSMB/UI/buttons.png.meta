@@ -3,7 +3,10 @@ guid: 3ca99cbaefd04eb438900a895ffa8f00
 timeCreated: 1770071273
 licenseType: Pro
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: back_sel
+    21300002: back_btn
+    21300004: back_pres
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -67,7 +70,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: 
+      name: back_sel
       rect:
         serializedVersion: 2
         x: 1
@@ -81,7 +84,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: 
+      name: back_btn
       rect:
         serializedVersion: 2
         x: 1
@@ -95,7 +98,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: 
+      name: back_pres
       rect:
         serializedVersion: 2
         x: 34

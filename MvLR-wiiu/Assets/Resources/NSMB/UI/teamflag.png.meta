@@ -3,7 +3,17 @@ guid: e94a536d637c01f4e9e8f5c7fc033cde
 timeCreated: 1770071274
 licenseType: Pro
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: teamflag_0
+    21300002: teamflag_1
+    21300004: teamflag_2
+    21300006: teamflag_3
+    21300008: teamflag_4
+    21300010: teamflag_5
+    21300012: teamflag_6
+    21300014: teamflag_7
+    21300016: teamflag_8
+    21300018: teamflag_9
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -67,7 +77,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: 
+      name: teamflag_0
       rect:
         serializedVersion: 2
         x: 0
@@ -81,7 +91,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: 
+      name: teamflag_1
       rect:
         serializedVersion: 2
         x: 26
@@ -95,7 +105,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: 
+      name: teamflag_2
       rect:
         serializedVersion: 2
         x: 0
@@ -109,7 +119,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: 
+      name: teamflag_3
       rect:
         serializedVersion: 2
         x: 26
@@ -123,7 +133,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: 
+      name: teamflag_4
       rect:
         serializedVersion: 2
         x: 0
@@ -137,7 +147,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: 
+      name: teamflag_5
       rect:
         serializedVersion: 2
         x: 26
@@ -151,7 +161,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: 
+      name: teamflag_6
       rect:
         serializedVersion: 2
         x: 0
@@ -165,7 +175,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: 
+      name: teamflag_7
       rect:
         serializedVersion: 2
         x: 26
@@ -179,7 +189,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: 
+      name: teamflag_8
       rect:
         serializedVersion: 2
         x: 0
@@ -193,7 +203,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: 
+      name: teamflag_9
       rect:
         serializedVersion: 2
         x: 26

@@ -15,6 +15,27 @@ namespace NSMB.Items {
             _rb = GetComponent<Rigidbody2D>();
             _rb.gravityScale = 3.5f;
             _rb.freezeRotation = true;
+
+            EnsureVisuals();
+        }
+
+        private void EnsureVisuals() {
+            SpriteRenderer sr = GetComponent<SpriteRenderer>();
+            if (sr == null) {
+                return;
+            }
+
+            bool placeholder = (sr.sprite == null) || (sr.sprite.texture == Texture2D.whiteTexture);
+            if (!placeholder) {
+                return;
+            }
+
+            Sprite mush = NSMB.Visual.GameplaySprites.GetMushroom();
+            if (mush != null) {
+                sr.sprite = mush;
+                sr.color = Color.white;
+                sr.sortingOrder = 0;
+            }
         }
 
         private void FixedUpdate() {

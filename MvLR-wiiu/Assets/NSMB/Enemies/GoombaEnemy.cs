@@ -13,11 +13,43 @@ namespace NSMB.Enemies {
         private Rigidbody2D _rb;
         private int _dir = -1;
         private bool _dead;
+        private SpriteRenderer _sr;
 
         private void Awake() {
             _rb = GetComponent<Rigidbody2D>();
             _rb.gravityScale = gravityScale;
             _rb.freezeRotation = true;
+
+            _sr = GetComponent<SpriteRenderer>();
+            if (_sr == null) {
+                _sr = gameObject.AddComponent<SpriteRenderer>();
+            }
+
+            EnsureVisuals();
+        }
+
+        private void EnsureVisuals() {
+            if (_sr == null) {
+                return;
+            }
+
+            bool placeholder = (_sr.sprite == null) || (_sr.sprite.texture == Texture2D.whiteTexture);
+            if (!placeholder) {
+                return;
+            }
+
+            Sprite[] walk = NSMB.Visual.GameplaySprites.GetGoombaWalkFrames();
+            if (walk != null && walk.Length > 0) {
+                _sr.sprite = walk[0];
+                _sr.color = Color.white;
+                _sr.sortingOrder = 0;
+
+                NSMB.Visual.SimpleSpriteAnimator anim = GetComponent<NSMB.Visual.SimpleSpriteAnimator>();
+                if (anim == null) {
+                    anim = gameObject.AddComponent<NSMB.Visual.SimpleSpriteAnimator>();
+                }
+                anim.SetFrames(walk, 10f, true);
+            }
         }
 
         private void FixedUpdate() {
@@ -92,4 +124,3 @@ namespace NSMB.Enemies {
         }
     }
 }
-

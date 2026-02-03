@@ -3,7 +3,12 @@ guid: 229b986136eca134d9ec345e1181d1f2
 timeCreated: 1770071273
 licenseType: Pro
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: track-boos_0
+    21300002: track-boos_1
+    21300004: track-boos_2
+    21300006: track-boos_3
+    21300008: track-boos_4
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -67,7 +72,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: 
+      name: track-boos_0
       rect:
         serializedVersion: 2
         x: 0
@@ -81,7 +86,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: 
+      name: track-boos_1
       rect:
         serializedVersion: 2
         x: 0
@@ -95,7 +100,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: 
+      name: track-boos_2
       rect:
         serializedVersion: 2
         x: 0
@@ -109,7 +114,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: 
+      name: track-boos_3
       rect:
         serializedVersion: 2
         x: 0
@@ -123,7 +128,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: 
+      name: track-boos_4
       rect:
         serializedVersion: 2
         x: 0

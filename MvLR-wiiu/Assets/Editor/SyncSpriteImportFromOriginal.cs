@@ -52,9 +52,11 @@ public sealed class SyncSpriteImportFromOriginal : AssetPostprocessor {
         // - Assets/NSMB/Sprites/Sprites/**  -> NSMB-MarioVsLuigi/Assets/Sprites/**
         // - Assets/NSMB/Sprites/Gizmos/**   -> NSMB-MarioVsLuigi/Assets/Gizmos/**
         // - Assets/Resources/NSMB/UI/**     -> NSMB-MarioVsLuigi/Assets/Sprites/UI/**
+        // - Assets/Resources/NSMB/Sprites/**-> NSMB-MarioVsLuigi/Assets/Sprites/**
         const string spritesPrefix = "Assets/NSMB/Sprites/Sprites/";
         const string gizmosPrefix = "Assets/NSMB/Sprites/Gizmos/";
         const string resourcesUiPrefix = "Assets/Resources/NSMB/UI/";
+        const string resourcesSpritesPrefix = "Assets/Resources/NSMB/Sprites/";
 
         string originalRelativeAssetPath;
         if (mvlrAssetPath.StartsWith(spritesPrefix, StringComparison.InvariantCultureIgnoreCase)) {
@@ -63,6 +65,8 @@ public sealed class SyncSpriteImportFromOriginal : AssetPostprocessor {
             originalRelativeAssetPath = "Assets/Gizmos/" + mvlrAssetPath.Substring(gizmosPrefix.Length);
         } else if (mvlrAssetPath.StartsWith(resourcesUiPrefix, StringComparison.InvariantCultureIgnoreCase)) {
             originalRelativeAssetPath = "Assets/Sprites/UI/" + mvlrAssetPath.Substring(resourcesUiPrefix.Length);
+        } else if (mvlrAssetPath.StartsWith(resourcesSpritesPrefix, StringComparison.InvariantCultureIgnoreCase)) {
+            originalRelativeAssetPath = "Assets/Sprites/" + mvlrAssetPath.Substring(resourcesSpritesPrefix.Length);
         } else {
             return null;
         }
@@ -94,7 +98,9 @@ public sealed class SyncSpriteImportFromOriginal : AssetPostprocessor {
         public FilterMode FilterMode = FilterMode.Point;
         public int SpriteMode = 1; // 1 = Single, 2 = Multiple
         public float SpritePixelsToUnits = 100f;
-        public int SpriteAlignmentValue = (int)UnityEngine.SpriteAlignment.Center;
+        // Unity 2017.1 doesn't reliably expose the SpriteAlignment enum across namespaces in editor code.
+        // Alignment value 0 corresponds to Center.
+        public int SpriteAlignmentValue = 0;
         public Vector2 SpritePivot = new Vector2(0.5f, 0.5f);
         public SpriteMetaData[] Sprites;
 
@@ -114,6 +120,7 @@ public sealed class SyncSpriteImportFromOriginal : AssetPostprocessor {
 
             bool inSpriteSheet = false;
             bool inSpritesList = false;
+            int spritesKeyIndent = -1;
             List<SpriteMetaData> sprites = null;
             SpriteMetaData currentSprite = new SpriteMetaData();
             bool hasCurrentSprite = false;
@@ -124,6 +131,97 @@ public sealed class SyncSpriteImportFromOriginal : AssetPostprocessor {
 
                 if (line.Length == 0) {
                     continue;
+                }
+
+                if (inSpritesList) {
+                    int indent = CountLeadingSpaces(raw);
+                    // End of sprites list when we return to the same indentation as the "sprites:" key
+                    // (e.g., "outline:", "physicsShape:", "spritePackingTag:", etc).
+                    if (spritesKeyIndent >= 0 && indent <= spritesKeyIndent && !line.StartsWith("-", StringComparison.InvariantCulture)) {
+                        if (hasCurrentSprite) {
+                            sprites.Add(currentSprite);
+                            hasCurrentSprite = false;
+                            currentSprite = new SpriteMetaData();
+                        }
+                        inSpritesList = false;
+                        // Continue parsing other parts of the meta (do not 'continue' here).
+                    } else {
+                        if (line.StartsWith("- ", StringComparison.InvariantCulture)) {
+                            if (hasCurrentSprite) {
+                                sprites.Add(currentSprite);
+                                currentSprite = new SpriteMetaData();
+                            }
+                            hasCurrentSprite = true;
+                            currentSprite.alignment = 0;
+                            currentSprite.pivot = new Vector2(0.5f, 0.5f);
+                            currentSprite.border = Vector4.zero;
+                            continue;
+                        }
+
+                        if (!hasCurrentSprite) {
+                            continue;
+                        }
+
+                        // Name is typically on its own line in modern Unity metas.
+                        if (line.StartsWith("name:", StringComparison.InvariantCultureIgnoreCase)) {
+                            string n = line.Substring("name:".Length).Trim();
+                            if (!string.IsNullOrEmpty(n)) {
+                                currentSprite.name = n;
+                            }
+                            continue;
+                        }
+
+                        Rect rect;
+                        if (TryParseInlineRect(line, "rect:", out rect)) {
+                            currentSprite.rect = rect;
+                            continue;
+                        }
+
+                        Vector2 sp;
+                        if (TryParseInlineVector2(line, "pivot:", out sp)) {
+                            currentSprite.pivot = sp;
+                            continue;
+                        }
+
+                        Vector4 border;
+                        if (TryParseInlineVector4(line, "border:", out border)) {
+                            currentSprite.border = border;
+                            continue;
+                        }
+
+                        int spriteAlign;
+                        if (TryParseInt(line, "alignment:", out spriteAlign)) {
+                            currentSprite.alignment = spriteAlign;
+                            continue;
+                        }
+
+                        // Multi-line rect form:
+                        // rect:
+                        //   serializedVersion: 2
+                        //   x: 0
+                        //   y: 0
+                        //   width: 16
+                        //   height: 16
+                        if (line == "rect:") {
+                            float x = 0, y = 0, w = 0, h = 0;
+                            for (int j = i + 1; j < Math.Min(i + 12, lines.Length); j++) {
+                                string l2raw = lines[j];
+                                string l2 = l2raw.Trim();
+                                if (l2.StartsWith("-", StringComparison.InvariantCulture)) break;
+                                if (CountLeadingSpaces(l2raw) <= indent) break;
+
+                                float fx, fy, fw, fh;
+                                if (TryParseFloat(l2, "x:", out fx)) x = fx;
+                                if (TryParseFloat(l2, "y:", out fy)) y = fy;
+                                if (TryParseFloat(l2, "width:", out fw)) w = fw;
+                                if (TryParseFloat(l2, "height:", out fh)) h = fh;
+                            }
+                            currentSprite.rect = new Rect(x, y, w, h);
+                            continue;
+                        }
+
+                        continue;
+                    }
                 }
 
                 // Top-level scalar values we care about.
@@ -172,97 +270,11 @@ public sealed class SyncSpriteImportFromOriginal : AssetPostprocessor {
 
                 if (inSpriteSheet && line == "sprites:") {
                     inSpritesList = true;
+                    spritesKeyIndent = CountLeadingSpaces(raw);
                     if (sprites == null) {
                         sprites = new List<SpriteMetaData>();
                     }
                     continue;
-                }
-
-                if (inSpritesList) {
-                    // End of sprites list when leaving indentation.
-                    // Unity YAML is indentation based; we detect a new top-level key by minimal indent.
-                    // If we hit "outline:" / "physicsShape:" etc, stop.
-                    if (line == "outline:" || line == "physicsShape:" || line == "spritePackingTag:" || line == "userData:" || line == "assetBundleName:" || line == "assetBundleVariant:") {
-                        if (hasCurrentSprite) {
-                            sprites.Add(currentSprite);
-                            hasCurrentSprite = false;
-                            currentSprite = new SpriteMetaData();
-                        }
-                        inSpritesList = false;
-                        continue;
-                    }
-
-                    if (line.StartsWith("- ", StringComparison.InvariantCulture)) {
-                        if (hasCurrentSprite) {
-                            sprites.Add(currentSprite);
-                            currentSprite = new SpriteMetaData();
-                        }
-                        hasCurrentSprite = true;
-                        currentSprite.alignment = (int)UnityEngine.SpriteAlignment.Center;
-                        currentSprite.pivot = new Vector2(0.5f, 0.5f);
-                        currentSprite.border = Vector4.zero;
-
-                        string name = ExtractAfter(line, "name:");
-                        if (!string.IsNullOrEmpty(name)) {
-                            currentSprite.name = name;
-                        }
-                        continue;
-                    }
-
-                    if (!hasCurrentSprite) {
-                        continue;
-                    }
-
-                    // Handle inline rect/pivot/border.
-                    Rect rect;
-                    if (TryParseInlineRect(line, "rect:", out rect)) {
-                        currentSprite.rect = rect;
-                        continue;
-                    }
-
-                    Vector2 sp;
-                    if (TryParseInlineVector2(line, "pivot:", out sp)) {
-                        currentSprite.pivot = sp;
-                        continue;
-                    }
-
-                    Vector4 border;
-                    if (TryParseInlineVector4(line, "border:", out border)) {
-                        currentSprite.border = border;
-                        continue;
-                    }
-
-                    int spriteAlign;
-                    if (TryParseInt(line, "alignment:", out spriteAlign)) {
-                        currentSprite.alignment = spriteAlign;
-                        continue;
-                    }
-
-                    // Multi-line rect form:
-                    // rect:
-                    //   serializedVersion: 2
-                    //   x: 0
-                    //   y: 0
-                    //   width: 16
-                    //   height: 16
-                    if (line == "rect:") {
-                        float x = 0, y = 0, w = 0, h = 0;
-                        // Lookahead a small window.
-                        for (int j = i + 1; j < Math.Min(i + 10, lines.Length); j++) {
-                            string l2 = lines[j].Trim();
-                            float fx;
-                            float fy;
-                            float fw;
-                            float fh;
-                            if (TryParseFloat(l2, "x:", out fx)) x = fx;
-                            if (TryParseFloat(l2, "y:", out fy)) y = fy;
-                            if (TryParseFloat(l2, "width:", out fw)) w = fw;
-                            if (TryParseFloat(l2, "height:", out fh)) h = fh;
-                            if (l2.StartsWith("-", StringComparison.InvariantCulture)) break;
-                        }
-                        currentSprite.rect = new Rect(x, y, w, h);
-                        continue;
-                    }
                 }
             }
 
@@ -351,6 +363,22 @@ public sealed class SyncSpriteImportFromOriginal : AssetPostprocessor {
             if (!TryParseInlineFloat(inner, "y", out y)) return false;
             vec = new Vector2(x, y);
             return true;
+        }
+
+        private static int CountLeadingSpaces(string rawLine) {
+            if (string.IsNullOrEmpty(rawLine)) {
+                return 0;
+            }
+            int count = 0;
+            for (int i = 0; i < rawLine.Length; i++) {
+                char c = rawLine[i];
+                if (c == ' ') {
+                    count++;
+                } else {
+                    break;
+                }
+            }
+            return count;
         }
 
         private static bool TryParseInlineVector4(string line, string prefix, out Vector4 vec) {

@@ -3,7 +3,10 @@ guid: eb73965e5075bac45aa686d862d11f7f
 timeCreated: 1770071274
 licenseType: Pro
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: palette_0
+    21300002: palette_1
+    21300004: palette_2
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -67,7 +70,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: 
+      name: palette_0
       rect:
         serializedVersion: 2
         x: 0
@@ -81,7 +84,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: 
+      name: palette_1
       rect:
         serializedVersion: 2
         x: 12
@@ -95,7 +98,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: 
+      name: palette_2
       rect:
         serializedVersion: 2
         x: 24

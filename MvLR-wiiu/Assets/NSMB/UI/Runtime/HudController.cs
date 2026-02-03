@@ -62,7 +62,10 @@ namespace NSMB.UI {
             panelRt.anchoredPosition = new Vector2(16f, -16f);
             panelRt.sizeDelta = new Vector2(360f, 84f);
 
-            Sprite coinSprite = _sprites.LoadSingle("NSMB/UI/ministar");
+            Sprite coinSprite = _sprites.LoadFromSheet("NSMB/UI/ui", "hud_star");
+            if (coinSprite == null) {
+                coinSprite = _sprites.LoadSingle("NSMB/UI/ministar");
+            }
             Image coin = UiRuntimeUtil.CreateImage(panel.transform, "CoinIcon", coinSprite);
             RectTransform coinRt = coin.rectTransform;
             coinRt.anchorMin = new Vector2(0f, 0.5f);

@@ -17,6 +17,8 @@ namespace NSMB.Gameplay {
         private NSMB.UI.MenuController _menu;
         private NSMB.UI.HudController _hud;
         private NSMB.UI.PauseMenuController _pause;
+        private GameObject _levelRoot;
+        private string _selectedStageKey = "stage-grassland";
 
         private void Awake() {
             if (_instance != null && _instance != this) {
@@ -57,8 +59,13 @@ namespace NSMB.Gameplay {
         }
 
         public void StartGame() {
-            EnsureGameplayWorld();
+            EnsureGameplayWorld(_selectedStageKey);
             EnterInGame();
+        }
+
+        public void StartGame(string stageKey) {
+            _selectedStageKey = stageKey;
+            StartGame();
         }
 
         public void EnterInGame() {
@@ -86,24 +93,71 @@ namespace NSMB.Gameplay {
                 Destroy(player.gameObject);
             }
 
-            NSMB.World.TestLevelBootstrap level = Object.FindObjectOfType(typeof(NSMB.World.TestLevelBootstrap)) as NSMB.World.TestLevelBootstrap;
-            if (level != null) {
-                Destroy(level.gameObject);
+            if (_levelRoot != null) {
+                Destroy(_levelRoot);
+                _levelRoot = null;
             }
 
             EnterMenu();
         }
 
-        private static void EnsureGameplayWorld() {
-            if (Object.FindObjectOfType(typeof(NSMB.World.TestLevelBootstrap)) == null) {
-                GameObject go = new GameObject("TestLevel");
-                go.AddComponent<NSMB.World.TestLevelBootstrap>();
+        private void EnsureGameplayWorld(string stageKey) {
+            if (_levelRoot != null) {
+                Destroy(_levelRoot);
+                _levelRoot = null;
             }
+
+            _levelRoot = NSMB.World.LevelRegistry.Spawn(stageKey);
+            EnsureBackground(_levelRoot);
 
             NSMB.Player.PlayerMotor2D existing = Object.FindObjectOfType(typeof(NSMB.Player.PlayerMotor2D)) as NSMB.Player.PlayerMotor2D;
             if (existing == null) {
                 // Use bootstrap helper to create a player the same way.
                 NSMB.WiiU.WiiUBootstrap.EnsurePlayerForFlow();
+            }
+        }
+
+        private static void EnsureBackground(GameObject levelRoot) {
+            if (levelRoot == null) {
+                return;
+            }
+
+            // Gameplay background should be a subtle dark gradient. (The "uibackground" asset in this repo
+            // is a diagonal white stripe used by some menus, so do not use it here.)
+            Sprite[] bgSprites = NSMB.Content.ResourceSpriteCache.LoadAllSprites("NSMB/UI/bggradient");
+            Sprite bg = (bgSprites != null && bgSprites.Length > 0) ? bgSprites[0] : null;
+            if (bg == null) {
+                return;
+            }
+
+            Transform existing = levelRoot.transform.Find("Background");
+            GameObject go;
+            if (existing != null) {
+                go = existing.gameObject;
+            } else {
+                go = new GameObject("Background");
+                go.transform.parent = levelRoot.transform;
+                go.transform.localPosition = Vector3.zero;
+            }
+
+            SpriteRenderer sr = go.GetComponent<SpriteRenderer>();
+            if (sr == null) {
+                sr = go.AddComponent<SpriteRenderer>();
+            }
+            sr.sprite = bg;
+            sr.sortingOrder = -1000;
+            sr.color = Color.white;
+
+            // Scale to roughly fill the camera view (we keep it simple for 2017.1).
+            UnityEngine.Camera cam = UnityEngine.Camera.main;
+            if (cam != null && cam.orthographic) {
+                float height = cam.orthographicSize * 2f;
+                float width = height * cam.aspect;
+
+                Vector2 size = bg.bounds.size;
+                if (size.x > 0f && size.y > 0f) {
+                    go.transform.localScale = new Vector3(width / size.x, height / size.y, 1f);
+                }
             }
         }
     }

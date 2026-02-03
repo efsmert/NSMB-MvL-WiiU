@@ -3,7 +3,11 @@ guid: 4b56c877a3448c14889278dd1744fbfb
 timeCreated: 1770064886
 licenseType: Pro
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: rounded-rect_0
+    21300002: rounded-rect_1
+    21300004: rounded-rect_2
+    21300006: rounded-rect_3
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -67,7 +71,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: 
+      name: rounded-rect_0
       rect:
         serializedVersion: 2
         x: 0
@@ -81,7 +85,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: 
+      name: rounded-rect_1
       rect:
         serializedVersion: 2
         x: 0
@@ -95,7 +99,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: 
+      name: rounded-rect_2
       rect:
         serializedVersion: 2
         x: 0
@@ -109,7 +113,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: 
+      name: rounded-rect_3
       rect:
         serializedVersion: 2
         x: 0

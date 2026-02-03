@@ -3,7 +3,47 @@ guid: 25736e71d9751df46951bff50b080207
 timeCreated: 1770064886
 licenseType: Pro
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: bullet-bill_0
+    21300002: bullet-bill_1
+    21300004: bullet-bill_2
+    21300006: bullet-bill_3
+    21300008: bullet-bill_4
+    21300010: bullet-bill_5
+    21300012: bullet-bill_6
+    21300014: bullet-bill_7
+    21300016: bullet-bill_8
+    21300018: bullet-bill_9
+    21300020: bullet-bill_10
+    21300022: bullet-bill_11
+    21300024: bullet-bill_12
+    21300026: bullet-bill_13
+    21300028: bullet-bill_14
+    21300030: bullet-bill_15
+    21300032: bullet-bill_16
+    21300034: bullet-bill_17
+    21300036: bullet-bill_18
+    21300038: bullet-bill_19
+    21300040: bullet-bill_20
+    21300042: bullet-bill_21
+    21300044: bullet-bill_22
+    21300046: bullet-bill_23
+    21300048: bullet-bill_24
+    21300050: bullet-bill_25
+    21300052: bullet-bill_26
+    21300054: bullet-bill_27
+    21300056: bullet-bill_28
+    21300058: bullet-bill_29
+    21300060: bullet-bill_30
+    21300062: bullet-bill_31
+    21300064: bullet-bill_32
+    21300066: bullet-bill_33
+    21300068: bullet-bill_34
+    21300070: bullet-bill_35
+    21300072: bullet-bill_36
+    21300074: bullet-bill_37
+    21300076: bullet-bill_38
+    21300078: bullet-bill_39
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -30,7 +70,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: -1
+    filterMode: 0
     aniso: -1
     mipBias: -1
     wrapU: 1
@@ -39,7 +79,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -65,7 +105,567 @@ TextureImporter:
     overridden: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: bullet-bill_0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 45
+        width: 21
+        height: 13
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: bullet-bill_1
+      rect:
+        serializedVersion: 2
+        x: 23
+        y: 45
+        width: 21
+        height: 13
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: bullet-bill_2
+      rect:
+        serializedVersion: 2
+        x: 45
+        y: 45
+        width: 21
+        height: 13
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: bullet-bill_3
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 45
+        width: 21
+        height: 13
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: bullet-bill_4
+      rect:
+        serializedVersion: 2
+        x: 89
+        y: 45
+        width: 21
+        height: 13
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: bullet-bill_5
+      rect:
+        serializedVersion: 2
+        x: 111
+        y: 45
+        width: 21
+        height: 13
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: bullet-bill_6
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 45
+        width: 21
+        height: 13
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: bullet-bill_7
+      rect:
+        serializedVersion: 2
+        x: 155
+        y: 45
+        width: 21
+        height: 13
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: bullet-bill_8
+      rect:
+        serializedVersion: 2
+        x: 177
+        y: 45
+        width: 21
+        height: 13
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: bullet-bill_9
+      rect:
+        serializedVersion: 2
+        x: 199
+        y: 45
+        width: 21
+        height: 13
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: bullet-bill_10
+      rect:
+        serializedVersion: 2
+        x: 221
+        y: 45
+        width: 21
+        height: 13
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: bullet-bill_11
+      rect:
+        serializedVersion: 2
+        x: 243
+        y: 45
+        width: 21
+        height: 13
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: bullet-bill_12
+      rect:
+        serializedVersion: 2
+        x: 265
+        y: 45
+        width: 21
+        height: 13
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: bullet-bill_13
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 30
+        width: 21
+        height: 13
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: bullet-bill_14
+      rect:
+        serializedVersion: 2
+        x: 23
+        y: 30
+        width: 21
+        height: 13
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: bullet-bill_15
+      rect:
+        serializedVersion: 2
+        x: 45
+        y: 30
+        width: 21
+        height: 13
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: bullet-bill_16
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 30
+        width: 21
+        height: 13
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: bullet-bill_17
+      rect:
+        serializedVersion: 2
+        x: 89
+        y: 30
+        width: 21
+        height: 13
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: bullet-bill_18
+      rect:
+        serializedVersion: 2
+        x: 111
+        y: 30
+        width: 21
+        height: 13
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: bullet-bill_19
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 30
+        width: 21
+        height: 13
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: bullet-bill_20
+      rect:
+        serializedVersion: 2
+        x: 155
+        y: 30
+        width: 21
+        height: 13
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: bullet-bill_21
+      rect:
+        serializedVersion: 2
+        x: 177
+        y: 30
+        width: 21
+        height: 13
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: bullet-bill_22
+      rect:
+        serializedVersion: 2
+        x: 199
+        y: 30
+        width: 21
+        height: 13
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: bullet-bill_23
+      rect:
+        serializedVersion: 2
+        x: 221
+        y: 30
+        width: 21
+        height: 13
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: bullet-bill_24
+      rect:
+        serializedVersion: 2
+        x: 243
+        y: 30
+        width: 21
+        height: 13
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: bullet-bill_25
+      rect:
+        serializedVersion: 2
+        x: 265
+        y: 30
+        width: 21
+        height: 13
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: bullet-bill_26
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 15
+        width: 21
+        height: 13
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: bullet-bill_27
+      rect:
+        serializedVersion: 2
+        x: 23
+        y: 15
+        width: 21
+        height: 13
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: bullet-bill_28
+      rect:
+        serializedVersion: 2
+        x: 45
+        y: 15
+        width: 21
+        height: 13
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: bullet-bill_29
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 15
+        width: 21
+        height: 13
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: bullet-bill_30
+      rect:
+        serializedVersion: 2
+        x: 89
+        y: 15
+        width: 21
+        height: 13
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: bullet-bill_31
+      rect:
+        serializedVersion: 2
+        x: 111
+        y: 15
+        width: 21
+        height: 13
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: bullet-bill_32
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 15
+        width: 21
+        height: 13
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: bullet-bill_33
+      rect:
+        serializedVersion: 2
+        x: 155
+        y: 15
+        width: 21
+        height: 13
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: bullet-bill_34
+      rect:
+        serializedVersion: 2
+        x: 177
+        y: 15
+        width: 21
+        height: 13
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: bullet-bill_35
+      rect:
+        serializedVersion: 2
+        x: 199
+        y: 15
+        width: 21
+        height: 13
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: bullet-bill_36
+      rect:
+        serializedVersion: 2
+        x: 221
+        y: 15
+        width: 21
+        height: 13
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: bullet-bill_37
+      rect:
+        serializedVersion: 2
+        x: 243
+        y: 15
+        width: 21
+        height: 13
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: bullet-bill_38
+      rect:
+        serializedVersion: 2
+        x: 265
+        y: 15
+        width: 21
+        height: 13
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: bullet-bill_39
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 1
+        width: 21
+        height: 13
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
     outline: []
     physicsShape: []
   spritePackingTag: 
