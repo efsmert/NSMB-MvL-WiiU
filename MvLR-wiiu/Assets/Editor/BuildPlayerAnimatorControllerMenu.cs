@@ -8,6 +8,10 @@ public static class BuildPlayerAnimatorControllerMenu {
 
     [MenuItem("NSMB/Player Assets/Build Animator Controllers (From FBX Clips)")]
     private static void BuildControllers() {
+        BuildControllersForImport();
+    }
+
+    public static void BuildControllersForImport() {
         // Requires the models to already be copied into:
         // Assets/Resources/NSMB/Player/Models/Players/...
         BuildSmallController();
@@ -94,10 +98,11 @@ public static class BuildPlayerAnimatorControllerMenu {
         // Locomotion blend (idle <-> walk) driven by velocityMagnitude.
         AnimatorState locomotion = sm.AddState("locomotion", new Vector3(250f, 100f, 0f));
 
-        BlendTree tree;
-        locomotion.motion = CreateLocomotionBlendTree(out tree, idle, walk);
+        BlendTree tree = CreateOrReplaceLocomotionBlendTree(controller, "locomotion", idle, walk);
+        locomotion.motion = tree;
 
         sm.defaultState = locomotion;
+        EditorUtility.SetDirty(controller);
     }
 
     private static void BuildJumpFall(AnimatorController controller, AnimationClip jump, AnimationClip fall) {
@@ -144,16 +149,38 @@ public static class BuildPlayerAnimatorControllerMenu {
             backToGround.duration = 0f;
             backToGround.AddCondition(AnimatorConditionMode.If, 0f, "onGround");
         }
+
+        EditorUtility.SetDirty(controller);
     }
 
-    private static Motion CreateLocomotionBlendTree(out BlendTree tree, AnimationClip idle, AnimationClip walk) {
-        tree = new BlendTree();
-        tree.name = "locomotion";
+    private static BlendTree CreateOrReplaceLocomotionBlendTree(AnimatorController controller, string name, AnimationClip idle, AnimationClip walk) {
+        if (controller == null) {
+            return null;
+        }
+
+        string controllerPath = AssetDatabase.GetAssetPath(controller);
+        if (string.IsNullOrEmpty(controllerPath)) {
+            return null;
+        }
+
+        // Reuse an existing BlendTree subasset if present, otherwise create and add it as a subasset.
+        // IMPORTANT: If the BlendTree is not a subasset of the controller, Unity will NOT serialize it,
+        // causing locomotion to be missing after an editor reload (which looks like "only jump works").
+        BlendTree tree = FindSubAsset<BlendTree>(controllerPath, name);
+        if (tree == null) {
+            tree = new BlendTree();
+            tree.name = name;
+            tree.hideFlags = HideFlags.HideInHierarchy;
+            AssetDatabase.AddObjectToAsset(tree, controller);
+        }
+
         tree.blendType = BlendTreeType.Simple1D;
         tree.blendParameter = "velocityMagnitude";
         tree.useAutomaticThresholds = false;
 
-        // Fallback clips if missing: Unity will still create the controller, but locomotion will be static.
+        // Clear existing children.
+        tree.children = new ChildMotion[0];
+
         if (idle != null) {
             tree.AddChild(idle, 0f);
         }
@@ -162,13 +189,37 @@ public static class BuildPlayerAnimatorControllerMenu {
         }
 
         if (idle == null && walk == null) {
-            // Create an empty placeholder so controller is valid.
-            AnimationClip empty = new AnimationClip();
-            empty.name = "empty";
+            // Create a persistent empty placeholder so controller is valid.
+            AnimationClip empty = FindSubAsset<AnimationClip>(controllerPath, "empty");
+            if (empty == null) {
+                empty = new AnimationClip();
+                empty.name = "empty";
+                empty.hideFlags = HideFlags.HideInHierarchy;
+                AssetDatabase.AddObjectToAsset(empty, controller);
+            }
             tree.AddChild(empty, 0f);
         }
 
+        EditorUtility.SetDirty(tree);
         return tree;
+    }
+
+    private static T FindSubAsset<T>(string assetPath, string name) where T : UnityEngine.Object {
+        if (string.IsNullOrEmpty(assetPath) || string.IsNullOrEmpty(name)) {
+            return null;
+        }
+        UnityEngine.Object[] assets = AssetDatabase.LoadAllAssetsAtPath(assetPath);
+        if (assets == null) {
+            return null;
+        }
+        for (int i = 0; i < assets.Length; i++) {
+            T t = assets[i] as T;
+            if (t == null) continue;
+            if (string.Equals(t.name, name, StringComparison.InvariantCultureIgnoreCase)) {
+                return t;
+            }
+        }
+        return null;
     }
 
     private static AnimatorController CreateOrResetController(string assetPath) {

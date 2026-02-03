@@ -282,7 +282,8 @@ public sealed class PlayerModelImporterTuner : AssetPostprocessor {
         clip.takeName = info.name;
         clip.firstFrame = info.firstFrame;
         clip.lastFrame = info.lastFrame;
-        clip.loopTime = info.loopTime;
+        bool forceLoop = info.loopTime || NameImpliesLoop(info.name);
+        clip.loopTime = forceLoop;
         outClips.Add(clip);
     }
 
@@ -296,5 +297,16 @@ public sealed class PlayerModelImporterTuner : AssetPostprocessor {
     private static bool TryParseFloat(string s, out float value) {
         // Unity .meta uses invariant formatting.
         return float.TryParse(s, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out value);
+    }
+
+    private static bool NameImpliesLoop(string clipName) {
+        if (string.IsNullOrEmpty(clipName)) {
+            return false;
+        }
+        string lower = clipName.ToLowerInvariant();
+        if (lower.Contains("wait")) return true;
+        if (lower.Contains("walk")) return true;
+        if (lower.Contains("run")) return true;
+        return false;
     }
 }

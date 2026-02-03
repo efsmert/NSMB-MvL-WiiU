@@ -9,15 +9,21 @@ namespace NSMB.Input {
         }
 
         public static bool GetJumpDown() {
-            return UnityEngine.Input.GetKeyDown(KeyCode.Space);
+            // Keyboard + common gamepad "A" (Unity maps this to JoystickButton0 for most controllers).
+            return UnityEngine.Input.GetKeyDown(KeyCode.Space) || UnityEngine.Input.GetKeyDown(KeyCode.JoystickButton0);
         }
 
         public static bool GetJump() {
-            return UnityEngine.Input.GetKey(KeyCode.Space);
+            return UnityEngine.Input.GetKey(KeyCode.Space) || UnityEngine.Input.GetKey(KeyCode.JoystickButton0);
         }
 
         public static bool GetSprint() {
-            return UnityEngine.Input.GetKey(KeyCode.LeftShift) || UnityEngine.Input.GetKey(KeyCode.RightShift);
+            // Keyboard + common gamepad "B" (JoystickButton1 on most controllers).
+            return UnityEngine.Input.GetKey(KeyCode.LeftShift) ||
+                   UnityEngine.Input.GetKey(KeyCode.RightShift) ||
+                   UnityEngine.Input.GetKey(KeyCode.LeftControl) ||
+                   UnityEngine.Input.GetKey(KeyCode.RightControl) ||
+                   UnityEngine.Input.GetKey(KeyCode.JoystickButton1);
         }
 
         public static bool GetPauseDown() {

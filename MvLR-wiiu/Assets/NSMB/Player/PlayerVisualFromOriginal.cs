@@ -13,6 +13,8 @@ namespace NSMB.Player {
         public PlayerCharacter character = PlayerCharacter.Mario;
         public bool large = false;
         public int sortingOrder = 20;
+        // The exported player FBXs face the camera by default; yaw them so the character faces right in 2D.
+        public float yawOffsetDegrees = 90f;
 
         private PlayerMotor2D _motor;
         private Rigidbody2D _rb;
@@ -22,6 +24,7 @@ namespace NSMB.Player {
         private GameObject _modelRoot;
         private Animator _animator;
         private bool _facingRight = true;
+        private float _nextControllerRetryTime;
 
         private void Awake() {
             _motor = GetComponent<PlayerMotor2D>();
@@ -37,6 +40,24 @@ namespace NSMB.Player {
                 return;
             }
 
+            // If the controller wasn't imported yet when the player spawned (common when assets are still importing),
+            // retry to attach the generated controller so we don't get stuck in a wrong/empty state.
+            if (_animator != null) {
+                RuntimeAnimatorController cur = _animator.runtimeAnimatorController;
+                bool needs = (cur == null) || (cur.animationClips == null) || (cur.animationClips.Length == 0) ||
+                             (cur.animationClips.Length == 1 && cur.animationClips[0] != null &&
+                              string.Equals(cur.animationClips[0].name, "empty", System.StringComparison.InvariantCultureIgnoreCase));
+                if (needs && Time.time >= _nextControllerRetryTime) {
+                    _nextControllerRetryTime = Time.time + 1.0f;
+                    RuntimeAnimatorController controller = LoadGeneratedController(character, large);
+                    if (controller != null) {
+                        _animator.runtimeAnimatorController = controller;
+                        // reset playback
+                        _animator.Rebind();
+                    }
+                }
+            }
+
             float vx = _rb.velocity.x;
             float vy = _rb.velocity.y;
 
@@ -45,7 +66,8 @@ namespace NSMB.Player {
             }
 
             // Match original approach: rotate model around Y for facing.
-            _modelRoot.transform.localRotation = Quaternion.Euler(0f, _facingRight ? 0f : 180f, 0f);
+            float yaw = yawOffsetDegrees + (_facingRight ? 0f : 180f);
+            _modelRoot.transform.localRotation = Quaternion.Euler(0f, yaw, 0f);
 
             if (_animator != null) {
                 // These parameter names match the original controller (see MarioPlayerAnimator hashes).
@@ -259,6 +281,11 @@ namespace NSMB.Player {
                         }
                     }
 
+                    // Determine desired flipbook selection (if any) so we can apply it even when we don't replace.
+                    Vector2 desiredScale;
+                    Vector2 desiredOffset;
+                    bool wantsFlipbook = TryGetFlipbookTransform(mainTex, out desiredScale, out desiredOffset);
+
                     if (shaderBad || mat.shader == null || mat.shader.name == null ||
                         mat.shader.name.IndexOf("Unlit/", System.StringComparison.InvariantCultureIgnoreCase) < 0 ||
                         (mainTex != null && mat.mainTexture != mainTex)) {
@@ -272,11 +299,23 @@ namespace NSMB.Player {
                             // Player textures are flipbook atlases (e.g. mario_big.png is 128x1280 = 20 rows of 128x64).
                             // The original ShaderGraph selects the correct slice; in Unity 2017 we mimic this by selecting
                             // the first row/frame via texture scale+offset.
-                            ApplyFlipbookIfNeeded(repl, mainTex);
+                            if (wantsFlipbook) {
+                                repl.mainTextureScale = desiredScale;
+                                repl.mainTextureOffset = desiredOffset;
+                            }
                         }
                         repl.color = Color.white;
                         newMats[m] = repl;
                         changed = true;
+                    } else if (wantsFlipbook) {
+                        // Already unlit, but still needs flipbook selection.
+                        if (mat.mainTextureScale != desiredScale || mat.mainTextureOffset != desiredOffset) {
+                            Material repl2 = new Material(mat);
+                            repl2.mainTextureScale = desiredScale;
+                            repl2.mainTextureOffset = desiredOffset;
+                            newMats[m] = repl2;
+                            changed = true;
+                        }
                     }
                 }
 
@@ -378,49 +417,48 @@ namespace NSMB.Player {
             return textures[0];
         }
 
-        private static void ApplyFlipbookIfNeeded(Material mat, Texture tex) {
-            if (mat == null || tex == null) {
-                return;
-            }
+        private static bool TryGetFlipbookTransform(Texture tex, out Vector2 scale, out Vector2 offset) {
+            scale = Vector2.one;
+            offset = Vector2.zero;
 
             Texture2D t = tex as Texture2D;
             if (t == null) {
-                return;
+                return false;
             }
 
             int w = t.width;
             int h = t.height;
             if (w <= 0 || h <= 0) {
-                return;
+                return false;
             }
 
-            // Vertical flipbook: mario_big.png is 128x1280 => sliceHeight = w/2 = 64, rows = 20.
-            if (h > w && (w % 2) == 0) {
-                int sliceHeight = w / 2;
-                if (sliceHeight > 0 && (h % sliceHeight) == 0) {
-                    int rows = h / sliceHeight;
-                    if (rows > 1) {
-                        float invRows = 1f / rows;
-                        // Choose row 0 from the TOP (Unity UV origin is bottom).
-                        mat.mainTextureScale = new Vector2(1f, invRows);
-                        mat.mainTextureOffset = new Vector2(0f, 1f - invRows);
-                    }
-                    return;
-                }
+            // Only apply flipbook slicing for tall textures (body). Do NOT touch eyes; their UVs are already authored.
+            if (h <= w) {
+                return false;
             }
 
-            // Horizontal flipbook: mario_eyes.png is 64x32 => sliceWidth = h/2 = 16, cols = 4.
-            if (w > h && (h % 2) == 0) {
-                int sliceWidth = h / 2;
-                if (sliceWidth > 0 && (w % sliceWidth) == 0) {
-                    int cols = w / sliceWidth;
-                    if (cols > 1) {
-                        float invCols = 1f / cols;
-                        mat.mainTextureScale = new Vector2(invCols, 1f);
-                        mat.mainTextureOffset = Vector2.zero;
-                    }
+            // Prefer half-height rows (rows = h / (w/2)). mario_big.png is 128x1280 => 20 rows of 64px.
+            int rows = 0;
+            if ((w % 2) == 0) {
+                int frameH = w / 2;
+                if (frameH > 0 && (h % frameH) == 0) {
+                    rows = h / frameH;
                 }
             }
+            if (rows <= 1 && (h % w) == 0) {
+                // Fallback to square rows if present.
+                rows = h / w;
+            }
+
+            if (rows <= 1) {
+                return false;
+            }
+
+            float invRows = 1f / rows;
+            scale = new Vector2(1f, invRows);
+            // Default to the TOP row (row 0 from top).
+            offset = new Vector2(0f, 1f - invRows);
+            return true;
         }
 
         private static string Normalize(string s) {
