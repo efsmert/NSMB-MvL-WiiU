@@ -38,23 +38,15 @@ public static class SetupGameplaySpritesMenu {
             Directory.CreateDirectory(resourcesAtlases);
         }
 
-        string[] relativePngs = new[] {
-            // Entity
-            Path.Combine("Entity", "goomba.png"),
-            Path.Combine("Entity", "powerups.png"),
-
-            // Terrain
-            Path.Combine("Terrain", "platforms.png"),
-            Path.Combine("Terrain", "animated-blocks.png"),
-            Path.Combine("Terrain", "dotted-coins.png"),
-            Path.Combine("Terrain", "grass.png"),
-        };
+        // Copy all atlas PNGs (Entity + Terrain). This is heavier to import, but it ensures
+        // we can build levels and enemies without constantly revisiting the sprite pipeline.
+        string[] absolutePngs = Directory.GetFiles(originalAtlases, "*.png", SearchOption.AllDirectories);
 
         List<string> importedAssetPaths = new List<string>();
 
-        for (int i = 0; i < relativePngs.Length; i++) {
-            string rel = relativePngs[i];
-            string src = Path.Combine(originalAtlases, rel);
+        for (int i = 0; i < absolutePngs.Length; i++) {
+            string src = absolutePngs[i];
+            string rel = src.Substring(originalAtlases.Length).TrimStart('\\', '/');
             string dst = Path.Combine(resourcesAtlases, rel);
 
             if (!File.Exists(src)) {

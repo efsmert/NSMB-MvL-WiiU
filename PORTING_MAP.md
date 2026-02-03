@@ -87,3 +87,15 @@ We rebuild the game in Unity 2017.1 with:
 6. Networking (later):
    - Decide between Photon PUN 1.x or a custom solution compatible with 2017.1.
 
+## Day-to-day workflow (Unity 2017 target)
+
+These are Unity Editor menu items (top menu bar), not terminal commands:
+
+1. Copy atlases from the original project:
+   - `NSMB/Setup Gameplay Sprites (Mirror Atlases To Resources)`
+2. Sync import settings/slicing from the original project’s `.meta` files:
+   - `NSMB/Resync Sprite Import Settings (From Original)`
+3. Import a playable stage definition (first milestone):
+   - `NSMB/Import/Import Default Grass Stage (Tilemap + Entities)`
+4. Press Play and start the game from the menu:
+   - The runtime loads `Resources/NSMB/Levels/<stageKey>.asset` when present (e.g. `stage-grassland`), otherwise it falls back to test bootstraps.

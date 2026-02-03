@@ -96,6 +96,14 @@ namespace NSMB.WiiU {
             BindCameraTarget(player.transform);
         }
 
+        public static void EnsurePlayerForFlowAt(Vector3 worldPosition) {
+            EnsurePlayerForFlow();
+            NSMB.Player.PlayerMotor2D player = Object.FindObjectOfType(typeof(NSMB.Player.PlayerMotor2D)) as NSMB.Player.PlayerMotor2D;
+            if (player != null) {
+                player.transform.position = worldPosition;
+            }
+        }
+
         private static void BindCameraTarget(Transform target) {
             UnityEngine.Camera cam = UnityEngine.Camera.main;
             if (cam == null) {

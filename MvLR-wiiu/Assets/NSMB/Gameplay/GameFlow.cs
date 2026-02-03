@@ -110,10 +110,18 @@ namespace NSMB.Gameplay {
             _levelRoot = NSMB.World.LevelRegistry.Spawn(stageKey);
             EnsureBackground(_levelRoot);
 
+            NSMB.World.StageDefinition imported = Resources.Load(typeof(NSMB.World.StageDefinition), "NSMB/Levels/" + stageKey) as NSMB.World.StageDefinition;
+            Vector3 spawn = Vector3.zero;
+            if (imported != null) {
+                spawn = new Vector3(imported.spawnPoint.x, imported.spawnPoint.y, 0f);
+            }
+
             NSMB.Player.PlayerMotor2D existing = Object.FindObjectOfType(typeof(NSMB.Player.PlayerMotor2D)) as NSMB.Player.PlayerMotor2D;
             if (existing == null) {
                 // Use bootstrap helper to create a player the same way.
-                NSMB.WiiU.WiiUBootstrap.EnsurePlayerForFlow();
+                NSMB.WiiU.WiiUBootstrap.EnsurePlayerForFlowAt(spawn);
+            } else if (imported != null) {
+                existing.transform.position = spawn;
             }
         }
 
