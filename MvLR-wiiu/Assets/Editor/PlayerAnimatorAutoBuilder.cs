@@ -45,7 +45,7 @@ public sealed class PlayerAnimatorAutoBuilder : AssetPostprocessor {
         AnimatorController small = AssetDatabase.LoadAssetAtPath(smallPath, typeof(AnimatorController)) as AnimatorController;
         AnimatorController big = AssetDatabase.LoadAssetAtPath(bigPath, typeof(AnimatorController)) as AnimatorController;
 
-        if (IsControllerReady(small) && IsControllerReady(big)) {
+        if (IsControllerReady(small) && IsLargeControllerReady(big)) {
             return;
         }
 
@@ -109,6 +109,29 @@ public sealed class PlayerAnimatorAutoBuilder : AssetPostprocessor {
 
         // Controllers with only jump/fall should be rebuilt.
         return hasWait && hasWalk;
+    }
+
+    private static bool IsLargeControllerReady(AnimatorController controller) {
+        if (!IsControllerReady(controller)) {
+            return false;
+        }
+
+        // Unity 6 parity: the large (Mushroom) state uses "wait_mario_model_mg"/"walk_mario_model_mg".
+        // The "big_wait_*"/"big_walk_*" clips are used by MegaMushroom states.
+        AnimationClip[] clips = controller.animationClips;
+        bool hasNormalWait = false;
+        bool hasNormalWalk = false;
+        if (clips != null) {
+            for (int i = 0; i < clips.Length; i++) {
+                AnimationClip c = clips[i];
+                if (c == null || string.IsNullOrEmpty(c.name)) continue;
+                string n = c.name.ToLowerInvariant();
+                if (!hasNormalWait && n.Contains("wait_mario_model_mg")) hasNormalWait = true;
+                if (!hasNormalWalk && n.Contains("walk_mario_model_mg")) hasNormalWalk = true;
+            }
+        }
+
+        return hasNormalWait && hasNormalWalk;
     }
 
     private static bool HasParam(AnimatorController controller, string name) {

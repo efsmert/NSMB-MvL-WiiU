@@ -5,11 +5,19 @@ namespace NSMB.Blocks {
     public sealed class BlockBump : MonoBehaviour {
         public float bumpHeight = 0.18f;
         public float bumpDuration = 0.10f;
+        public bool playBumpSfx = true;
+        public NSMB.Audio.SoundEffectId bumpSfxId = NSMB.Audio.SoundEffectId.World_Block_Bump;
         public float bumpSfxVolume = 0.8f;
 
         private Vector3 _startPos;
         private bool _bumping;
         private float _t;
+
+        private NSMB.Player.PlayerMotor2D _lastBumper;
+
+        public NSMB.Player.PlayerMotor2D LastBumper {
+            get { return _lastBumper; }
+        }
 
         private void Awake() {
             _startPos = transform.position;
@@ -34,9 +42,15 @@ namespace NSMB.Blocks {
                 yOffset = 0f;
                 _bumping = false;
                 _t = 0f;
+                SendMessage("OnBumpFinished", SendMessageOptions.DontRequireReceiver);
             }
 
             transform.position = _startPos + new Vector3(0f, yOffset, 0f);
+        }
+
+        public void TriggerBump(NSMB.Player.PlayerMotor2D bumper) {
+            _lastBumper = bumper;
+            TriggerBump();
         }
 
         public void TriggerBump() {
@@ -48,11 +62,13 @@ namespace NSMB.Blocks {
             _t = 0f;
             _startPos = transform.position;
 
-            NSMB.Core.GameRoot root = NSMB.Core.GameRoot.Instance;
-            if (root != null) {
-                NSMB.Audio.AudioManager audio = root.GetComponent<NSMB.Audio.AudioManager>();
-                if (audio != null) {
-                    audio.PlayOneShot(NSMB.Audio.SoundEffectId.World_Block_Bump, bumpSfxVolume);
+            if (playBumpSfx) {
+                NSMB.Core.GameRoot root = NSMB.Core.GameRoot.Instance;
+                if (root != null) {
+                    NSMB.Audio.AudioManager audio = root.GetComponent<NSMB.Audio.AudioManager>();
+                    if (audio != null) {
+                        audio.PlayOneShot(bumpSfxId, bumpSfxVolume);
+                    }
                 }
             }
 

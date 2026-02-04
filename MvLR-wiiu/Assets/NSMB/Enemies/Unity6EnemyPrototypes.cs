@@ -36,7 +36,8 @@ namespace NSMB.Enemies {
                 if (anim == null) {
                     anim = graphics.gameObject.AddComponent<NSMB.Visual.SimpleSpriteAnimator>();
                 }
-                anim.SetFrames(frames, 60f, true);
+                // Unity 6 controller plays the walk clip at 0.33333334 speed (60 * 1/3 = 20 fps effective).
+                anim.SetFrames(frames, 20f, true);
             }
         }
 

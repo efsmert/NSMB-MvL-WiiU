@@ -3,6 +3,29 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace NSMB.World {
+    public enum StageTileInteractionKind : byte {
+        None = 0,
+        BreakableBrick = 1,
+        CoinTile = 2,
+        PowerupTile = 3,
+        RouletteTile = 4,
+    }
+
+    public enum StagePowerupKind : byte {
+        None = 0,
+        Mushroom = 1,
+        FireFlower = 2,
+        IceFlower = 3,
+        BlueShell = 4,
+        MiniMushroom = 5,
+        MegaMushroom = 6,
+        PropellerMushroom = 7,
+        Starman = 8,
+        OneUp = 9,
+        HammerSuit = 10,
+        GoldBlock = 11,
+    }
+
     [Serializable]
     public struct StageTile {
         public int x;
@@ -12,6 +35,15 @@ namespace NSMB.World {
         public bool flipX;
         public bool flipY;
         public bool solid;
+
+        // Optional special behavior derived from the original Quantum StageTile assets.
+        public StageTileInteractionKind interactionKind;
+        public int breakingRules;
+        public bool bumpIfNotBroken;
+        public string usedAtlasPath;
+        public string usedSpriteName;
+        public StagePowerupKind smallPowerup;
+        public StagePowerupKind largePowerup;
     }
 
     [Serializable]

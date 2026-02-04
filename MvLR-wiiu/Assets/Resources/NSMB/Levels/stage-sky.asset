@@ -18,58 +18,100 @@ MonoBehaviour:
   isWrappingLevel: 1
   tileLayers:
   - name: Tilemap_Background
-    resourcesAtlasPath: NSMB/Sprites/Atlases/Terrain/cloud
+    resourcesAtlasPath: NSMB/Sprites/Atlases/Terrain/sky-mushroom
     sortingOrder: -1005
-    position: {x: -2, y: 6, z: 0}
-    scale: {x: 1, y: 1, z: 1}
+    position: {x: -1, y: 3, z: 0}
+    scale: {x: 0.5, y: 0.5, z: 1}
     tiles:
     - x: -22
       y: -6
       spriteIndex: 0
-      spriteName: 
+      spriteName: sky-mushroom_73
       flipX: 0
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -21
       y: -6
       spriteIndex: 0
-      spriteName: 
+      spriteName: sky-mushroom_73
       flipX: 1
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -22
       y: -5
       spriteIndex: 0
-      spriteName: 
+      spriteName: sky-mushroom_73
       flipX: 0
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -21
       y: -5
       spriteIndex: 0
-      spriteName: 
+      spriteName: sky-mushroom_73
       flipX: 1
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -22
       y: -4
       spriteIndex: 0
-      spriteName: 
+      spriteName: sky-mushroom_73
       flipX: 0
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -21
       y: -4
       spriteIndex: 0
-      spriteName: 
+      spriteName: sky-mushroom_73
       flipX: 1
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
   - name: Tilemap_Ground_animated-blocks
     resourcesAtlasPath: NSMB/Sprites/Atlases/Terrain/animated-blocks
     sortingOrder: -2
-    position: {x: -2, y: 6, z: 0}
-    scale: {x: 1, y: 1, z: 1}
+    position: {x: -1, y: 3, z: 0}
+    scale: {x: 0.5, y: 0.5, z: 1}
     tiles:
     - x: -9
       y: -9
@@ -78,13 +120,27 @@ MonoBehaviour:
       flipX: 0
       flipY: 0
       solid: 0
+      interactionKind: 2
+      breakingRules: 320
+      bumpIfNotBroken: 0
+      usedAtlasPath: NSMB/Sprites/Atlases/Terrain/generic-blocks
+      usedSpriteName: Tileset 0 (Jyotyu)_4
+      smallPowerup: 0
+      largePowerup: 0
     - x: -23
       y: -5
       spriteIndex: 53
-      spriteName: animation_7
+      spriteName: animation_4
       flipX: 0
       flipY: 0
       solid: 0
+      interactionKind: 1
+      breakingRules: 508
+      bumpIfNotBroken: 1
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -22
       y: -5
       spriteIndex: 19
@@ -92,20 +148,41 @@ MonoBehaviour:
       flipX: 0
       flipY: 0
       solid: 0
+      interactionKind: 3
+      breakingRules: 320
+      bumpIfNotBroken: 0
+      usedAtlasPath: NSMB/Sprites/Atlases/Terrain/generic-blocks
+      usedSpriteName: Tileset 0 (Jyotyu)_4
+      smallPowerup: 1
+      largePowerup: 2
     - x: -21
       y: -5
       spriteIndex: 53
-      spriteName: animation_7
+      spriteName: animation_4
       flipX: 0
       flipY: 0
       solid: 0
+      interactionKind: 1
+      breakingRules: 508
+      bumpIfNotBroken: 1
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -7
       y: 2
       spriteIndex: 53
-      spriteName: animation_7
+      spriteName: animation_4
       flipX: 0
       flipY: 0
       solid: 0
+      interactionKind: 1
+      breakingRules: 508
+      bumpIfNotBroken: 1
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -6
       y: 2
       spriteIndex: 19
@@ -113,20 +190,41 @@ MonoBehaviour:
       flipX: 0
       flipY: 0
       solid: 0
+      interactionKind: 2
+      breakingRules: 320
+      bumpIfNotBroken: 0
+      usedAtlasPath: NSMB/Sprites/Atlases/Terrain/generic-blocks
+      usedSpriteName: Tileset 0 (Jyotyu)_4
+      smallPowerup: 0
+      largePowerup: 0
     - x: -5
       y: 2
       spriteIndex: 53
-      spriteName: animation_7
+      spriteName: animation_4
       flipX: 0
       flipY: 0
       solid: 0
+      interactionKind: 1
+      breakingRules: 508
+      bumpIfNotBroken: 1
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 11
       y: 6
       spriteIndex: 53
-      spriteName: animation_7
+      spriteName: animation_4
       flipX: 0
       flipY: 0
       solid: 0
+      interactionKind: 1
+      breakingRules: 508
+      bumpIfNotBroken: 1
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 12
       y: 6
       spriteIndex: 19
@@ -134,13 +232,27 @@ MonoBehaviour:
       flipX: 0
       flipY: 0
       solid: 0
+      interactionKind: 3
+      breakingRules: 320
+      bumpIfNotBroken: 0
+      usedAtlasPath: NSMB/Sprites/Atlases/Terrain/generic-blocks
+      usedSpriteName: Tileset 0 (Jyotyu)_4
+      smallPowerup: 1
+      largePowerup: 2
     - x: 13
       y: 6
       spriteIndex: 53
-      spriteName: animation_7
+      spriteName: animation_4
       flipX: 0
       flipY: 0
       solid: 0
+      interactionKind: 1
+      breakingRules: 508
+      bumpIfNotBroken: 1
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 14
       y: 6
       spriteIndex: 19
@@ -148,19 +260,243 @@ MonoBehaviour:
       flipX: 0
       flipY: 0
       solid: 0
+      interactionKind: 2
+      breakingRules: 320
+      bumpIfNotBroken: 0
+      usedAtlasPath: NSMB/Sprites/Atlases/Terrain/generic-blocks
+      usedSpriteName: Tileset 0 (Jyotyu)_4
+      smallPowerup: 0
+      largePowerup: 0
     - x: 15
       y: 6
       spriteIndex: 53
-      spriteName: animation_7
+      spriteName: animation_4
       flipX: 0
       flipY: 0
       solid: 0
+      interactionKind: 1
+      breakingRules: 508
+      bumpIfNotBroken: 1
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
   - name: Tilemap_Ground_grass
     resourcesAtlasPath: NSMB/Sprites/Atlases/Terrain/grass
     sortingOrder: -2
-    position: {x: -2, y: 6, z: 0}
-    scale: {x: 1, y: 1, z: 1}
+    position: {x: -1, y: 3, z: 0}
+    scale: {x: 0.5, y: 0.5, z: 1}
     tiles:
+    - x: -18
+      y: -10
+      spriteIndex: 48
+      spriteName: grass_0
+      flipX: 0
+      flipY: 0
+      solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
+    - x: -17
+      y: -10
+      spriteIndex: 48
+      spriteName: grass_0
+      flipX: 0
+      flipY: 0
+      solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
+    - x: -16
+      y: -10
+      spriteIndex: 48
+      spriteName: grass_0
+      flipX: 0
+      flipY: 0
+      solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
+    - x: -15
+      y: -10
+      spriteIndex: 48
+      spriteName: grass_0
+      flipX: 0
+      flipY: 0
+      solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
+    - x: -14
+      y: -10
+      spriteIndex: 48
+      spriteName: grass_0
+      flipX: 0
+      flipY: 0
+      solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
+    - x: -2
+      y: -10
+      spriteIndex: 48
+      spriteName: grass_0
+      flipX: 0
+      flipY: 0
+      solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
+    - x: -1
+      y: -10
+      spriteIndex: 48
+      spriteName: grass_0
+      flipX: 0
+      flipY: 0
+      solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
+    - x: 0
+      y: -10
+      spriteIndex: 48
+      spriteName: grass_0
+      flipX: 0
+      flipY: 0
+      solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
+    - x: 1
+      y: -10
+      spriteIndex: 48
+      spriteName: grass_0
+      flipX: 0
+      flipY: 0
+      solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
+    - x: 2
+      y: -10
+      spriteIndex: 48
+      spriteName: grass_0
+      flipX: 0
+      flipY: 0
+      solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
+    - x: 3
+      y: -10
+      spriteIndex: 48
+      spriteName: grass_0
+      flipX: 0
+      flipY: 0
+      solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
+    - x: 4
+      y: -10
+      spriteIndex: 48
+      spriteName: grass_0
+      flipX: 0
+      flipY: 0
+      solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
+    - x: 5
+      y: -10
+      spriteIndex: 48
+      spriteName: grass_0
+      flipX: 0
+      flipY: 0
+      solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
+    - x: 6
+      y: -10
+      spriteIndex: 48
+      spriteName: grass_0
+      flipX: 0
+      flipY: 0
+      solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
+    - x: 7
+      y: -10
+      spriteIndex: 48
+      spriteName: grass_0
+      flipX: 0
+      flipY: 0
+      solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -5
       y: -9
       spriteIndex: 20
@@ -168,6 +504,13 @@ MonoBehaviour:
       flipX: 0
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -4
       y: -9
       spriteIndex: 21
@@ -175,6 +518,13 @@ MonoBehaviour:
       flipX: 0
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 14
       y: -9
       spriteIndex: 22
@@ -182,6 +532,13 @@ MonoBehaviour:
       flipX: 0
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 15
       y: -9
       spriteIndex: 23
@@ -189,6 +546,13 @@ MonoBehaviour:
       flipX: 0
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 16
       y: -9
       spriteIndex: 24
@@ -196,6 +560,13 @@ MonoBehaviour:
       flipX: 0
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 17
       y: -9
       spriteIndex: 25
@@ -203,6 +574,13 @@ MonoBehaviour:
       flipX: 0
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 18
       y: -9
       spriteIndex: 26
@@ -210,6 +588,13 @@ MonoBehaviour:
       flipX: 0
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 19
       y: -9
       spriteIndex: 27
@@ -217,6 +602,13 @@ MonoBehaviour:
       flipX: 0
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -5
       y: -8
       spriteIndex: 30
@@ -224,6 +616,13 @@ MonoBehaviour:
       flipX: 0
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -4
       y: -8
       spriteIndex: 31
@@ -231,6 +630,13 @@ MonoBehaviour:
       flipX: 0
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 14
       y: -8
       spriteIndex: 33
@@ -238,6 +644,13 @@ MonoBehaviour:
       flipX: 0
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 15
       y: -8
       spriteIndex: 34
@@ -245,6 +658,13 @@ MonoBehaviour:
       flipX: 0
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 16
       y: -8
       spriteIndex: 35
@@ -252,6 +672,13 @@ MonoBehaviour:
       flipX: 0
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 17
       y: -8
       spriteIndex: 36
@@ -259,6 +686,13 @@ MonoBehaviour:
       flipX: 0
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 18
       y: -8
       spriteIndex: 37
@@ -266,6 +700,13 @@ MonoBehaviour:
       flipX: 0
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 19
       y: -8
       spriteIndex: 38
@@ -273,6 +714,13 @@ MonoBehaviour:
       flipX: 0
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 15
       y: -7
       spriteIndex: 42
@@ -280,6 +728,13 @@ MonoBehaviour:
       flipX: 0
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 16
       y: -7
       spriteIndex: 43
@@ -287,6 +742,13 @@ MonoBehaviour:
       flipX: 0
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 17
       y: -7
       spriteIndex: 44
@@ -294,6 +756,13 @@ MonoBehaviour:
       flipX: 0
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 18
       y: -7
       spriteIndex: 45
@@ -301,6 +770,153 @@ MonoBehaviour:
       flipX: 0
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
+    - x: -16
+      y: -6
+      spriteIndex: 48
+      spriteName: grass_0
+      flipX: 0
+      flipY: 0
+      solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
+    - x: -15
+      y: -6
+      spriteIndex: 48
+      spriteName: grass_0
+      flipX: 0
+      flipY: 0
+      solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
+    - x: -14
+      y: -6
+      spriteIndex: 48
+      spriteName: grass_0
+      flipX: 0
+      flipY: 0
+      solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
+    - x: -13
+      y: -6
+      spriteIndex: 48
+      spriteName: grass_0
+      flipX: 0
+      flipY: 0
+      solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
+    - x: -12
+      y: -6
+      spriteIndex: 48
+      spriteName: grass_0
+      flipX: 0
+      flipY: 0
+      solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
+    - x: 8
+      y: 2
+      spriteIndex: 48
+      spriteName: grass_0
+      flipX: 0
+      flipY: 0
+      solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
+    - x: 9
+      y: 2
+      spriteIndex: 48
+      spriteName: grass_0
+      flipX: 0
+      flipY: 0
+      solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
+    - x: 10
+      y: 2
+      spriteIndex: 48
+      spriteName: grass_0
+      flipX: 0
+      flipY: 0
+      solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
+    - x: 11
+      y: 2
+      spriteIndex: 48
+      spriteName: grass_0
+      flipX: 0
+      flipY: 0
+      solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
+    - x: 12
+      y: 2
+      spriteIndex: 48
+      spriteName: grass_0
+      flipX: 0
+      flipY: 0
+      solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 14
       y: 3
       spriteIndex: 20
@@ -308,6 +924,13 @@ MonoBehaviour:
       flipX: 0
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 15
       y: 3
       spriteIndex: 21
@@ -315,6 +938,13 @@ MonoBehaviour:
       flipX: 0
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 14
       y: 4
       spriteIndex: 30
@@ -322,6 +952,13 @@ MonoBehaviour:
       flipX: 0
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 15
       y: 4
       spriteIndex: 31
@@ -329,1825 +966,3295 @@ MonoBehaviour:
       flipX: 0
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
   - name: Tilemap_Ground
     resourcesAtlasPath: NSMB/Sprites/Atlases/Terrain/sky-mushroom
     sortingOrder: -2
-    position: {x: -2, y: 6, z: 0}
-    scale: {x: 1, y: 1, z: 1}
+    position: {x: -1, y: 3, z: 0}
+    scale: {x: 0.5, y: 0.5, z: 1}
     tiles:
     - x: -26
       y: -13
       spriteIndex: 0
-      spriteName: 
+      spriteName: sky-mushroom_41
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 21
       y: -13
       spriteIndex: 1
-      spriteName: 
+      spriteName: sky-mushroom_42
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -26
       y: -12
       spriteIndex: 0
-      spriteName: 
+      spriteName: sky-mushroom_41
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 21
       y: -12
       spriteIndex: 1
-      spriteName: 
+      spriteName: sky-mushroom_42
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -29
       y: -11
       spriteIndex: 2
-      spriteName: 
+      spriteName: sky-mushroom_73
       flipX: 0
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -28
       y: -11
       spriteIndex: 2
-      spriteName: 
+      spriteName: sky-mushroom_73
       flipX: 1
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -26
       y: -11
       spriteIndex: 3
-      spriteName: 
+      spriteName: sky-mushroom_44
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -25
       y: -11
       spriteIndex: 4
-      spriteName: 
+      spriteName: sky-mushroom_56
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -24
       y: -11
       spriteIndex: 4
-      spriteName: 
+      spriteName: sky-mushroom_56
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -23
       y: -11
       spriteIndex: 5
-      spriteName: 
+      spriteName: sky-mushroom_55
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -22
       y: -11
       spriteIndex: 2
-      spriteName: 
+      spriteName: sky-mushroom_73
       flipX: 0
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -22
       y: -11
       spriteIndex: 5
-      spriteName: 
+      spriteName: sky-mushroom_55
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -21
       y: -11
       spriteIndex: 2
-      spriteName: 
+      spriteName: sky-mushroom_73
       flipX: 1
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -21
       y: -11
       spriteIndex: 6
-      spriteName: 
+      spriteName: sky-mushroom_46
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -18
       y: -11
       spriteIndex: 0
-      spriteName: 
+      spriteName: sky-mushroom_41
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -17
       y: -11
       spriteIndex: 0
-      spriteName: 
+      spriteName: sky-mushroom_41
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -16
       y: -11
       spriteIndex: 0
-      spriteName: 
+      spriteName: sky-mushroom_41
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -15
       y: -11
       spriteIndex: 0
-      spriteName: 
+      spriteName: sky-mushroom_41
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -14
       y: -11
       spriteIndex: 0
-      spriteName: 
+      spriteName: sky-mushroom_41
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -13
       y: -11
       spriteIndex: 7
-      spriteName: 
+      spriteName: sky-mushroom_45
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -12
       y: -11
       spriteIndex: 5
-      spriteName: 
+      spriteName: sky-mushroom_55
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -11
       y: -11
       spriteIndex: 4
-      spriteName: 
+      spriteName: sky-mushroom_56
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -10
       y: -11
       spriteIndex: 4
-      spriteName: 
+      spriteName: sky-mushroom_56
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -9
       y: -11
       spriteIndex: 5
-      spriteName: 
+      spriteName: sky-mushroom_55
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -8
       y: -11
       spriteIndex: 4
-      spriteName: 
+      spriteName: sky-mushroom_56
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -7
       y: -11
       spriteIndex: 4
-      spriteName: 
+      spriteName: sky-mushroom_56
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -6
       y: -11
       spriteIndex: 5
-      spriteName: 
+      spriteName: sky-mushroom_55
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -5
       y: -11
       spriteIndex: 5
-      spriteName: 
+      spriteName: sky-mushroom_55
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -4
       y: -11
       spriteIndex: 4
-      spriteName: 
+      spriteName: sky-mushroom_56
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -3
       y: -11
       spriteIndex: 6
-      spriteName: 
+      spriteName: sky-mushroom_46
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -2
       y: -11
       spriteIndex: 0
-      spriteName: 
+      spriteName: sky-mushroom_41
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -1
       y: -11
       spriteIndex: 0
-      spriteName: 
+      spriteName: sky-mushroom_41
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 0
       y: -11
       spriteIndex: 0
-      spriteName: 
+      spriteName: sky-mushroom_41
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 1
       y: -11
       spriteIndex: 0
-      spriteName: 
+      spriteName: sky-mushroom_41
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 2
       y: -11
       spriteIndex: 8
-      spriteName: 
+      spriteName: sky-mushroom_33
       flipX: 0
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 2
       y: -11
       spriteIndex: 0
-      spriteName: 
+      spriteName: sky-mushroom_41
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 3
       y: -11
       spriteIndex: 8
-      spriteName: 
+      spriteName: sky-mushroom_33
       flipX: 1
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 3
       y: -11
       spriteIndex: 0
-      spriteName: 
+      spriteName: sky-mushroom_41
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 4
       y: -11
       spriteIndex: 0
-      spriteName: 
+      spriteName: sky-mushroom_41
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 5
       y: -11
       spriteIndex: 0
-      spriteName: 
+      spriteName: sky-mushroom_41
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 6
       y: -11
       spriteIndex: 0
-      spriteName: 
+      spriteName: sky-mushroom_41
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 7
       y: -11
       spriteIndex: 0
-      spriteName: 
+      spriteName: sky-mushroom_41
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 8
       y: -11
       spriteIndex: 7
-      spriteName: 
+      spriteName: sky-mushroom_45
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 9
       y: -11
       spriteIndex: 4
-      spriteName: 
+      spriteName: sky-mushroom_56
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 10
       y: -11
       spriteIndex: 5
-      spriteName: 
+      spriteName: sky-mushroom_55
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 11
       y: -11
       spriteIndex: 4
-      spriteName: 
+      spriteName: sky-mushroom_56
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 12
       y: -11
       spriteIndex: 4
-      spriteName: 
+      spriteName: sky-mushroom_56
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 13
       y: -11
       spriteIndex: 4
-      spriteName: 
+      spriteName: sky-mushroom_56
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 14
       y: -11
       spriteIndex: 4
-      spriteName: 
+      spriteName: sky-mushroom_56
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 15
       y: -11
       spriteIndex: 5
-      spriteName: 
+      spriteName: sky-mushroom_55
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 16
       y: -11
       spriteIndex: 5
-      spriteName: 
+      spriteName: sky-mushroom_55
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 17
       y: -11
       spriteIndex: 5
-      spriteName: 
+      spriteName: sky-mushroom_55
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 18
       y: -11
       spriteIndex: 5
-      spriteName: 
+      spriteName: sky-mushroom_55
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 19
       y: -11
       spriteIndex: 6
-      spriteName: 
+      spriteName: sky-mushroom_46
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 24
       y: -11
       spriteIndex: 9
-      spriteName: 
+      spriteName: sky-mushroom_19
       flipX: 0
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 30
       y: -11
       spriteIndex: 9
-      spriteName: 
+      spriteName: sky-mushroom_19
       flipX: 0
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 31
       y: -11
       spriteIndex: 2
-      spriteName: 
+      spriteName: sky-mushroom_73
       flipX: 0
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 32
       y: -11
       spriteIndex: 2
-      spriteName: 
+      spriteName: sky-mushroom_73
       flipX: 1
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -29
       y: -10
       spriteIndex: 2
-      spriteName: 
+      spriteName: sky-mushroom_73
       flipX: 0
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -28
       y: -10
       spriteIndex: 2
-      spriteName: 
+      spriteName: sky-mushroom_73
       flipX: 1
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -26
       y: -10
       spriteIndex: 3
-      spriteName: 
+      spriteName: sky-mushroom_44
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -25
       y: -10
       spriteIndex: 10
-      spriteName: 
+      spriteName: sky-mushroom_40
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -24
       y: -10
       spriteIndex: 1
-      spriteName: 
+      spriteName: sky-mushroom_42
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -23
       y: -10
       spriteIndex: 1
-      spriteName: 
+      spriteName: sky-mushroom_42
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -22
       y: -10
       spriteIndex: 2
-      spriteName: 
+      spriteName: sky-mushroom_73
       flipX: 0
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -22
       y: -10
       spriteIndex: 1
-      spriteName: 
+      spriteName: sky-mushroom_42
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -21
       y: -10
       spriteIndex: 2
-      spriteName: 
+      spriteName: sky-mushroom_73
       flipX: 1
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -21
       y: -10
       spriteIndex: 11
-      spriteName: 
+      spriteName: sky-mushroom_29
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -18
       y: -10
-      spriteIndex: 48
-      spriteName: 
-      flipX: 0
-      flipY: 0
-      solid: 1
-    - x: -18
-      y: -10
       spriteIndex: 0
-      spriteName: 
+      spriteName: sky-mushroom_41
       flipX: 0
       flipY: 0
       solid: 1
-    - x: -17
-      y: -10
-      spriteIndex: 48
-      spriteName: 
-      flipX: 0
-      flipY: 0
-      solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -17
       y: -10
       spriteIndex: 0
-      spriteName: 
+      spriteName: sky-mushroom_41
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -16
       y: -10
-      spriteIndex: 48
-      spriteName: 
-      flipX: 0
-      flipY: 0
-      solid: 1
-    - x: -16
-      y: -10
       spriteIndex: 0
-      spriteName: 
+      spriteName: sky-mushroom_41
       flipX: 0
       flipY: 0
       solid: 1
-    - x: -15
-      y: -10
-      spriteIndex: 48
-      spriteName: 
-      flipX: 0
-      flipY: 0
-      solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -15
       y: -10
       spriteIndex: 0
-      spriteName: 
+      spriteName: sky-mushroom_41
       flipX: 0
       flipY: 0
       solid: 1
-    - x: -14
-      y: -10
-      spriteIndex: 48
-      spriteName: 
-      flipX: 0
-      flipY: 0
-      solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -14
       y: -10
       spriteIndex: 0
-      spriteName: 
+      spriteName: sky-mushroom_41
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -13
       y: -10
       spriteIndex: 12
-      spriteName: 
+      spriteName: sky-mushroom_18
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -12
       y: -10
       spriteIndex: 13
-      spriteName: 
+      spriteName: sky-mushroom_52
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -11
       y: -10
       spriteIndex: 14
-      spriteName: 
+      spriteName: sky-mushroom_28
       flipX: 1
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -10
       y: -10
       spriteIndex: 14
-      spriteName: 
+      spriteName: sky-mushroom_28
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -9
       y: -10
       spriteIndex: 15
-      spriteName: 
+      spriteName: sky-mushroom_50
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -8
       y: -10
       spriteIndex: 15
-      spriteName: 
+      spriteName: sky-mushroom_50
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -7
       y: -10
       spriteIndex: 13
-      spriteName: 
+      spriteName: sky-mushroom_52
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -6
       y: -10
       spriteIndex: 13
-      spriteName: 
+      spriteName: sky-mushroom_52
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -5
       y: -10
       spriteIndex: 13
-      spriteName: 
+      spriteName: sky-mushroom_52
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -4
       y: -10
       spriteIndex: 15
-      spriteName: 
+      spriteName: sky-mushroom_50
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -3
       y: -10
       spriteIndex: 12
-      spriteName: 
+      spriteName: sky-mushroom_18
       flipX: 1
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -2
       y: -10
-      spriteIndex: 48
-      spriteName: 
-      flipX: 0
-      flipY: 0
-      solid: 1
-    - x: -2
-      y: -10
       spriteIndex: 0
-      spriteName: 
+      spriteName: sky-mushroom_41
       flipX: 0
       flipY: 0
       solid: 1
-    - x: -1
-      y: -10
-      spriteIndex: 48
-      spriteName: 
-      flipX: 0
-      flipY: 0
-      solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -1
       y: -10
       spriteIndex: 0
-      spriteName: 
+      spriteName: sky-mushroom_41
       flipX: 0
       flipY: 0
       solid: 1
-    - x: 0
-      y: -10
-      spriteIndex: 48
-      spriteName: 
-      flipX: 0
-      flipY: 0
-      solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 0
       y: -10
       spriteIndex: 0
-      spriteName: 
+      spriteName: sky-mushroom_41
       flipX: 0
       flipY: 0
       solid: 1
-    - x: 1
-      y: -10
-      spriteIndex: 48
-      spriteName: 
-      flipX: 0
-      flipY: 0
-      solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 1
       y: -10
       spriteIndex: 0
-      spriteName: 
+      spriteName: sky-mushroom_41
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 2
       y: -10
       spriteIndex: 8
-      spriteName: 
+      spriteName: sky-mushroom_33
       flipX: 0
       flipY: 0
       solid: 0
-    - x: 2
-      y: -10
-      spriteIndex: 48
-      spriteName: 
-      flipX: 0
-      flipY: 0
-      solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 2
       y: -10
       spriteIndex: 0
-      spriteName: 
+      spriteName: sky-mushroom_41
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 3
       y: -10
       spriteIndex: 8
-      spriteName: 
+      spriteName: sky-mushroom_33
       flipX: 1
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 3
       y: -10
-      spriteIndex: 48
-      spriteName: 
-      flipX: 0
-      flipY: 0
-      solid: 1
-    - x: 3
-      y: -10
       spriteIndex: 0
-      spriteName: 
+      spriteName: sky-mushroom_41
       flipX: 0
       flipY: 0
       solid: 1
-    - x: 4
-      y: -10
-      spriteIndex: 48
-      spriteName: 
-      flipX: 0
-      flipY: 0
-      solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 4
       y: -10
       spriteIndex: 0
-      spriteName: 
+      spriteName: sky-mushroom_41
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 5
       y: -10
-      spriteIndex: 48
-      spriteName: 
-      flipX: 0
-      flipY: 0
-      solid: 1
-    - x: 5
-      y: -10
       spriteIndex: 0
-      spriteName: 
+      spriteName: sky-mushroom_41
       flipX: 0
       flipY: 0
       solid: 1
-    - x: 6
-      y: -10
-      spriteIndex: 48
-      spriteName: 
-      flipX: 0
-      flipY: 0
-      solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 6
       y: -10
       spriteIndex: 0
-      spriteName: 
+      spriteName: sky-mushroom_41
       flipX: 0
       flipY: 0
       solid: 1
-    - x: 7
-      y: -10
-      spriteIndex: 48
-      spriteName: 
-      flipX: 0
-      flipY: 0
-      solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 7
       y: -10
       spriteIndex: 0
-      spriteName: 
+      spriteName: sky-mushroom_41
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 8
       y: -10
       spriteIndex: 12
-      spriteName: 
+      spriteName: sky-mushroom_18
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 9
       y: -10
       spriteIndex: 15
-      spriteName: 
+      spriteName: sky-mushroom_50
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 10
       y: -10
       spriteIndex: 15
-      spriteName: 
+      spriteName: sky-mushroom_50
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 11
       y: -10
       spriteIndex: 13
-      spriteName: 
+      spriteName: sky-mushroom_52
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 12
       y: -10
       spriteIndex: 16
-      spriteName: 
+      spriteName: sky-mushroom_51
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 13
       y: -10
       spriteIndex: 17
-      spriteName: 
+      spriteName: sky-mushroom_53
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 14
       y: -10
       spriteIndex: 13
-      spriteName: 
+      spriteName: sky-mushroom_52
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 15
       y: -10
       spriteIndex: 15
-      spriteName: 
+      spriteName: sky-mushroom_50
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 16
       y: -10
       spriteIndex: 16
-      spriteName: 
+      spriteName: sky-mushroom_51
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 17
       y: -10
       spriteIndex: 15
-      spriteName: 
+      spriteName: sky-mushroom_50
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 18
       y: -10
       spriteIndex: 16
-      spriteName: 
+      spriteName: sky-mushroom_51
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 19
       y: -10
       spriteIndex: 12
-      spriteName: 
+      spriteName: sky-mushroom_18
       flipX: 1
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 24
       y: -10
       spriteIndex: 9
-      spriteName: 
+      spriteName: sky-mushroom_19
       flipX: 0
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 30
       y: -10
       spriteIndex: 18
-      spriteName: 
+      spriteName: sky-mushroom_9
       flipX: 0
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 31
       y: -10
       spriteIndex: 2
-      spriteName: 
+      spriteName: sky-mushroom_73
       flipX: 0
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 32
       y: -10
       spriteIndex: 2
-      spriteName: 
+      spriteName: sky-mushroom_73
       flipX: 1
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -29
       y: -9
       spriteIndex: 2
-      spriteName: 
+      spriteName: sky-mushroom_73
       flipX: 0
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -28
       y: -9
       spriteIndex: 2
-      spriteName: 
+      spriteName: sky-mushroom_73
       flipX: 1
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -26
       y: -9
       spriteIndex: 12
-      spriteName: 
+      spriteName: sky-mushroom_18
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -25
       y: -9
       spriteIndex: 13
-      spriteName: 
+      spriteName: sky-mushroom_52
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -24
       y: -9
       spriteIndex: 16
-      spriteName: 
+      spriteName: sky-mushroom_51
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -23
       y: -9
       spriteIndex: 13
-      spriteName: 
+      spriteName: sky-mushroom_52
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -22
       y: -9
       spriteIndex: 2
-      spriteName: 
+      spriteName: sky-mushroom_73
       flipX: 0
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -22
       y: -9
       spriteIndex: 16
-      spriteName: 
+      spriteName: sky-mushroom_51
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -21
       y: -9
       spriteIndex: 2
-      spriteName: 
+      spriteName: sky-mushroom_73
       flipX: 1
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -21
       y: -9
       spriteIndex: 12
-      spriteName: 
+      spriteName: sky-mushroom_18
       flipX: 1
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -11
       y: -9
       spriteIndex: 3
-      spriteName: 
+      spriteName: sky-mushroom_44
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -10
       y: -9
       spriteIndex: 11
-      spriteName: 
+      spriteName: sky-mushroom_29
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 2
       y: -9
       spriteIndex: 8
-      spriteName: 
+      spriteName: sky-mushroom_33
       flipX: 0
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 3
       y: -9
       spriteIndex: 8
-      spriteName: 
+      spriteName: sky-mushroom_33
       flipX: 1
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 24
       y: -9
       spriteIndex: 9
-      spriteName: 
+      spriteName: sky-mushroom_19
       flipX: 0
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 28
       y: -9
       spriteIndex: 28
-      spriteName: 
+      spriteName: sky-mushroom_5
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 29
       y: -9
       spriteIndex: 29
-      spriteName: 
+      spriteName: sky-mushroom_6
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 30
       y: -9
       spriteIndex: 29
-      spriteName: 
+      spriteName: sky-mushroom_6
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 31
       y: -9
       spriteIndex: 2
-      spriteName: 
+      spriteName: sky-mushroom_73
       flipX: 0
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 31
       y: -9
       spriteIndex: 29
-      spriteName: 
+      spriteName: sky-mushroom_6
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 32
       y: -9
       spriteIndex: 2
-      spriteName: 
+      spriteName: sky-mushroom_73
       flipX: 1
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 32
       y: -9
       spriteIndex: 28
-      spriteName: 
+      spriteName: sky-mushroom_5
       flipX: 1
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -29
       y: -8
       spriteIndex: 2
-      spriteName: 
+      spriteName: sky-mushroom_73
       flipX: 0
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -28
       y: -8
       spriteIndex: 2
-      spriteName: 
+      spriteName: sky-mushroom_73
       flipX: 1
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -22
       y: -8
       spriteIndex: 2
-      spriteName: 
+      spriteName: sky-mushroom_73
       flipX: 0
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -21
       y: -8
       spriteIndex: 2
-      spriteName: 
+      spriteName: sky-mushroom_73
       flipX: 1
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -11
       y: -8
       spriteIndex: 3
-      spriteName: 
+      spriteName: sky-mushroom_44
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -10
       y: -8
       spriteIndex: 11
-      spriteName: 
+      spriteName: sky-mushroom_29
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 2
       y: -8
       spriteIndex: 32
-      spriteName: 
+      spriteName: sky-mushroom_23
       flipX: 0
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 3
       y: -8
       spriteIndex: 32
-      spriteName: 
+      spriteName: sky-mushroom_23
       flipX: 1
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 24
       y: -8
       spriteIndex: 18
-      spriteName: 
+      spriteName: sky-mushroom_9
       flipX: 0
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 31
       y: -8
       spriteIndex: 2
-      spriteName: 
+      spriteName: sky-mushroom_73
       flipX: 0
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 32
       y: -8
       spriteIndex: 2
-      spriteName: 
+      spriteName: sky-mushroom_73
       flipX: 1
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -29
       y: -7
       spriteIndex: 2
-      spriteName: 
+      spriteName: sky-mushroom_73
       flipX: 0
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -28
       y: -7
       spriteIndex: 2
-      spriteName: 
+      spriteName: sky-mushroom_73
       flipX: 1
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -22
       y: -7
       spriteIndex: 2
-      spriteName: 
+      spriteName: sky-mushroom_73
       flipX: 0
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -21
       y: -7
       spriteIndex: 2
-      spriteName: 
+      spriteName: sky-mushroom_73
       flipX: 1
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -11
       y: -7
       spriteIndex: 3
-      spriteName: 
+      spriteName: sky-mushroom_44
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -10
       y: -7
       spriteIndex: 11
-      spriteName: 
+      spriteName: sky-mushroom_29
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -2
       y: -7
       spriteIndex: 39
-      spriteName: 
+      spriteName: sky-mushroom_70
       flipX: 0
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -1
       y: -7
       spriteIndex: 40
-      spriteName: 
+      spriteName: sky-mushroom_71
       flipX: 0
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 0
       y: -7
       spriteIndex: 41
-      spriteName: 
+      spriteName: sky-mushroom_72
       flipX: 0
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 1
       y: -7
       spriteIndex: 41
-      spriteName: 
+      spriteName: sky-mushroom_72
       flipX: 1
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 2
       y: -7
       spriteIndex: 41
-      spriteName: 
+      spriteName: sky-mushroom_72
       flipX: 0
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 3
       y: -7
       spriteIndex: 41
-      spriteName: 
+      spriteName: sky-mushroom_72
       flipX: 1
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 4
       y: -7
       spriteIndex: 41
-      spriteName: 
+      spriteName: sky-mushroom_72
       flipX: 0
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 5
       y: -7
       spriteIndex: 41
-      spriteName: 
+      spriteName: sky-mushroom_72
       flipX: 1
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 6
       y: -7
       spriteIndex: 40
-      spriteName: 
+      spriteName: sky-mushroom_71
       flipX: 1
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 7
       y: -7
       spriteIndex: 39
-      spriteName: 
+      spriteName: sky-mushroom_70
       flipX: 1
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 21
       y: -7
       spriteIndex: 46
-      spriteName: 
+      spriteName: sky-mushroom_68
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 22
       y: -7
       spriteIndex: 47
-      spriteName: 
+      spriteName: sky-mushroom_69
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 23
       y: -7
       spriteIndex: 47
-      spriteName: 
+      spriteName: sky-mushroom_69
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 24
       y: -7
       spriteIndex: 47
-      spriteName: 
+      spriteName: sky-mushroom_69
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 25
       y: -7
       spriteIndex: 47
-      spriteName: 
+      spriteName: sky-mushroom_69
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 26
       y: -7
       spriteIndex: 47
-      spriteName: 
+      spriteName: sky-mushroom_69
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 27
       y: -7
       spriteIndex: 46
-      spriteName: 
+      spriteName: sky-mushroom_68
       flipX: 1
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 31
       y: -7
       spriteIndex: 2
-      spriteName: 
+      spriteName: sky-mushroom_73
       flipX: 0
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 32
       y: -7
       spriteIndex: 2
-      spriteName: 
+      spriteName: sky-mushroom_73
       flipX: 1
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -29
       y: -6
       spriteIndex: 2
-      spriteName: 
+      spriteName: sky-mushroom_73
       flipX: 0
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -28
       y: -6
       spriteIndex: 2
-      spriteName: 
+      spriteName: sky-mushroom_73
       flipX: 1
       flipY: 0
       solid: 0
-    - x: -16
-      y: -6
-      spriteIndex: 48
-      spriteName: 
-      flipX: 0
-      flipY: 0
-      solid: 1
-    - x: -15
-      y: -6
-      spriteIndex: 48
-      spriteName: 
-      flipX: 0
-      flipY: 0
-      solid: 1
-    - x: -14
-      y: -6
-      spriteIndex: 48
-      spriteName: 
-      flipX: 0
-      flipY: 0
-      solid: 1
-    - x: -13
-      y: -6
-      spriteIndex: 48
-      spriteName: 
-      flipX: 0
-      flipY: 0
-      solid: 1
-    - x: -12
-      y: -6
-      spriteIndex: 48
-      spriteName: 
-      flipX: 0
-      flipY: 0
-      solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -11
       y: -6
       spriteIndex: 12
-      spriteName: 
+      spriteName: sky-mushroom_18
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -10
       y: -6
       spriteIndex: 12
-      spriteName: 
+      spriteName: sky-mushroom_18
       flipX: 1
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -2
       y: -6
       spriteIndex: 49
-      spriteName: 
+      spriteName: sky-mushroom_60
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -1
       y: -6
       spriteIndex: 50
-      spriteName: 
+      spriteName: sky-mushroom_61
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 0
       y: -6
       spriteIndex: 51
-      spriteName: 
+      spriteName: sky-mushroom_62
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 1
       y: -6
       spriteIndex: 51
-      spriteName: 
+      spriteName: sky-mushroom_62
       flipX: 1
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 2
       y: -6
       spriteIndex: 51
-      spriteName: 
+      spriteName: sky-mushroom_62
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 3
       y: -6
       spriteIndex: 51
-      spriteName: 
+      spriteName: sky-mushroom_62
       flipX: 1
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 4
       y: -6
       spriteIndex: 51
-      spriteName: 
+      spriteName: sky-mushroom_62
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 5
       y: -6
       spriteIndex: 51
-      spriteName: 
+      spriteName: sky-mushroom_62
       flipX: 1
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 6
       y: -6
       spriteIndex: 50
-      spriteName: 
+      spriteName: sky-mushroom_61
       flipX: 1
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 7
       y: -6
       spriteIndex: 49
-      spriteName: 
+      spriteName: sky-mushroom_60
       flipX: 1
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 31
       y: -6
       spriteIndex: 52
-      spriteName: 
+      spriteName: sky-mushroom_17
       flipX: 0
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 32
       y: -6
       spriteIndex: 52
-      spriteName: 
+      spriteName: sky-mushroom_17
       flipX: 1
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -30
       y: -5
       spriteIndex: 46
-      spriteName: 
+      spriteName: sky-mushroom_68
       flipX: 1
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -29
       y: -5
       spriteIndex: 2
-      spriteName: 
+      spriteName: sky-mushroom_73
       flipX: 0
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -28
       y: -5
       spriteIndex: 2
-      spriteName: 
+      spriteName: sky-mushroom_73
       flipX: 1
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 29
       y: -5
       spriteIndex: 46
-      spriteName: 
+      spriteName: sky-mushroom_68
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 30
       y: -5
       spriteIndex: 47
-      spriteName: 
+      spriteName: sky-mushroom_69
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 31
       y: -5
       spriteIndex: 47
-      spriteName: 
+      spriteName: sky-mushroom_69
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 32
       y: -5
       spriteIndex: 47
-      spriteName: 
+      spriteName: sky-mushroom_69
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 33
       y: -5
       spriteIndex: 47
-      spriteName: 
+      spriteName: sky-mushroom_69
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -29
       y: -4
       spriteIndex: 2
-      spriteName: 
+      spriteName: sky-mushroom_73
       flipX: 0
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -28
       y: -4
       spriteIndex: 2
-      spriteName: 
+      spriteName: sky-mushroom_73
       flipX: 1
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -29
       y: -3
       spriteIndex: 2
-      spriteName: 
+      spriteName: sky-mushroom_73
       flipX: 0
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -28
       y: -3
       spriteIndex: 2
-      spriteName: 
+      spriteName: sky-mushroom_73
       flipX: 1
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -22
       y: -3
       spriteIndex: 2
-      spriteName: 
+      spriteName: sky-mushroom_73
       flipX: 0
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -21
       y: -3
       spriteIndex: 2
-      spriteName: 
+      spriteName: sky-mushroom_73
       flipX: 1
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -29
       y: -2
       spriteIndex: 2
-      spriteName: 
+      spriteName: sky-mushroom_73
       flipX: 0
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -28
       y: -2
       spriteIndex: 2
-      spriteName: 
+      spriteName: sky-mushroom_73
       flipX: 1
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -22
       y: -2
       spriteIndex: 2
-      spriteName: 
+      spriteName: sky-mushroom_73
       flipX: 0
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -21
       y: -2
       spriteIndex: 2
-      spriteName: 
+      spriteName: sky-mushroom_73
       flipX: 1
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -29
       y: -1
       spriteIndex: 52
-      spriteName: 
+      spriteName: sky-mushroom_17
       flipX: 0
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -28
       y: -1
       spriteIndex: 52
-      spriteName: 
+      spriteName: sky-mushroom_17
       flipX: 1
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -22
       y: -1
       spriteIndex: 2
-      spriteName: 
+      spriteName: sky-mushroom_73
       flipX: 0
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -21
       y: -1
       spriteIndex: 2
-      spriteName: 
+      spriteName: sky-mushroom_73
       flipX: 1
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -30
       y: 0
       spriteIndex: 28
-      spriteName: 
+      spriteName: sky-mushroom_5
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -29
       y: 0
       spriteIndex: 29
-      spriteName: 
+      spriteName: sky-mushroom_6
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -28
       y: 0
       spriteIndex: 29
-      spriteName: 
+      spriteName: sky-mushroom_6
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -27
       y: 0
       spriteIndex: 28
-      spriteName: 
+      spriteName: sky-mushroom_5
       flipX: 1
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -22
       y: 0
       spriteIndex: 2
-      spriteName: 
+      spriteName: sky-mushroom_73
       flipX: 0
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -21
       y: 0
       spriteIndex: 2
-      spriteName: 
+      spriteName: sky-mushroom_73
       flipX: 1
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 13
       y: 0
       spriteIndex: 7
-      spriteName: 
+      spriteName: sky-mushroom_45
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 14
       y: 0
       spriteIndex: 5
-      spriteName: 
+      spriteName: sky-mushroom_55
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 15
       y: 0
       spriteIndex: 54
-      spriteName: 
+      spriteName: sky-mushroom_57
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 16
       y: 0
       spriteIndex: 6
-      spriteName: 
+      spriteName: sky-mushroom_46
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -22
       y: 1
       spriteIndex: 2
-      spriteName: 
+      spriteName: sky-mushroom_73
       flipX: 0
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -21
       y: 1
       spriteIndex: 2
-      spriteName: 
+      spriteName: sky-mushroom_73
       flipX: 1
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 13
       y: 1
       spriteIndex: 3
-      spriteName: 
+      spriteName: sky-mushroom_44
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 14
       y: 1
       spriteIndex: 0
-      spriteName: 
+      spriteName: sky-mushroom_41
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 15
       y: 1
       spriteIndex: 10
-      spriteName: 
+      spriteName: sky-mushroom_40
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 16
       y: 1
       spriteIndex: 11
-      spriteName: 
+      spriteName: sky-mushroom_29
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -22
       y: 2
       spriteIndex: 52
-      spriteName: 
+      spriteName: sky-mushroom_17
       flipX: 0
       flipY: 0
       solid: 0
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -21
       y: 2
       spriteIndex: 52
-      spriteName: 
+      spriteName: sky-mushroom_17
       flipX: 1
       flipY: 0
       solid: 0
-    - x: 8
-      y: 2
-      spriteIndex: 48
-      spriteName: 
-      flipX: 0
-      flipY: 0
-      solid: 1
-    - x: 9
-      y: 2
-      spriteIndex: 48
-      spriteName: 
-      flipX: 0
-      flipY: 0
-      solid: 1
-    - x: 10
-      y: 2
-      spriteIndex: 48
-      spriteName: 
-      flipX: 0
-      flipY: 0
-      solid: 1
-    - x: 11
-      y: 2
-      spriteIndex: 48
-      spriteName: 
-      flipX: 0
-      flipY: 0
-      solid: 1
-    - x: 12
-      y: 2
-      spriteIndex: 48
-      spriteName: 
-      flipX: 0
-      flipY: 0
-      solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 13
       y: 2
       spriteIndex: 12
-      spriteName: 
+      spriteName: sky-mushroom_18
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 14
       y: 2
       spriteIndex: 17
-      spriteName: 
+      spriteName: sky-mushroom_53
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 15
       y: 2
       spriteIndex: 16
-      spriteName: 
+      spriteName: sky-mushroom_51
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: 16
       y: 2
       spriteIndex: 12
-      spriteName: 
+      spriteName: sky-mushroom_18
       flipX: 1
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -23
       y: 3
       spriteIndex: 46
-      spriteName: 
+      spriteName: sky-mushroom_68
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -22
       y: 3
       spriteIndex: 47
-      spriteName: 
+      spriteName: sky-mushroom_69
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -21
       y: 3
       spriteIndex: 47
-      spriteName: 
+      spriteName: sky-mushroom_69
       flipX: 0
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
     - x: -20
       y: 3
       spriteIndex: 46
-      spriteName: 
+      spriteName: sky-mushroom_68
       flipX: 1
       flipY: 0
       solid: 1
+      interactionKind: 0
+      breakingRules: 0
+      bumpIfNotBroken: 0
+      usedAtlasPath: 
+      usedSpriteName: 
+      smallPowerup: 0
+      largePowerup: 0
   entities:
   - kind: 1
     position: {x: 16, y: 1.5}

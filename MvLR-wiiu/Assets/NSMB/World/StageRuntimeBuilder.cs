@@ -4,6 +4,9 @@ using UnityEngine;
 
 namespace NSMB.World {
     public static class StageRuntimeBuilder {
+        private const float PixelsPerUnit = 16f;
+        private const float PixelUnit = 1f / PixelsPerUnit;
+
         public static void Build(StageDefinition def, Transform parent) {
             Build(def, parent, true, true);
         }
@@ -21,6 +24,10 @@ namespace NSMB.World {
             BuildTiles(def, root.transform, buildColliders);
             if (buildEntities) {
                 BuildEntities(def, root.transform);
+            }
+
+            if (def.isWrappingLevel) {
+                root.AddComponent<StageWrap2D>();
             }
         }
 
@@ -40,6 +47,9 @@ namespace NSMB.World {
                 layerGo.transform.localPosition = layer.position;
                 layerGo.transform.localScale = (layer.scale.sqrMagnitude > 0.0001f) ? layer.scale : Vector3.one;
 
+                // Snap tile layers to the pixel grid to avoid 1px seams due to sub-pixel offsets.
+                layerGo.transform.localPosition = SnapVector(layerGo.transform.localPosition, PixelUnit);
+
                 // Track per-layer interactive tiles so we can exclude them from the merged colliders.
                 HashSet<long> interactiveSolidKeys = null;
 
@@ -52,6 +62,7 @@ namespace NSMB.World {
 
                     // Tilemaps place cell (x,y) at integer coords. With centered pivots, add 0.5.
                     tileGo.transform.localPosition = new Vector3(tile.x + 0.5f, tile.y + 0.5f, 0f);
+                    tileGo.transform.localPosition = SnapVector(tileGo.transform.localPosition, PixelUnit);
                     float sx = tile.flipX ? -1f : 1f;
                     float sy = tile.flipY ? -1f : 1f;
                     tileGo.transform.localScale = new Vector3(sx, sy, 1f);
@@ -71,7 +82,11 @@ namespace NSMB.World {
 
                     // Convert certain solid tiles into interactive block GameObjects (question blocks, etc.)
                     // so they can be bumped from below and animated like the original game.
-                    if (IsQuestionBlockTile(layer.resourcesAtlasPath, tile)) {
+                    int animatedBlocksIndex;
+                    bool isAnimatedBlocksTile = TryGetAnimatedBlocksIndex(layer.resourcesAtlasPath, tile, out animatedBlocksIndex);
+                    bool isInteractive = (tile.interactionKind != NSMB.World.StageTileInteractionKind.None) ||
+                                         (isAnimatedBlocksTile && IsInteractiveBlockAnimatedIndex(animatedBlocksIndex));
+                    if (isInteractive) {
                         if (interactiveSolidKeys == null) {
                             interactiveSolidKeys = new HashSet<long>();
                         }
@@ -80,11 +95,22 @@ namespace NSMB.World {
                         BoxCollider2D box = tileGo.AddComponent<BoxCollider2D>();
                         box.size = new Vector2(1f, 1f);
 
-                        tileGo.AddComponent<NSMB.Blocks.BlockBump>();
+                        NSMB.Blocks.BlockBump bump = tileGo.AddComponent<NSMB.Blocks.BlockBump>();
+                        // Let the tile behavior pick sounds (coin/powerup/break) for parity with the Unity 6 logic.
+                        bump.playBumpSfx = false;
                         tileGo.AddComponent<NSMB.Blocks.BlockHitDetector>();
 
-                        NSMB.Blocks.QuestionBlockTile qb = tileGo.AddComponent<NSMB.Blocks.QuestionBlockTile>();
-                        qb.usedSpriteName = "animation_4";
+                        NSMB.Blocks.InteractiveBlockTile ib = tileGo.AddComponent<NSMB.Blocks.InteractiveBlockTile>();
+                        ib.interactionKind = tile.interactionKind;
+                        ib.breakingRules = tile.breakingRules;
+                        ib.bumpIfNotBroken = tile.bumpIfNotBroken;
+                        ib.usedAtlasPath = tile.usedAtlasPath;
+                        ib.usedSpriteName = tile.usedSpriteName;
+                        ib.smallPowerup = tile.smallPowerup;
+                        ib.largePowerup = tile.largePowerup;
+
+                        // Question blocks (yellow) are animation_0..animation_3 in the Unity 6 atlas.
+                        ib.isQuestionBlockVisual = isAnimatedBlocksTile && animatedBlocksIndex >= 0 && animatedBlocksIndex <= 3;
                     }
                 }
 
@@ -101,30 +127,44 @@ namespace NSMB.World {
             }
         }
 
-        private static bool IsQuestionBlockTile(string resourcesAtlasPath, StageTile tile) {
+        private static bool TryGetAnimatedBlocksIndex(string resourcesAtlasPath, StageTile tile, out int index) {
+            index = -1;
             if (!string.Equals(resourcesAtlasPath, NSMB.Content.GameplayAtlasPaths.AnimatedBlocks, StringComparison.InvariantCultureIgnoreCase)) {
                 return false;
             }
 
-            // In this project, question block animation frames are animation_0..animation_3.
-            int index = tile.spriteIndex;
-            if (index >= 0 && index <= 3) {
-                return true;
-            }
-
-            // Some import paths use spriteName instead of spriteIndex.
-            if (!string.IsNullOrEmpty(tile.spriteName)) {
-                if (tile.spriteName.StartsWith("animation_", StringComparison.InvariantCultureIgnoreCase)) {
-                    int u = tile.spriteName.LastIndexOf('_');
-                    if (u >= 0 && u + 1 < tile.spriteName.Length) {
-                        int v;
-                        if (int.TryParse(tile.spriteName.Substring(u + 1), out v)) {
-                            return v >= 0 && v <= 3;
-                        }
+            // Prefer spriteName, because Unity 6 Tilemap serializes a separate sprite index table that may not be stable.
+            if (!string.IsNullOrEmpty(tile.spriteName) && tile.spriteName.StartsWith("animation_", StringComparison.InvariantCultureIgnoreCase)) {
+                int u = tile.spriteName.LastIndexOf('_');
+                if (u >= 0 && u + 1 < tile.spriteName.Length) {
+                    int v;
+                    if (int.TryParse(tile.spriteName.Substring(u + 1), out v)) {
+                        index = v;
+                        return true;
                     }
                 }
             }
 
+            // Fallback: use spriteIndex directly (some older imported assets used this).
+            if (tile.spriteIndex >= 0) {
+                index = tile.spriteIndex;
+                return true;
+            }
+
+            return false;
+        }
+
+        private static bool IsInteractiveBlockAnimatedIndex(int animatedBlocksIndex) {
+            // Derived from Unity 6 tile assets under Assets/Resources/Tilemaps/Tiles:
+            // - YellowPowerup/YellowCoin use animation_0..3 (question animation).
+            // - BrownBrick uses base animation_4.
+            // - BlueBrick uses base animation_16.
+            // - GrayBrick uses base animation_24.
+            // We treat these as bumpable blocks for parity; full "contents" behavior is ported separately.
+            if (animatedBlocksIndex >= 0 && animatedBlocksIndex <= 3) return true;
+            if (animatedBlocksIndex == 4) return true;
+            if (animatedBlocksIndex == 16) return true;
+            if (animatedBlocksIndex == 24) return true;
             return false;
         }
 
@@ -232,6 +272,16 @@ namespace NSMB.World {
                         break;
                 }
             }
+        }
+
+        private static Vector3 SnapVector(Vector3 v, float step) {
+            if (step <= 0f) {
+                return v;
+            }
+            float x = Mathf.Round(v.x / step) * step;
+            float y = Mathf.Round(v.y / step) * step;
+            float z = Mathf.Round(v.z / step) * step;
+            return new Vector3(x, y, z);
         }
 
         private static Sprite TryResolveTileSprite(string resourcesAtlasPath, int spriteIndex) {
@@ -474,7 +524,8 @@ namespace NSMB.World {
             sr.sortingOrder = 0;
             sr.sprite = NSMB.Visual.GameplaySprites.GetPlatformTile(2);
 
-            go.AddComponent<NSMB.Blocks.BlockBump>();
+            NSMB.Blocks.BlockBump bump = go.AddComponent<NSMB.Blocks.BlockBump>();
+            bump.playBumpSfx = false;
             go.AddComponent<NSMB.Blocks.BlockHitDetector>();
             go.AddComponent<NSMB.Blocks.BreakableBlock>();
         }

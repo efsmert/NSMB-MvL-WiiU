@@ -3,7 +3,9 @@ using UnityEngine;
 namespace NSMB.Blocks {
     [RequireComponent(typeof(SpriteRenderer))]
     public sealed class QuestionBlockTile : MonoBehaviour {
-        public string usedSpriteName = "animation_4";
+        // Unity 6 swaps to a "used" tile from generic-blocks (EmptyYellow) after being bumped.
+        public string usedAtlasPath = NSMB.Content.GameplayAtlasPaths.Bricks;
+        public string usedSpriteName = "Tileset 0 (Jyotyu)_4";
         public float animationFps = 8f;
 
         private bool _used;
@@ -40,8 +42,8 @@ namespace NSMB.Blocks {
                 _anim.enabled = false;
             }
 
-            if (_sr != null && !string.IsNullOrEmpty(usedSpriteName)) {
-                Sprite used = NSMB.Content.ResourceSpriteCache.FindSprite(NSMB.Content.GameplayAtlasPaths.AnimatedBlocks, usedSpriteName);
+            if (_sr != null && !string.IsNullOrEmpty(usedSpriteName) && !string.IsNullOrEmpty(usedAtlasPath)) {
+                Sprite used = NSMB.Content.ResourceSpriteCache.FindSprite(usedAtlasPath, usedSpriteName);
                 if (used != null) {
                     _sr.sprite = used;
                 }
@@ -49,4 +51,3 @@ namespace NSMB.Blocks {
         }
     }
 }
-

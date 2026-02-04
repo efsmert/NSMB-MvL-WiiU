@@ -138,7 +138,10 @@ namespace NSMB.Gameplay {
                         Vector2 min = def.cameraMin;
                         Vector2 max = def.cameraMax;
                         Vector3 targetPos;
-                        if (min != max) {
+                        if (def.isWrappingLevel) {
+                            follow.clampToBounds = false;
+                            targetPos = new Vector3(def.spawnPoint.x, def.spawnPoint.y, 0f);
+                        } else if (min != max) {
                             targetPos = new Vector3((min.x + max.x) * 0.5f, (min.y + max.y) * 0.5f, 0f);
                             follow.SetBounds(min, max);
                         } else {
@@ -207,7 +210,9 @@ namespace NSMB.Gameplay {
             if (cam != null) {
                 NSMB.Camera.CameraFollow2D follow = cam.GetComponent<NSMB.Camera.CameraFollow2D>();
                 if (follow != null) {
-                    if (imported != null && imported.cameraMin != imported.cameraMax) {
+                    if (imported != null && imported.isWrappingLevel) {
+                        follow.clampToBounds = false;
+                    } else if (imported != null && imported.cameraMin != imported.cameraMax) {
                         follow.SetBounds(imported.cameraMin, imported.cameraMax);
                     } else {
                         follow.clampToBounds = false;

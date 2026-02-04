@@ -4,6 +4,10 @@ namespace NSMB.Enemies {
     [RequireComponent(typeof(Rigidbody2D))]
     [RequireComponent(typeof(Collider2D))]
     public sealed class KoopaEnemy : MonoBehaviour {
+        private const float WalkAnimFps = 20f; // Unity6 walk clip authored at 60fps but played at 0.3333x
+        private const float ShellSpinFpsPerSpeed = 3f; // Unity6 shell uses speed parameter ~= 0.05 * |xVel| => 60 * 0.05 = 3
+        private const float ShellSpinMaxFps = 60f;
+
         private enum KoopaState {
             Walking = 0,
             ShellIdle = 1,
@@ -41,6 +45,13 @@ namespace NSMB.Enemies {
             _shellFrames = Unity6EnemyPrototypes.GetKoopaGreenShellFrames();
 
             Unity6EnemyPrototypes.ApplyKoopaGreen(gameObject, out _graphics, out _sr, out _anim);
+
+            if (_anim != null) {
+                // Ensure deterministic startup; some states were previously using 60fps.
+                if (_walkFrames != null && _walkFrames.Length > 0) {
+                    _anim.SetFrames(_walkFrames, WalkAnimFps, true);
+                }
+            }
         }
 
         private void FixedUpdate() {
@@ -67,6 +78,10 @@ namespace NSMB.Enemies {
                 Vector2 v = _rb.velocity;
                 v.x = _dir * shellSpeed;
                 _rb.velocity = v;
+                if (_anim != null && _anim.enabled) {
+                    float fps = Mathf.Min(ShellSpinMaxFps, ShellSpinFpsPerSpeed * Mathf.Abs(v.x));
+                    _anim.framesPerSecond = fps;
+                }
                 return;
             }
         }
@@ -85,13 +100,40 @@ namespace NSMB.Enemies {
                 return;
             }
 
-            // Turn around on walls/obstacles.
-            ContactPoint2D[] contacts = collision.contacts;
-            for (int i = 0; i < contacts.Length; i++) {
-                ContactPoint2D cp = contacts[i];
-                if (Mathf.Abs(cp.normal.x) > 0.5f) {
-                    _dir = -_dir;
-                    break;
+            // Never turn around from the player pushing the shell / touching the enemy.
+            NSMB.Player.PlayerMotor2D player = collision.collider.GetComponent<NSMB.Player.PlayerMotor2D>();
+            if (player == null) {
+                player = collision.collider.GetComponentInParent<NSMB.Player.PlayerMotor2D>();
+            }
+            if (player != null) {
+                return;
+            }
+
+            // Turn around on walls/obstacles (not while idle in shell).
+            if (_state == KoopaState.Walking || _state == KoopaState.ShellMoving) {
+                bool allowTurn = true;
+
+                // When shell-moving, don't reverse on other enemies; it should keep going.
+                if (_state == KoopaState.ShellMoving) {
+                    GoombaEnemy otherGoomba = collision.collider.GetComponent<GoombaEnemy>();
+                    if (otherGoomba != null) {
+                        allowTurn = false;
+                    }
+                    KoopaEnemy otherKoopa = collision.collider.GetComponent<KoopaEnemy>();
+                    if (otherKoopa != null && otherKoopa != this) {
+                        allowTurn = false;
+                    }
+                }
+
+                if (allowTurn) {
+                    ContactPoint2D[] contacts = collision.contacts;
+                    for (int i = 0; i < contacts.Length; i++) {
+                        ContactPoint2D cp = contacts[i];
+                        if (Mathf.Abs(cp.normal.x) > 0.5f) {
+                            _dir = -_dir;
+                            break;
+                        }
+                    }
                 }
             }
 
@@ -173,7 +215,8 @@ namespace NSMB.Enemies {
             if (_anim != null) {
                 if (_shellFrames != null && _shellFrames.Length > 0) {
                     _anim.enabled = true;
-                    _anim.SetFrames(_shellFrames, 60f, true);
+                    // Shell should be visually idle until kicked.
+                    _anim.SetFrames(_shellFrames, 0f, true);
                 } else {
                     _anim.enabled = false;
                 }
@@ -190,7 +233,8 @@ namespace NSMB.Enemies {
             if (_anim != null) {
                 if (_shellFrames != null && _shellFrames.Length > 0) {
                     _anim.enabled = true;
-                    _anim.SetFrames(_shellFrames, 60f, true);
+                    // Spin speed depends on shell horizontal velocity; seed it here and update in FixedUpdate.
+                    _anim.SetFrames(_shellFrames, Mathf.Min(ShellSpinMaxFps, ShellSpinFpsPerSpeed * Mathf.Abs(shellSpeed)), true);
                 } else {
                     _anim.enabled = false;
                 }
@@ -208,7 +252,7 @@ namespace NSMB.Enemies {
                         _anim = (_graphics != null) ? _graphics.gameObject.AddComponent<NSMB.Visual.SimpleSpriteAnimator>() : gameObject.AddComponent<NSMB.Visual.SimpleSpriteAnimator>();
                     }
                     _anim.enabled = true;
-                    _anim.SetFrames(_walkFrames, 60f, true);
+                    _anim.SetFrames(_walkFrames, WalkAnimFps, true);
                 }
             }
         }

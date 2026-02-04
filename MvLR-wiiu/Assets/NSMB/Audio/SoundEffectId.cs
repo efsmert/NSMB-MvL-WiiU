@@ -16,6 +16,7 @@ namespace NSMB.Audio {
         UI_WindowOpen = 86,
 
         World_Block_Bump = 68,
+        World_Block_Break = 67,
         World_Block_Powerup = 69,
         World_Coin_Collect = 70,
     }
@@ -35,6 +36,7 @@ namespace NSMB.Audio {
             { SoundEffectId.UI_WindowOpen, "ui/windowopen" },
 
             { SoundEffectId.World_Block_Bump, "world/block_bump" },
+            { SoundEffectId.World_Block_Break, "world/block_break" },
             { SoundEffectId.World_Block_Powerup, "world/block_powerup" },
             { SoundEffectId.World_Coin_Collect, "world/coin_collect" },
         };

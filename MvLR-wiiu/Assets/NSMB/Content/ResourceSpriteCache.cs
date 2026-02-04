@@ -60,6 +60,28 @@ namespace NSMB.Content {
                 }
             }
 
+            // Compatibility fallback: some imported metas prefix sprite names with "<number> " (e.g. "17 Snow (with ice)_0").
+            // Older stage assets (or older importers) may store the name without that numeric prefix.
+            // Prefer matching "<digits><space><spriteName>".
+            if (sprites != null && sprites.Length > 0 && spriteName.Length > 0) {
+                bool hasNumericPrefixAlready = spriteName.Length >= 2 && char.IsDigit(spriteName[0]) && spriteName.IndexOf(' ') > 0;
+                if (!hasNumericPrefixAlready) {
+                    for (int i = 0; i < sprites.Length; i++) {
+                        Sprite s = sprites[i];
+                        if (s == null || string.IsNullOrEmpty(s.name)) continue;
+
+                        // Must end with the requested name, and have a space before it, and start with a digit.
+                        if (s.name.Length > spriteName.Length + 1 &&
+                            s.name.EndsWith(spriteName, StringComparison.InvariantCultureIgnoreCase)) {
+                            int idx = s.name.Length - spriteName.Length - 1;
+                            if (idx >= 0 && s.name[idx] == ' ' && char.IsDigit(s.name[0])) {
+                                return s;
+                            }
+                        }
+                    }
+                }
+            }
+
             return null;
         }
 

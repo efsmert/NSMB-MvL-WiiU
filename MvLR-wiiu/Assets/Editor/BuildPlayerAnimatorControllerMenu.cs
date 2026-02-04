@@ -45,32 +45,34 @@ public static class BuildPlayerAnimatorControllerMenu {
         BuildJumpFall(controller, jump, fall);
     }
 
-    private static void BuildBigController() {
-        string fbxPath = "Assets/Resources/NSMB/Player/Models/Players/mario_big/mario_big_exported.fbx";
-        Dictionary<string, AnimationClip> clips = LoadClipsByName(fbxPath);
+	    private static void BuildBigController() {
+	        string fbxPath = "Assets/Resources/NSMB/Player/Models/Players/mario_big/mario_big_exported.fbx";
+	        Dictionary<string, AnimationClip> clips = LoadClipsByName(fbxPath);
 
         // mario_big_exported uses names like: "mario_model_mg|..._mario_model_mg"
-        AnimationClip idle = FindClipContains(clips, "mario_model_mg|big_wait_mario_model_mg");
-        if (idle == null) idle = FindClipContains(clips, "big_wait_mario_model_mg");
-        if (idle == null) idle = FindClipContains(clips, "big_wait");
+        //
+        // IMPORTANT (Unity 6 parity): the "big_*" clips are used by the MegaMushroom states in the original
+        // LargeMario controller ("mega-idle"/"mega-walk"). Normal Mushroom "large" uses "wait_*" / "walk_*".
+	        // IMPORTANT (Unity 6 parity): normal Mushroom "large" uses "wait_*" / "walk_*".
+	        // Do NOT fall back to "big_*" clips here; those are for MegaMushroom.
+	        AnimationClip idle = FindClip(clips, "mario_model_mg|wait_mario_model_mg");
+	        if (idle == null) idle = FindClipContains(clips, "|wait_mario_model_mg");
+	        if (idle == null) idle = FindClipContains(clips, "wait_mario_model_mg");
 
-        AnimationClip walk = FindClipContains(clips, "mario_model_mg|big_walk_mario_model_mg");
-        if (walk == null) walk = FindClipContains(clips, "big_walk_mario_model_mg");
-        if (walk == null) walk = FindClipContains(clips, "big_walk");
+	        AnimationClip walk = FindClip(clips, "mario_model_mg|walk_mario_model_mg");
+	        if (walk == null) walk = FindClipContains(clips, "|walk_mario_model_mg");
+	        if (walk == null) walk = FindClipContains(clips, "walk_mario_model_mg");
 
-        AnimationClip jump = FindClipContains(clips, "mario_model_mg|jump_mario_model_mg");
-        if (jump == null) jump = FindClipContains(clips, "|jump_mario_model_mg");
-        if (jump == null) jump = FindClipContains(clips, "jump_mario_model_mg");
-        if (jump == null) jump = FindClipContains(clips, "|jump");
+	        AnimationClip jump = FindClip(clips, "mario_model_mg|jump_mario_model_mg");
+	        if (jump == null) jump = FindClipContains(clips, "|jump_mario_model_mg");
+	        if (jump == null) jump = FindClipContains(clips, "jump_mario_model_mg");
 
-        AnimationClip fall = FindClipContains(clips, "mario_model_mg|m_fall_wait_mario_model_mg");
-        if (fall == null) fall = FindClipContains(clips, "m_fall_wait_mario_model_mg");
-        if (fall == null) fall = FindClipContains(clips, "m_fall");
-        if (fall == null) fall = FindClipContains(clips, "fall");
+	        AnimationClip fall = FindClip(clips, "mario_model_mg|m_fall_wait_mario_model_mg");
+	        if (fall == null) fall = FindClipContains(clips, "m_fall_wait_mario_model_mg");
 
-        string outPath = EnsureGeneratedFolder() + "/LargeMarioGenerated.controller";
-        AnimatorController controller = CreateOrResetController(outPath);
-        ConfigureCommonParams(controller);
+	        string outPath = EnsureGeneratedFolder() + "/LargeMarioGenerated.controller";
+	        AnimatorController controller = CreateOrResetController(outPath);
+	        ConfigureCommonParams(controller);
         BuildLocomotionGraph(controller, idle, walk);
         BuildJumpFall(controller, jump, fall);
     }
@@ -302,17 +304,24 @@ public static class BuildPlayerAnimatorControllerMenu {
         return clips.TryGetValue(exactName, out clip) ? clip : null;
     }
 
-    private static AnimationClip FindClipContains(Dictionary<string, AnimationClip> clips, string contains) {
-        if (clips == null || string.IsNullOrEmpty(contains)) {
-            return null;
-        }
-        foreach (KeyValuePair<string, AnimationClip> kv in clips) {
-            if (kv.Key != null && kv.Key.IndexOf(contains, StringComparison.InvariantCultureIgnoreCase) >= 0) {
-                return kv.Value;
-            }
-        }
-        return null;
-    }
+	    private static AnimationClip FindClipContains(Dictionary<string, AnimationClip> clips, string contains) {
+	        if (clips == null || string.IsNullOrEmpty(contains)) {
+	            return null;
+	        }
+	        // Deterministic selection: dictionary iteration order is undefined.
+	        List<string> keys = new List<string>(clips.Keys);
+	        keys.Sort(StringComparer.InvariantCultureIgnoreCase);
+	        for (int i = 0; i < keys.Count; i++) {
+	            string k = keys[i];
+	            if (k != null && k.IndexOf(contains, StringComparison.InvariantCultureIgnoreCase) >= 0) {
+	                AnimationClip clip;
+	                if (clips.TryGetValue(k, out clip)) {
+	                    return clip;
+	                }
+	            }
+	        }
+	        return null;
+	    }
 
     private static AnimatorState FindState(AnimatorStateMachine sm, string name) {
         if (sm == null || string.IsNullOrEmpty(name)) return null;

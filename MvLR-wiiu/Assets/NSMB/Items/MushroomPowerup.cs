@@ -45,9 +45,12 @@ namespace NSMB.Items {
         }
 
         private void OnCollisionEnter2D(Collision2D collision) {
-            if (collision != null && collision.collider != null && collision.collider.GetComponent<NSMB.Player.PlayerMotor2D>() != null) {
-                Collect();
-                return;
+            if (collision != null && collision.collider != null) {
+                NSMB.Player.PlayerMotor2D player = collision.collider.GetComponent<NSMB.Player.PlayerMotor2D>();
+                if (player != null) {
+                    Collect(player);
+                    return;
+                }
             }
 
             // bounce off walls
@@ -62,7 +65,13 @@ namespace NSMB.Items {
             }
         }
 
-        private void Collect() {
+        private void Collect(NSMB.Player.PlayerMotor2D player) {
+            if (player != null) {
+                NSMB.Player.PlayerPowerupState p = player.GetComponent<NSMB.Player.PlayerPowerupState>();
+                if (p != null) {
+                    p.CollectMushroom();
+                }
+            }
 
             NSMB.Gameplay.GameManager gm = NSMB.Gameplay.GameManager.Instance;
             if (gm != null) {
@@ -73,7 +82,7 @@ namespace NSMB.Items {
             if (root != null) {
                 NSMB.Audio.AudioManager audio = root.GetComponent<NSMB.Audio.AudioManager>();
                 if (audio != null) {
-                    audio.PlayOneShot(NSMB.Audio.SoundEffectId.World_Block_Powerup, collectSfxVolume);
+                    audio.PlayOneShot(NSMB.Audio.SoundEffectId.Player_Sound_PowerupCollect, collectSfxVolume);
                 }
             }
 

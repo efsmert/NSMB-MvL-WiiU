@@ -78,7 +78,9 @@ namespace NSMB.WiiU {
             if (col == null) {
                 col = player.AddComponent<BoxCollider2D>();
             }
-            col.size = new Vector2(0.9f, 0.9f);
+            // Match Unity 6 (Quantum) Mario hitbox at Small state: width=0.375*2*scale, height=0.42*scale (scale=2).
+            col.size = new Vector2(0.75f, 0.84f);
+            col.offset = new Vector2(0f, 0.42f);
 
             // Movement/visuals.
             if (player.GetComponent<NSMB.Player.PlayerMotor2D>() == null) {
@@ -86,6 +88,9 @@ namespace NSMB.WiiU {
             }
             if (player.GetComponent<NSMB.Player.PlayerVisualFromOriginal>() == null) {
                 player.AddComponent<NSMB.Player.PlayerVisualFromOriginal>();
+            }
+            if (player.GetComponent<NSMB.Player.PlayerPowerupState>() == null) {
+                player.AddComponent<NSMB.Player.PlayerPowerupState>();
             }
             if (player.GetComponent<NSMB.Player.PlayerSfx>() == null) {
                 player.AddComponent<NSMB.Player.PlayerSfx>();

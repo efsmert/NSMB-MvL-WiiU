@@ -225,6 +225,9 @@ public static class ImportOriginalStagesMenu {
 
         OriginalSpriteResolver spriteResolver = new OriginalSpriteResolver(originalProjectDir);
         OriginalTileColliderResolver tileColliderResolver = new OriginalTileColliderResolver(originalProjectDir);
+        OriginalTileVisualResolver tileVisualResolver = new OriginalTileVisualResolver(originalProjectDir);
+        OriginalItemAssetResolver itemResolver = new OriginalItemAssetResolver(originalProjectDir);
+        OriginalStageTileBehaviorResolver stageTileBehaviorResolver = new OriginalStageTileBehaviorResolver(originalProjectDir, tileVisualResolver, spriteResolver, itemResolver);
 
         for (int tm = 0; tm < tilemaps.Count; tm++) {
             SceneTilemapData tilemap = tilemaps[tm];
@@ -234,8 +237,19 @@ public static class ImportOriginalStagesMenu {
 
             Dictionary<string, NSMB.World.StageTileLayer> layersByAtlas = new Dictionary<string, NSMB.World.StageTileLayer>(StringComparer.InvariantCultureIgnoreCase);
 
+            // IMPORTANT: Unity 6 levels are authored with Tilemap transforms scaled to 0.5 (32px-per-unit-ish),
+            // while the Wii U port runtime builds tiles in a 16 PPU / 1-unit-per-tile grid.
+            //
+            // `ImportScale` is our "original -> Unity" scale factor and must be applied here so StageDefinition
+            // tile layers line up with imported spawn/camera values (already ImportScale-adjusted) and runtime
+            // tile placement (cell coords assumed to be 1-unit cells).
             Vector3 layerPos = tilemap.worldPosition * ImportScale;
-            Vector3 layerScale = Vector3.Scale(tilemap.worldScale, new Vector3(ImportScale, ImportScale, 1f));
+            Vector3 layerScale = tilemap.worldScale * ImportScale;
+
+            // Avoid tiny floating point drift (e.g. 0.99999994) becoming visible seams.
+            layerScale.x = SnapNear(layerScale.x, 1f, 0.0005f);
+            layerScale.y = SnapNear(layerScale.y, 1f, 0.0005f);
+            layerScale.z = SnapNear(layerScale.z, 1f, 0.0005f);
 
             for (int i = 0; i < tilemap.tiles.Count; i++) {
                 SceneTile t = tilemap.tiles[i];
@@ -251,15 +265,48 @@ public static class ImportOriginalStagesMenu {
                 string resourcesAtlasPath = null;
                 string spriteName = null;
 
-                if (t.spriteIndex >= 0 && t.spriteIndex < tilemap.spriteRefs.Count) {
-                    SceneSpriteRef sr = tilemap.spriteRefs[t.spriteIndex];
-                    string rp;
-                    string sn;
-                    if (spriteResolver.TryResolveSprite(sr.guid, sr.fileId, out rp, out sn)) {
-                        resourcesAtlasPath = rp;
-                        spriteName = sn;
-                    }
-                }
+                 // Prefer resolving sprite via the referenced Tile asset. In Unity 6, Tilemap stores an asset ref
+                 // for each cell (tileAssetIndex) and a separate sprite table index that is not stable across versions.
+                 if (t.tileAssetIndex >= 0 && t.tileAssetIndex < tilemap.tileAssets.Count) {
+                     SceneTileAssetRef tr = tilemap.tileAssets[t.tileAssetIndex];
+                     string sGuid;
+                     long sFileId;
+                     if (!string.IsNullOrEmpty(tr.guid) && tileVisualResolver.TryGetPrimarySprite(tr.guid, out sGuid, out sFileId)) {
+                         string rp;
+                         string sn;
+                         // Even if we can't map the internal sprite ID to a stable name, we can still infer the
+                         // correct atlas from the sprite GUID. Keeping the atlas correct prevents tiles from being
+                         // bucketed into a wrong default layer (which shows up as holes).
+                         spriteResolver.TryResolveSprite(sGuid, sFileId, out rp, out sn);
+                         if (!string.IsNullOrEmpty(rp)) {
+                             resourcesAtlasPath = rp;
+                         }
+                         if (!string.IsNullOrEmpty(sn)) {
+                             spriteName = sn;
+                         }
+                     }
+                 }
+
+                // Fallback: resolve from the Tilemap sprite table when the Tile asset didn't give us a name.
+                // This table may contain many null slots (fileID: 0), so our YAML parser must preserve indices.
+                 if ((string.IsNullOrEmpty(spriteName) || string.IsNullOrEmpty(resourcesAtlasPath)) &&
+                     t.spriteIndex >= 0 && t.spriteIndex < tilemap.spriteRefs.Count) {
+                     SceneSpriteRef sr = tilemap.spriteRefs[t.spriteIndex];
+                     string rp;
+                     string sn;
+                     spriteResolver.TryResolveSprite(sr.guid, sr.fileId, out rp, out sn);
+                     if (!string.IsNullOrEmpty(rp)) {
+                         if (string.IsNullOrEmpty(resourcesAtlasPath)) {
+                             resourcesAtlasPath = rp;
+                         } else if (!string.Equals(resourcesAtlasPath, rp, StringComparison.InvariantCultureIgnoreCase)) {
+                             // If we inferred the wrong atlas (fallback mapping), trust the resolver's atlas.
+                             resourcesAtlasPath = rp;
+                         }
+                     }
+                     if (!string.IsNullOrEmpty(sn)) {
+                         spriteName = sn;
+                     }
+                 }
 
                 if (string.IsNullOrEmpty(resourcesAtlasPath)) {
                     resourcesAtlasPath = ResolveAtlasForTilemap(tilemap.name, spec);
@@ -272,8 +319,10 @@ public static class ImportOriginalStagesMenu {
                 }
 
                 bool isSolid = true;
+                string tileAssetGuid = null;
                 if (t.tileAssetIndex >= 0 && t.tileAssetIndex < tilemap.tileAssets.Count) {
                     SceneTileAssetRef tr = tilemap.tileAssets[t.tileAssetIndex];
+                    tileAssetGuid = tr.guid;
                     if (!string.IsNullOrEmpty(tr.guid)) {
                         int colliderType = tileColliderResolver.GetDefaultColliderType(tr.guid);
                         if (colliderType == 0) {
@@ -306,6 +355,18 @@ public static class ImportOriginalStagesMenu {
                 outTile.flipX = flipX;
                 outTile.flipY = flipY;
                 outTile.solid = isSolid;
+
+                // Special tile behavior: resolve from the original Quantum StageTile asset linked to this Tile.
+                OriginalStageTileBehaviorResolver.TileBehavior behavior;
+                if (!string.IsNullOrEmpty(tileAssetGuid) && stageTileBehaviorResolver.TryGetBehavior(tileAssetGuid, out behavior)) {
+                    outTile.interactionKind = behavior.kind;
+                    outTile.breakingRules = behavior.breakingRules;
+                    outTile.bumpIfNotBroken = behavior.bumpIfNotBroken;
+                    outTile.usedAtlasPath = behavior.usedAtlasPath;
+                    outTile.usedSpriteName = behavior.usedSpriteName;
+                    outTile.smallPowerup = behavior.smallPowerup;
+                    outTile.largePowerup = behavior.largePowerup;
+                }
                 layer.tiles.Add(outTile);
             }
 
@@ -461,6 +522,13 @@ public static class ImportOriginalStagesMenu {
             return resourcesAtlasPath.Substring(slash + 1);
         }
         return resourcesAtlasPath;
+    }
+
+    private static float SnapNear(float value, float target, float epsilon) {
+        if (Mathf.Abs(value - target) <= epsilon) {
+            return target;
+        }
+        return value;
     }
 
     private sealed class OriginalSpriteResolver {
@@ -627,6 +695,11 @@ public static class ImportOriginalStagesMenu {
             long pendingId = 0;
             bool havePendingId = false;
 
+            // Modern Unity texture metas frequently have:
+            //   internalIDToNameTable: []
+            // and instead store sprite names in spriteSheet.sprites with an "internalID:" per sprite.
+            // We'll parse both and merge results.
+
             for (int i = 0; i < lines.Length; i++) {
                 string t = lines[i].Trim();
 
@@ -647,8 +720,21 @@ public static class ImportOriginalStagesMenu {
                 // - first:
                 //     213: <long>
                 //   second: 0 SpriteName
+                //
+                // Some Unity versions serialize this as:
+                // - first: <long>
+                //   second: 0 SpriteName
                 if (t.StartsWith("213:", StringComparison.InvariantCulture)) {
                     string s = t.Substring("213:".Length).Trim();
+                    long id;
+                    if (long.TryParse(s, NumberStyles.Integer, CultureInfo.InvariantCulture, out id)) {
+                        pendingId = id;
+                        havePendingId = true;
+                    }
+                    continue;
+                }
+                if (t.StartsWith("first:", StringComparison.InvariantCulture)) {
+                    string s = t.Substring("first:".Length).Trim();
                     long id;
                     if (long.TryParse(s, NumberStyles.Integer, CultureInfo.InvariantCulture, out id)) {
                         pendingId = id;
@@ -659,15 +745,7 @@ public static class ImportOriginalStagesMenu {
 
                 if (havePendingId && t.StartsWith("second:", StringComparison.InvariantCulture)) {
                     string name = t.Substring("second:".Length).Trim();
-                    // Unity prefixes with "0 " in many metas: "0 SpriteName"
-                    int space = name.IndexOf(' ');
-                    if (space >= 0) {
-                        string maybeNum = name.Substring(0, space).Trim();
-                        int dummy;
-                        if (int.TryParse(maybeNum, out dummy)) {
-                            name = name.Substring(space + 1).Trim();
-                        }
-                    }
+                    name = NormalizeSpriteNameFromMeta(name);
 
                     if (!string.IsNullOrEmpty(name) && !map.ContainsKey(pendingId)) {
                         map[pendingId] = name;
@@ -678,7 +756,187 @@ public static class ImportOriginalStagesMenu {
                 }
             }
 
+            // Also parse spriteSheet.sprites internalID/name pairs and merge them in.
+            // Some Unity texture metas contain a partially-populated internalIDToNameTable, while scenes/tilemaps
+            // can reference sprites using the per-sprite "internalID" values stored under spriteSheet.sprites.
+            // Keeping both in a single map avoids missing lookups for certain tiles/atlases.
+            // Example (Unity 6 texture meta):
+            //   spriteSheet:
+            //     sprites:
+            //     - name: beach-yellow_10
+            //       ...
+            //       internalID: 1220336670
+            bool inSpriteSheet = false;
+            bool inSprites = false;
+            string pendingName = null;
+            long pendingInternalId = 0;
+            bool haveName = false;
+            bool haveInternalId = false;
+            int spriteEntryIndent = -1;
+
+            for (int i = 0; i < lines.Length; i++) {
+                string raw = lines[i];
+                string tt = raw.Trim();
+
+                if (!inSpriteSheet) {
+                    if (tt == "spriteSheet:") {
+                        inSpriteSheet = true;
+                    }
+                    continue;
+                }
+
+                if (!inSprites) {
+                    if (tt == "sprites:") {
+                        inSprites = true;
+                    }
+                    continue;
+                }
+
+                // End if we leave the spriteSheet indentation (2 spaces in these metas).
+                if (raw.Length > 0 && CountLeadingSpacesLocal(raw) < 4) {
+                    break;
+                }
+
+                // IMPORTANT: Only treat "- ..." as a new sprite entry when it's at the sprite list indentation.
+                // Sprite entries are typically indented 4 spaces. Nested lists (outline/physicsShape) can also use
+                // "- ..." and would otherwise break parsing before we see "internalID:".
+                if (tt.StartsWith("- ", StringComparison.InvariantCulture)) {
+                    int indent = CountLeadingSpacesLocal(raw);
+                    if (spriteEntryIndent < 0) {
+                        spriteEntryIndent = indent;
+                    }
+                    if (indent == spriteEntryIndent) {
+                        // New sprite entry; flush if we have a completed pair.
+                        if (haveName && haveInternalId) {
+                            string nn = NormalizeSpriteNameFromMeta(pendingName);
+                            if (!string.IsNullOrEmpty(nn) && !map.ContainsKey(pendingInternalId)) {
+                                map[pendingInternalId] = nn;
+                            }
+                        }
+                        pendingName = null;
+                        pendingInternalId = 0;
+                        haveName = false;
+                        haveInternalId = false;
+                        continue;
+                    }
+                }
+
+                if (!haveName && tt.StartsWith("name:", StringComparison.InvariantCulture)) {
+                    pendingName = tt.Substring("name:".Length).Trim();
+                    haveName = true;
+                    continue;
+                }
+
+                if (!haveInternalId && tt.StartsWith("internalID:", StringComparison.InvariantCulture)) {
+                    string s = tt.Substring("internalID:".Length).Trim();
+                    long id;
+                    if (long.TryParse(s, NumberStyles.Integer, CultureInfo.InvariantCulture, out id)) {
+                        pendingInternalId = id;
+                        haveInternalId = true;
+                    }
+                    continue;
+                }
+            }
+
+            // Flush last entry.
+            if (haveName && haveInternalId) {
+                string nn = NormalizeSpriteNameFromMeta(pendingName);
+                if (!string.IsNullOrEmpty(nn) && !map.ContainsKey(pendingInternalId)) {
+                    map[pendingInternalId] = nn;
+                }
+            }
+
+            // Some Unity metas also include a nameFileIdTable mapping (name -> internalID).
+            // Parse and invert it as an additional fallback, then merge into the map.
+            // Example:
+            //   nameFileIdTable:
+            //     bonus_20: -2103662274
+            bool inNameFileIdTable = false;
+            int nameTableIndent = -1;
+            for (int i = 0; i < lines.Length; i++) {
+                string raw = lines[i];
+                string tt = raw.Trim();
+                if (!inNameFileIdTable) {
+                    if (tt == "nameFileIdTable:") {
+                        inNameFileIdTable = true;
+                        nameTableIndent = CountLeadingSpacesLocal(raw);
+                    }
+                    continue;
+                }
+
+                if (raw.Length > 0 && CountLeadingSpacesLocal(raw) <= nameTableIndent) {
+                    break;
+                }
+
+                int colon = tt.IndexOf(':');
+                if (colon <= 0) {
+                    continue;
+                }
+
+                string key = tt.Substring(0, colon).Trim();
+                string val = tt.Substring(colon + 1).Trim();
+
+                if (string.IsNullOrEmpty(key) || string.IsNullOrEmpty(val)) {
+                    continue;
+                }
+
+                // Unquote YAML keys when present.
+                if (key.Length >= 2) {
+                    char first = key[0];
+                    char last = key[key.Length - 1];
+                    if ((first == '"' && last == '"') || (first == '\'' && last == '\'')) {
+                        key = key.Substring(1, key.Length - 2);
+                    }
+                }
+
+                long id;
+                if (!long.TryParse(val, NumberStyles.Integer, CultureInfo.InvariantCulture, out id)) {
+                    continue;
+                }
+
+                string nn = NormalizeSpriteNameFromMeta(key);
+                if (!string.IsNullOrEmpty(nn) && !map.ContainsKey(id)) {
+                    map[id] = nn;
+                }
+            }
+
             return map;
+        }
+
+        private static string NormalizeSpriteNameFromMeta(string name) {
+            if (string.IsNullOrEmpty(name)) {
+                return name;
+            }
+
+            // Unity often prefixes with "0 " in some metas: "0 SpriteName".
+            // Do NOT strip other numeric prefixes (e.g. "17 Snow (with ice)_0" is intentional).
+            int space = name.IndexOf(' ');
+            if (space <= 0) {
+                return name.Trim();
+            }
+
+            string maybeNum = name.Substring(0, space).Trim();
+            int num;
+            if (!int.TryParse(maybeNum, out num)) {
+                return name.Trim();
+            }
+
+            if (num == 0) {
+                return name.Substring(space + 1).Trim();
+            }
+
+            return name.Trim();
+        }
+
+        private static int CountLeadingSpacesLocal(string s) {
+            if (string.IsNullOrEmpty(s)) {
+                return 0;
+            }
+            int n = 0;
+            while (n < s.Length && s[n] == ' ') {
+                n++;
+            }
+            return n;
         }
     }
 
@@ -805,6 +1063,609 @@ public static class ImportOriginalStagesMenu {
             int v;
             int.TryParse(s, NumberStyles.Integer, CultureInfo.InvariantCulture, out v);
             return v;
+        }
+    }
+
+    private sealed class OriginalTileVisualResolver {
+        private readonly string _originalProjectDir;
+        private Dictionary<string, string> _assetPathByGuid;
+        private readonly Dictionary<string, SpriteRef> _primarySpriteByTileGuid = new Dictionary<string, SpriteRef>(StringComparer.InvariantCultureIgnoreCase);
+
+        private struct SpriteRef {
+            public string guid;
+            public long fileId;
+        }
+
+        public OriginalTileVisualResolver(string originalProjectDir) {
+            _originalProjectDir = originalProjectDir;
+        }
+
+        public bool TryGetPrimarySprite(string tileAssetGuid, out string spriteGuid, out long spriteInternalId) {
+            spriteGuid = null;
+            spriteInternalId = 0;
+
+            if (string.IsNullOrEmpty(tileAssetGuid)) {
+                return false;
+            }
+
+            SpriteRef cached;
+            if (_primarySpriteByTileGuid.TryGetValue(tileAssetGuid, out cached)) {
+                spriteGuid = cached.guid;
+                spriteInternalId = cached.fileId;
+                return !string.IsNullOrEmpty(spriteGuid) && spriteInternalId != 0;
+            }
+
+            EnsureIndex();
+            string rel;
+            if (_assetPathByGuid == null || !_assetPathByGuid.TryGetValue(tileAssetGuid, out rel) || string.IsNullOrEmpty(rel)) {
+                _primarySpriteByTileGuid[tileAssetGuid] = new SpriteRef();
+                return false;
+            }
+
+            string abs = Path.Combine(_originalProjectDir, rel.Replace('/', Path.DirectorySeparatorChar));
+            if (!File.Exists(abs)) {
+                _primarySpriteByTileGuid[tileAssetGuid] = new SpriteRef();
+                return false;
+            }
+
+            SpriteRef sr = ParsePrimarySpriteRef(abs);
+            if (string.IsNullOrEmpty(sr.guid) || sr.fileId == 0) {
+                // Many Quantum "StageTile" assets store the real Unity Tile asset in a "Tile:" field.
+                // Follow that reference and read the sprite from the actual Tile asset.
+                string referencedTileGuid;
+                if (TryParseReferencedTileGuid(abs, out referencedTileGuid) && !string.IsNullOrEmpty(referencedTileGuid)) {
+                    string rel2;
+                    if (_assetPathByGuid != null && _assetPathByGuid.TryGetValue(referencedTileGuid, out rel2) && !string.IsNullOrEmpty(rel2)) {
+                        string abs2 = Path.Combine(_originalProjectDir, rel2.Replace('/', Path.DirectorySeparatorChar));
+                        if (File.Exists(abs2)) {
+                            SpriteRef sr2 = ParsePrimarySpriteRef(abs2);
+                            if (!string.IsNullOrEmpty(sr2.guid) && sr2.fileId != 0) {
+                                sr = sr2;
+                            }
+                        }
+                    }
+                }
+            }
+            _primarySpriteByTileGuid[tileAssetGuid] = sr;
+            spriteGuid = sr.guid;
+            spriteInternalId = sr.fileId;
+            return !string.IsNullOrEmpty(spriteGuid) && spriteInternalId != 0;
+        }
+
+        private void EnsureIndex() {
+            if (_assetPathByGuid != null) {
+                return;
+            }
+
+            _assetPathByGuid = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
+
+            // Tiles are stored under Resources/Tilemaps/Tiles in the original project.
+            string root = Path.Combine(_originalProjectDir, Path.Combine("Assets", Path.Combine("Resources", Path.Combine("Tilemaps", "Tiles"))));
+            if (!Directory.Exists(root)) {
+                return;
+            }
+
+            string[] metas = Directory.GetFiles(root, "*.meta", SearchOption.AllDirectories);
+            for (int i = 0; i < metas.Length; i++) {
+                string metaPath = metas[i];
+                try {
+                    string guid = ReadGuidFromMeta(metaPath);
+                    if (string.IsNullOrEmpty(guid)) {
+                        continue;
+                    }
+
+                    string assetPath = metaPath.Substring(_originalProjectDir.Length).TrimStart(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
+                    if (assetPath.EndsWith(".meta", StringComparison.InvariantCultureIgnoreCase)) {
+                        assetPath = assetPath.Substring(0, assetPath.Length - ".meta".Length);
+                    }
+
+                    assetPath = assetPath.Replace('\\', '/');
+                    if (!_assetPathByGuid.ContainsKey(guid)) {
+                        _assetPathByGuid[guid] = assetPath;
+                    }
+                } catch (Exception) {
+                    // ignore
+                }
+            }
+        }
+
+        private static string ReadGuidFromMeta(string metaPath) {
+            string[] lines = File.ReadAllLines(metaPath);
+            for (int i = 0; i < lines.Length; i++) {
+                string t = lines[i].Trim();
+                if (t.StartsWith("guid:", StringComparison.InvariantCulture)) {
+                    return t.Substring("guid:".Length).Trim();
+                }
+            }
+            return null;
+        }
+
+        private static SpriteRef ParsePrimarySpriteRef(string tileAssetAbsPath) {
+            SpriteRef sr = new SpriteRef();
+            try {
+                string[] lines = File.ReadAllLines(tileAssetAbsPath);
+                bool inAnimated = false;
+                for (int i = 0; i < lines.Length; i++) {
+                    string t = lines[i].Trim();
+                    if (!inAnimated) {
+                        if (t.StartsWith("m_AnimatedSprites:", StringComparison.InvariantCulture)) {
+                            inAnimated = true;
+                        }
+                        continue;
+                    }
+
+                    // First list entry:
+                    // - {fileID: 123, guid: abc, type: 3}
+                    if (t.StartsWith("- {fileID:", StringComparison.InvariantCulture)) {
+                        long id;
+                        string guid;
+                        if (TryParseInlineFileIdGuid(t, out id, out guid)) {
+                            sr.fileId = id;
+                            sr.guid = guid;
+                            return sr;
+                        }
+                    }
+
+                    // End of list.
+                    if (!t.StartsWith("-", StringComparison.InvariantCulture) && t.Length > 0) {
+                        break;
+                    }
+                }
+
+                for (int i = 0; i < lines.Length; i++) {
+                    string t = lines[i].Trim();
+                    if (t.StartsWith("m_Sprite:", StringComparison.InvariantCulture)) {
+                        long id;
+                        string guid;
+                        if (TryParseInlineFileIdGuid(t, out id, out guid)) {
+                            sr.fileId = id;
+                            sr.guid = guid;
+                            return sr;
+                        }
+                    }
+                }
+            } catch (Exception) {
+                // ignore
+            }
+            return sr;
+        }
+
+        private static bool TryParseReferencedTileGuid(string stageTileAbsPath, out string tileGuid) {
+            tileGuid = null;
+            try {
+                string[] lines = File.ReadAllLines(stageTileAbsPath);
+                for (int i = 0; i < lines.Length; i++) {
+                    string t = lines[i].Trim();
+                    if (t.StartsWith("Tile:", StringComparison.InvariantCulture)) {
+                        long id;
+                        string guid;
+                        if (TryParseInlineFileIdGuid(t, out id, out guid) && !string.IsNullOrEmpty(guid)) {
+                            tileGuid = guid;
+                            return true;
+                        }
+                    }
+                }
+            } catch (Exception) {
+                // ignore
+            }
+            return false;
+        }
+
+        private static bool TryParseInlineFileIdGuid(string lineTrimmed, out long fileId, out string guid) {
+            fileId = 0;
+            guid = null;
+
+            int fileIdIdx = lineTrimmed.IndexOf("fileID:", StringComparison.InvariantCulture);
+            int guidIdx = lineTrimmed.IndexOf("guid:", StringComparison.InvariantCulture);
+            if (fileIdIdx < 0 || guidIdx < 0) {
+                return false;
+            }
+
+            fileIdIdx += "fileID:".Length;
+            string filePart = lineTrimmed.Substring(fileIdIdx).Trim();
+            int comma = filePart.IndexOf(',');
+            if (comma >= 0) {
+                filePart = filePart.Substring(0, comma).Trim();
+            }
+
+            long id;
+            if (!long.TryParse(filePart, NumberStyles.Integer, CultureInfo.InvariantCulture, out id)) {
+                return false;
+            }
+
+            guidIdx += "guid:".Length;
+            string guidPart = lineTrimmed.Substring(guidIdx).Trim();
+            comma = guidPart.IndexOf(',');
+            if (comma >= 0) {
+                guidPart = guidPart.Substring(0, comma).Trim();
+            }
+
+            if (string.IsNullOrEmpty(guidPart)) {
+                return false;
+            }
+
+            fileId = id;
+            guid = guidPart;
+            return true;
+        }
+    }
+
+    private sealed class OriginalItemAssetResolver {
+        private readonly string _originalProjectDir;
+        private Dictionary<long, string> _itemNameById;
+
+        public OriginalItemAssetResolver(string originalProjectDir) {
+            _originalProjectDir = originalProjectDir;
+        }
+
+        public NSMB.World.StagePowerupKind ResolvePowerupKind(long guidValue) {
+            if (guidValue == 0) {
+                return NSMB.World.StagePowerupKind.None;
+            }
+
+            EnsureIndex();
+            string name;
+            if (_itemNameById != null && _itemNameById.TryGetValue(guidValue, out name) && !string.IsNullOrEmpty(name)) {
+                // Names match the Quantum asset object names (e.g. "Mushroom", "FireFlower", ...).
+                switch (name) {
+                    case "Mushroom": return NSMB.World.StagePowerupKind.Mushroom;
+                    case "FireFlower": return NSMB.World.StagePowerupKind.FireFlower;
+                    case "IceFlower": return NSMB.World.StagePowerupKind.IceFlower;
+                    case "BlueShell": return NSMB.World.StagePowerupKind.BlueShell;
+                    case "MiniMushroom": return NSMB.World.StagePowerupKind.MiniMushroom;
+                    case "MegaMushroom": return NSMB.World.StagePowerupKind.MegaMushroom;
+                    case "PropellerMushroom": return NSMB.World.StagePowerupKind.PropellerMushroom;
+                    case "Starman": return NSMB.World.StagePowerupKind.Starman;
+                    case "1-Up": return NSMB.World.StagePowerupKind.OneUp;
+                    case "HammerSuit": return NSMB.World.StagePowerupKind.HammerSuit;
+                    case "GoldBlock": return NSMB.World.StagePowerupKind.GoldBlock;
+                    default: return NSMB.World.StagePowerupKind.None;
+                }
+            }
+
+            return NSMB.World.StagePowerupKind.None;
+        }
+
+        private void EnsureIndex() {
+            if (_itemNameById != null) {
+                return;
+            }
+
+            _itemNameById = new Dictionary<long, string>();
+            string root = Path.Combine(_originalProjectDir, Path.Combine("Assets", Path.Combine("QuantumUser", Path.Combine("Resources", Path.Combine("AssetObjects", "Items")))));
+            if (!Directory.Exists(root)) {
+                return;
+            }
+
+            string[] assets = Directory.GetFiles(root, "*.asset", SearchOption.TopDirectoryOnly);
+            for (int i = 0; i < assets.Length; i++) {
+                string assetPath = assets[i];
+                try {
+                    long id = ParseIdentifierGuidValue(assetPath);
+                    if (id == 0) {
+                        continue;
+                    }
+
+                    string name = ParseName(assetPath);
+                    if (!_itemNameById.ContainsKey(id)) {
+                        _itemNameById[id] = name;
+                    }
+                } catch (Exception) {
+                    // ignore
+                }
+            }
+        }
+
+        private static string ParseName(string assetPath) {
+            string[] lines = File.ReadAllLines(assetPath);
+            for (int i = 0; i < lines.Length; i++) {
+                string t = lines[i].Trim();
+                if (t.StartsWith("m_Name:", StringComparison.InvariantCulture)) {
+                    return t.Substring("m_Name:".Length).Trim();
+                }
+            }
+            return null;
+        }
+
+        private static long ParseIdentifierGuidValue(string assetPath) {
+            string[] lines = File.ReadAllLines(assetPath);
+            bool inIdentifier = false;
+            bool inGuid = false;
+            for (int i = 0; i < lines.Length; i++) {
+                string t = lines[i].Trim();
+                if (!inIdentifier) {
+                    if (t == "Identifier:") {
+                        inIdentifier = true;
+                    }
+                    continue;
+                }
+
+                if (!inGuid) {
+                    if (t == "Guid:") {
+                        inGuid = true;
+                    }
+                    continue;
+                }
+
+                if (t.StartsWith("Value:", StringComparison.InvariantCulture)) {
+                    string s = t.Substring("Value:".Length).Trim();
+                    long v;
+                    if (long.TryParse(s, NumberStyles.Integer, CultureInfo.InvariantCulture, out v)) {
+                        return v;
+                    }
+                    return 0;
+                }
+            }
+            return 0;
+        }
+    }
+
+    private sealed class OriginalStageTileBehaviorResolver {
+        private const string ScriptGuid_BreakableBrickTile = "7c8a2a7c3b3c8694a83f3b72e87ca64a";
+        private const string ScriptGuid_CoinTile = "445236dd458722a4fb9d9111c0fd8acd";
+        private const string ScriptGuid_PowerupTile = "c8963c1eb6bcbe445abee72055f6918d";
+        private const string ScriptGuid_RouletteTile = "571ed829471dd0f4586d99a765335a82";
+
+        private readonly string _originalProjectDir;
+        private readonly OriginalTileVisualResolver _tileVisualResolver;
+        private readonly OriginalSpriteResolver _spriteResolver;
+        private readonly OriginalItemAssetResolver _itemResolver;
+
+        private Dictionary<string, TileBehavior> _behaviorByTileGuid;
+        private Dictionary<long, StageTileRef> _stageTileById;
+        private Dictionary<string, long> _resultStageTileIdByTileGuid;
+
+        public OriginalStageTileBehaviorResolver(string originalProjectDir, OriginalTileVisualResolver tileVisualResolver, OriginalSpriteResolver spriteResolver, OriginalItemAssetResolver itemResolver) {
+            _originalProjectDir = originalProjectDir;
+            _tileVisualResolver = tileVisualResolver;
+            _spriteResolver = spriteResolver;
+            _itemResolver = itemResolver;
+        }
+
+        public bool TryGetBehavior(string tileGuid, out TileBehavior behavior) {
+            behavior = new TileBehavior();
+            if (string.IsNullOrEmpty(tileGuid)) {
+                return false;
+            }
+
+            EnsureIndex();
+            if (_behaviorByTileGuid != null && _behaviorByTileGuid.TryGetValue(tileGuid, out behavior)) {
+                return behavior.kind != NSMB.World.StageTileInteractionKind.None;
+            }
+            return false;
+        }
+
+        public struct TileBehavior {
+            public NSMB.World.StageTileInteractionKind kind;
+            public int breakingRules;
+            public bool bumpIfNotBroken;
+            public string usedAtlasPath;
+            public string usedSpriteName;
+            public NSMB.World.StagePowerupKind smallPowerup;
+            public NSMB.World.StagePowerupKind largePowerup;
+        }
+
+        private struct StageTileRef {
+            public long stageTileId;
+            public string tileGuid;
+        }
+
+        private void EnsureIndex() {
+            if (_behaviorByTileGuid != null) {
+                return;
+            }
+
+            _behaviorByTileGuid = new Dictionary<string, TileBehavior>(StringComparer.InvariantCultureIgnoreCase);
+            _stageTileById = new Dictionary<long, StageTileRef>();
+            _resultStageTileIdByTileGuid = new Dictionary<string, long>(StringComparer.InvariantCultureIgnoreCase);
+
+            // StageTile assets are stored next to the Tile assets under Resources/Tilemaps/Tiles in the original project.
+            string root = Path.Combine(_originalProjectDir, Path.Combine("Assets", Path.Combine("Resources", Path.Combine("Tilemaps", "Tiles"))));
+            if (!Directory.Exists(root)) {
+                return;
+            }
+
+            string[] stageTiles = Directory.GetFiles(root, "*StageTile.asset", SearchOption.AllDirectories);
+            for (int i = 0; i < stageTiles.Length; i++) {
+                string path = stageTiles[i];
+                try {
+                    StageTileParsed parsed = ParseStageTileAsset(path);
+                    if (parsed.stageTileId == 0 || string.IsNullOrEmpty(parsed.tileGuid) || string.IsNullOrEmpty(parsed.scriptGuid)) {
+                        continue;
+                    }
+
+                    StageTileRef r = new StageTileRef();
+                    r.stageTileId = parsed.stageTileId;
+                    r.tileGuid = parsed.tileGuid;
+                    if (!_stageTileById.ContainsKey(parsed.stageTileId)) {
+                        _stageTileById[parsed.stageTileId] = r;
+                    }
+
+                    TileBehavior b = new TileBehavior();
+                    b.breakingRules = parsed.breakingRules;
+                    b.bumpIfNotBroken = parsed.bumpIfNotBroken;
+                    b.smallPowerup = _itemResolver != null ? _itemResolver.ResolvePowerupKind(parsed.smallPowerupId) : NSMB.World.StagePowerupKind.None;
+                    b.largePowerup = _itemResolver != null ? _itemResolver.ResolvePowerupKind(parsed.largePowerupId) : NSMB.World.StagePowerupKind.None;
+
+                    if (string.Equals(parsed.scriptGuid, ScriptGuid_BreakableBrickTile, StringComparison.InvariantCultureIgnoreCase)) {
+                        b.kind = NSMB.World.StageTileInteractionKind.BreakableBrick;
+                    } else if (string.Equals(parsed.scriptGuid, ScriptGuid_CoinTile, StringComparison.InvariantCultureIgnoreCase)) {
+                        b.kind = NSMB.World.StageTileInteractionKind.CoinTile;
+                    } else if (string.Equals(parsed.scriptGuid, ScriptGuid_PowerupTile, StringComparison.InvariantCultureIgnoreCase)) {
+                        b.kind = NSMB.World.StageTileInteractionKind.PowerupTile;
+                    } else if (string.Equals(parsed.scriptGuid, ScriptGuid_RouletteTile, StringComparison.InvariantCultureIgnoreCase)) {
+                        b.kind = NSMB.World.StageTileInteractionKind.RouletteTile;
+                    } else {
+                        b.kind = NSMB.World.StageTileInteractionKind.None;
+                    }
+
+                    // Temporarily stash the result stage tile id for a second pass that resolves the used sprite.
+                    b.usedAtlasPath = null;
+                    b.usedSpriteName = null;
+                    if (b.kind != NSMB.World.StageTileInteractionKind.None && parsed.resultTileId != 0) {
+                        _resultStageTileIdByTileGuid[parsed.tileGuid] = parsed.resultTileId;
+                    }
+
+                    _behaviorByTileGuid[parsed.tileGuid] = b;
+                } catch (Exception) {
+                    // ignore malformed asset
+                }
+            }
+
+            // Second pass: resolve result tile visuals (used/empty sprites) now that we have the full stage-tile id index.
+            if (_resultStageTileIdByTileGuid.Count > 0) {
+                foreach (KeyValuePair<string, long> kv in _resultStageTileIdByTileGuid) {
+                    TileBehavior b;
+                    if (_behaviorByTileGuid.TryGetValue(kv.Key, out b)) {
+                        b = AttachResultSprite(b, kv.Value);
+                        _behaviorByTileGuid[kv.Key] = b;
+                    }
+                }
+            }
+        }
+
+        private TileBehavior AttachResultSprite(TileBehavior b, long resultStageTileId) {
+            if (resultStageTileId == 0 || _stageTileById == null) {
+                return b;
+            }
+
+            StageTileRef r;
+            if (!_stageTileById.TryGetValue(resultStageTileId, out r) || string.IsNullOrEmpty(r.tileGuid)) {
+                return b;
+            }
+
+            string spriteGuid;
+            long spriteInternalId;
+            if (_tileVisualResolver != null && _tileVisualResolver.TryGetPrimarySprite(r.tileGuid, out spriteGuid, out spriteInternalId)) {
+                string atlas;
+                string spriteName;
+                if (_spriteResolver != null && _spriteResolver.TryResolveSprite(spriteGuid, spriteInternalId, out atlas, out spriteName)) {
+                    b.usedAtlasPath = atlas;
+                    b.usedSpriteName = spriteName;
+                }
+            }
+
+            return b;
+        }
+
+        private struct StageTileParsed {
+            public string scriptGuid;
+            public long stageTileId;
+            public string tileGuid;
+            public int breakingRules;
+            public bool bumpIfNotBroken;
+            public long resultTileId;
+            public long smallPowerupId;
+            public long largePowerupId;
+        }
+
+        private static StageTileParsed ParseStageTileAsset(string assetPath) {
+            StageTileParsed p = new StageTileParsed();
+            p.breakingRules = 0;
+            p.bumpIfNotBroken = true;
+
+            string[] lines = File.ReadAllLines(assetPath);
+
+            bool inIdentifier = false;
+            bool inIdentifierGuid = false;
+            bool inResultTile = false;
+            bool inSmallPowerup = false;
+            bool inLargePowerup = false;
+
+            for (int i = 0; i < lines.Length; i++) {
+                string t = lines[i].Trim();
+
+                if (t.StartsWith("m_Script:", StringComparison.InvariantCulture)) {
+                    // m_Script: {fileID: 11500000, guid: xxxx, type: 3}
+                    int g = t.IndexOf("guid:", StringComparison.InvariantCulture);
+                    if (g >= 0) {
+                        string tail = t.Substring(g + "guid:".Length).Trim();
+                        int comma = tail.IndexOf(',');
+                        if (comma >= 0) {
+                            tail = tail.Substring(0, comma).Trim();
+                        }
+                        p.scriptGuid = tail;
+                    }
+                    continue;
+                }
+
+                if (!inIdentifier) {
+                    if (t == "Identifier:") {
+                        inIdentifier = true;
+                    }
+                } else if (!inIdentifierGuid) {
+                    if (t == "Guid:") {
+                        inIdentifierGuid = true;
+                    }
+                } else if (p.stageTileId == 0 && t.StartsWith("Value:", StringComparison.InvariantCulture)) {
+                    string s = t.Substring("Value:".Length).Trim();
+                    long v;
+                    if (long.TryParse(s, NumberStyles.Integer, CultureInfo.InvariantCulture, out v)) {
+                        p.stageTileId = v;
+                    }
+                }
+
+                if (t.StartsWith("Tile:", StringComparison.InvariantCulture) && t.IndexOf("guid:", StringComparison.InvariantCulture) >= 0) {
+                    // Tile: {fileID: 11400000, guid: xxxx, type: 2}
+                    int g = t.IndexOf("guid:", StringComparison.InvariantCulture);
+                    string tail = t.Substring(g + "guid:".Length).Trim();
+                    int comma = tail.IndexOf(',');
+                    if (comma >= 0) {
+                        tail = tail.Substring(0, comma).Trim();
+                    }
+                    p.tileGuid = tail;
+                    continue;
+                }
+
+                if (t.StartsWith("BreakingRules:", StringComparison.InvariantCulture)) {
+                    string s = t.Substring("BreakingRules:".Length).Trim();
+                    int v;
+                    if (int.TryParse(s, NumberStyles.Integer, CultureInfo.InvariantCulture, out v)) {
+                        p.breakingRules = v;
+                    }
+                    continue;
+                }
+
+                if (t.StartsWith("BumpIfNotBroken:", StringComparison.InvariantCulture)) {
+                    string s = t.Substring("BumpIfNotBroken:".Length).Trim();
+                    int v;
+                    if (int.TryParse(s, NumberStyles.Integer, CultureInfo.InvariantCulture, out v)) {
+                        p.bumpIfNotBroken = v != 0;
+                    }
+                    continue;
+                }
+
+                if (t == "resultTile:") {
+                    inResultTile = true;
+                    inSmallPowerup = false;
+                    inLargePowerup = false;
+                    continue;
+                }
+                if (t == "smallPowerup:") {
+                    inSmallPowerup = true;
+                    inResultTile = false;
+                    inLargePowerup = false;
+                    continue;
+                }
+                if (t == "largePowerup:") {
+                    inLargePowerup = true;
+                    inResultTile = false;
+                    inSmallPowerup = false;
+                    continue;
+                }
+
+                if ((inResultTile || inSmallPowerup || inLargePowerup) && t.StartsWith("Value:", StringComparison.InvariantCulture)) {
+                    string s = t.Substring("Value:".Length).Trim();
+                    long v;
+                    if (long.TryParse(s, NumberStyles.Integer, CultureInfo.InvariantCulture, out v)) {
+                        if (inResultTile && p.resultTileId == 0) p.resultTileId = v;
+                        if (inSmallPowerup && p.smallPowerupId == 0) p.smallPowerupId = v;
+                        if (inLargePowerup && p.largePowerupId == 0) p.largePowerupId = v;
+                    }
+                }
+            }
+
+            return p;
         }
     }
 
@@ -1631,16 +2492,17 @@ public static class ImportOriginalStagesMenu {
                 }
 
                 if (inSpriteArray) {
-                    // Each sprite entry includes "m_Data: {fileID: ..., guid: ..., type: 3}"
+                    // Each sprite entry includes "m_Data: {fileID: ..., guid: ..., type: 3}".
+                    // IMPORTANT: Preserve indices even when Unity writes null slots as "{fileID: 0}".
                     if (t.IndexOf("m_Data:", StringComparison.InvariantCulture) >= 0) {
                         long fileId;
                         string guid;
-                        if (TryParseFileIdAndGuidFromInlineMapping(lines, ref i, out fileId, out guid)) {
-                            SceneSpriteRef sr;
-                            sr.fileId = fileId;
-                            sr.guid = guid;
-                            tm.spriteRefs.Add(sr);
-                        }
+                        // Always append an entry to preserve indices, even if parsing fails on this Unity version's YAML.
+                        TryParseFileIdAndGuidFromInlineMappingAllowNull(lines, ref i, out fileId, out guid);
+                        SceneSpriteRef sr;
+                        sr.fileId = fileId;
+                        sr.guid = guid;
+                        tm.spriteRefs.Add(sr);
                     }
                     continue;
                 }
@@ -1675,15 +2537,16 @@ public static class ImportOriginalStagesMenu {
                 }
 
                 if (inTileAssetArray) {
+                    // Preserve indices for tile assets too; null slots exist.
                     if (t.IndexOf("m_Data:", StringComparison.InvariantCulture) >= 0) {
                         long fileId;
                         string guid;
-                        if (TryParseFileIdAndGuidFromInlineMapping(lines, ref i, out fileId, out guid)) {
-                            SceneTileAssetRef tr;
-                            tr.fileId = fileId;
-                            tr.guid = guid;
-                            tm.tileAssets.Add(tr);
-                        }
+                        // Always append an entry to preserve indices, even if parsing fails on this Unity version's YAML.
+                        TryParseFileIdAndGuidFromInlineMappingAllowNull(lines, ref i, out fileId, out guid);
+                        SceneTileAssetRef tr;
+                        tr.fileId = fileId;
+                        tr.guid = guid;
+                        tm.tileAssets.Add(tr);
                     }
                     continue;
                 }
@@ -1706,7 +2569,7 @@ public static class ImportOriginalStagesMenu {
             // Some Unity YAML wraps {fileID: ..., guid: ..., type: 3} across multiple lines.
             string combined = lines[index].Trim();
             int safety = 0;
-            while (combined.IndexOf("}", StringComparison.InvariantCulture) < 0 && index + 1 < lines.Length && safety < 6) {
+            while (combined.IndexOf("}", StringComparison.InvariantCulture) < 0 && index + 1 < lines.Length && safety < 20) {
                 safety++;
                 index++;
                 combined += " " + lines[index].Trim();
@@ -1734,6 +2597,47 @@ public static class ImportOriginalStagesMenu {
             }
 
             return fileId != 0 && !string.IsNullOrEmpty(guid);
+        }
+
+        private static bool TryParseFileIdAndGuidFromInlineMappingAllowNull(string[] lines, ref int index, out long fileId, out string guid) {
+            fileId = 0;
+            guid = string.Empty;
+
+            // Some Unity YAML wraps {fileID: ..., guid: ..., type: 3} across multiple lines.
+            string combined = lines[index].Trim();
+            int safety = 0;
+            while (combined.IndexOf("}", StringComparison.InvariantCulture) < 0 && index + 1 < lines.Length && safety < 20) {
+                safety++;
+                index++;
+                combined += " " + lines[index].Trim();
+            }
+
+            bool foundAny = false;
+
+            int fid = combined.IndexOf("fileID:", StringComparison.InvariantCulture);
+            if (fid >= 0) {
+                foundAny = true;
+                fid += "fileID:".Length;
+                string rest = combined.Substring(fid).Trim();
+                int comma = rest.IndexOf(',');
+                if (comma >= 0) rest = rest.Substring(0, comma);
+                long v;
+                if (long.TryParse(rest.Trim(), NumberStyles.Integer, CultureInfo.InvariantCulture, out v)) {
+                    fileId = v;
+                }
+            }
+
+            int gid = combined.IndexOf("guid:", StringComparison.InvariantCulture);
+            if (gid >= 0) {
+                foundAny = true;
+                gid += "guid:".Length;
+                string rest = combined.Substring(gid).Trim();
+                int comma = rest.IndexOf(',');
+                if (comma >= 0) rest = rest.Substring(0, comma);
+                guid = rest.Trim();
+            }
+
+            return foundAny;
         }
 
         private static float ParseFloatAfterColon(string lineTrimmed) {
@@ -1845,7 +2749,7 @@ public static class ImportOriginalStagesMenu {
         }
     }
 
-    private static class QuantumMapParsers {
+        private static class QuantumMapParsers {
         private sealed class RefInfo {
             public string className;
             public long posX;
@@ -1854,7 +2758,6 @@ public static class ImportOriginalStagesMenu {
             public long velX;
             public long velY;
             public bool bool0;
-            public bool bool1;
 
             public long boxExtX;
             public long boxExtY;
@@ -2083,8 +2986,6 @@ public static class ImportOriginalStagesMenu {
             long currentRid = 0;
             RefInfo current = null;
 
-            string className = null;
-
             bool parseTransformPos = false;
             bool seenPosition = false;
             bool expectX = false;
@@ -2132,7 +3033,6 @@ public static class ImportOriginalStagesMenu {
 
                     current = new RefInfo();
                     currentRid = 0;
-                    className = null;
                     parseTransformPos = false;
                     seenPosition = false;
                     expectX = false;
@@ -2178,7 +3078,6 @@ public static class ImportOriginalStagesMenu {
                     parseMoverAsset = (cls == "GenericMoverPrototype");
                     parseBoxExtents = (cls == "PhysicsCollider2DPrototype");
                     parseBulletLauncher = (cls == "BulletBillLauncherPrototype");
-                    className = cls;
                     continue;
                 }
 

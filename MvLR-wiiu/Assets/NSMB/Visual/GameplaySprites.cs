@@ -52,6 +52,14 @@ namespace NSMB.Visual {
             return s;
         }
 
+        public static Sprite GetFireFlower() {
+            Sprite s = NSMB.Content.ResourceSpriteCache.FindSprite(NSMB.Content.GameplayAtlasPaths.Powerups, "FireFlower");
+            if (s == null) {
+                WarnOnce(ref _warnedPowerups, NSMB.Content.GameplayAtlasPaths.Powerups, "FireFlower");
+            }
+            return s;
+        }
+
         public static Sprite GetPlatformTile(int index) {
             Sprite s = NSMB.Content.ResourceSpriteCache.FindSprite(NSMB.Content.GameplayAtlasPaths.Platforms, "platforms_" + index);
             if (s == null) {
@@ -61,7 +69,17 @@ namespace NSMB.Visual {
         }
 
         public static Sprite[] GetQuestionBlockFrames() {
-            // Original sheet is "animation_0..". We use the first 4 frames.
+            // Always pick the canonical 4 frames by name; Resources.LoadAll ordering can vary.
+            Sprite a0 = NSMB.Content.ResourceSpriteCache.FindSprite(NSMB.Content.GameplayAtlasPaths.AnimatedBlocks, "animation_0");
+            Sprite a1 = NSMB.Content.ResourceSpriteCache.FindSprite(NSMB.Content.GameplayAtlasPaths.AnimatedBlocks, "animation_1");
+            Sprite a2 = NSMB.Content.ResourceSpriteCache.FindSprite(NSMB.Content.GameplayAtlasPaths.AnimatedBlocks, "animation_2");
+            Sprite a3 = NSMB.Content.ResourceSpriteCache.FindSprite(NSMB.Content.GameplayAtlasPaths.AnimatedBlocks, "animation_3");
+
+            if (a0 != null && a1 != null && a2 != null && a3 != null) {
+                return new Sprite[] { a0, a1, a2, a3 };
+            }
+
+            // Fallback: older imports or missing slicing. Try prefix scan.
             Sprite[] all = NSMB.Content.ResourceSpriteCache.FindSpritesByPrefix(NSMB.Content.GameplayAtlasPaths.AnimatedBlocks, "animation_");
             if (all == null || all.Length == 0) {
                 WarnOnce(ref _warnedAnimatedBlocks, NSMB.Content.GameplayAtlasPaths.AnimatedBlocks, "animation_0..");
