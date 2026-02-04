@@ -35,7 +35,7 @@ namespace NSMB.WiiU {
             cam.orthographic = true;
             cam.orthographicSize = 5f;
             cam.clearFlags = CameraClearFlags.SolidColor;
-            cam.backgroundColor = new Color(0.10f, 0.10f, 0.14f, 1f);
+            cam.backgroundColor = new Color(0.30f, 0.66f, 0.96f, 1f);
 
             NSMB.Camera.CameraFollow2D follow = cam.GetComponent<NSMB.Camera.CameraFollow2D>();
             if (follow == null) {

@@ -197,6 +197,7 @@ namespace NSMB.Gameplay {
             }
 
             _levelRoot = NSMB.World.LevelRegistry.Spawn(stageKey);
+            // Background is now built as part of StageRuntimeBuilder for imported stages.
             EnsureBackground(_levelRoot);
 
             NSMB.World.StageDefinition imported = Resources.Load<NSMB.World.StageDefinition>("NSMB/Levels/" + stageKey);
@@ -210,10 +211,13 @@ namespace NSMB.Gameplay {
             if (cam != null) {
                 NSMB.Camera.CameraFollow2D follow = cam.GetComponent<NSMB.Camera.CameraFollow2D>();
                 if (follow != null) {
-                    if (imported != null && imported.isWrappingLevel) {
-                        follow.clampToBounds = false;
-                    } else if (imported != null && imported.cameraMin != imported.cameraMax) {
+                    if (imported != null && imported.cameraMin != imported.cameraMax) {
                         follow.SetBounds(imported.cameraMin, imported.cameraMax);
+
+                        // Wrapping stages still need vertical clamping (to avoid showing "below the world"),
+                        // but horizontal clamping would fight StageWrap2D's recentering.
+                        follow.clampY = true;
+                        follow.clampX = !(imported != null && imported.isWrappingLevel);
                     } else {
                         follow.clampToBounds = false;
                     }
@@ -232,6 +236,22 @@ namespace NSMB.Gameplay {
         private static void EnsureBackground(GameObject levelRoot) {
             if (levelRoot == null) {
                 return;
+            }
+
+            // If the stage already spawned a background (preferred path), don't add the fallback gradient.
+            Transform stage = null;
+            for (int i = 0; i < levelRoot.transform.childCount; i++) {
+                Transform c = levelRoot.transform.GetChild(i);
+                if (c != null && c.name.StartsWith("Stage_", System.StringComparison.InvariantCultureIgnoreCase)) {
+                    stage = c;
+                    break;
+                }
+            }
+            if (stage != null) {
+                Transform existingBg = stage.Find("Background");
+                if (existingBg != null) {
+                    return;
+                }
             }
 
             // Gameplay background should be a subtle dark gradient. (The "uibackground" asset in this repo

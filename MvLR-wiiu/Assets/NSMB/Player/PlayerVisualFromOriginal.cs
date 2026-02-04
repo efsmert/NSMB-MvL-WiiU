@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,6 +11,13 @@ namespace NSMB.Player {
     [RequireComponent(typeof(PlayerMotor2D))]
     [RequireComponent(typeof(Rigidbody2D))]
     public sealed class PlayerVisualFromOriginal : MonoBehaviour {
+        private enum EyeState {
+            Normal = 0,
+            HalfBlink = 1,
+            FullBlink = 2,
+            Death = 3,
+        }
+
         public PlayerCharacter character = PlayerCharacter.Mario;
         public bool large = false;
         public int sortingOrder = 20;
@@ -40,6 +48,9 @@ namespace NSMB.Player {
 	        private float _nextControllerRetryTime;
 	        private bool _builtLarge;
 	        private float _nextSizeRebuildTime;
+	        private readonly List<Material> _eyeMaterials = new List<Material>(4);
+	        private Coroutine _blinkCoroutine;
+	        private EyeState _eyeState = EyeState.Normal;
 
         private void Awake() {
             _motor = GetComponent<PlayerMotor2D>();
@@ -49,16 +60,28 @@ namespace NSMB.Player {
 	            _builtLarge = large;
 	        }
 
-        private void Start() {
-            // Build after all Awake() calls have run so PlayerPowerupState has applied the correct hitbox size.
-            TryBuildModel();
-            _builtLarge = large;
-        }
+	        private void Start() {
+	            // Build after all Awake() calls have run so PlayerPowerupState has applied the correct hitbox size.
+	            TryBuildModel();
+	            _builtLarge = large;
+	            EnsureBlinkRoutine();
+	        }
 
-        private void LateUpdate() {
-            if (_rb == null) {
-                return;
-            }
+	        private void OnEnable() {
+	            EnsureBlinkRoutine();
+	        }
+
+	        private void OnDisable() {
+	            if (_blinkCoroutine != null) {
+	                StopCoroutine(_blinkCoroutine);
+	                _blinkCoroutine = null;
+	            }
+	        }
+
+	        private void LateUpdate() {
+	            if (_rb == null) {
+	                return;
+	            }
 
             if (large != _builtLarge && Time.time >= _nextSizeRebuildTime) {
                 _nextSizeRebuildTime = Time.time + 0.10f;
@@ -113,12 +136,14 @@ namespace NSMB.Player {
 	            if (_modelRoot != null) {
 	                Destroy(_modelRoot);
 	                _modelRoot = null;
-	                _animator = null;
-	            }
+		                _animator = null;
+		            }
 
-            TryBuildModel();
-            _builtLarge = large;
-        }
+		            _eyeMaterials.Clear();
+		            _eyeState = EyeState.Normal;
+	            TryBuildModel();
+	            _builtLarge = large;
+	        }
 
 	        private void TryBuildModel() {
             string modelPath = GetModelResourcePath(character, large);
@@ -156,15 +181,24 @@ namespace NSMB.Player {
  	            // - Large (Mushroom) model root scale: 0.054
  	            // - Root Y offset: -0.03
  	            //
- 	            // NOTE: originalToUnityScale is a physics/velocity scaling factor; it should not affect the 3D model scale.
+ 	            // IMPORTANT: the Unity 6 project is authored in a half-scale world (tile = 0.5 Unity units).
+ 	            // This port uses a 1-unit-per-tile world, so we apply a 2x visual scale to preserve parity.
+ 	            // NOTE: PlayerMotor2D.originalToUnityScale is a physics conversion factor; do not use it here.
+ 	            const float VisualWorldScaleFromOriginal = 2f;
  	            float multiplier = Mathf.Max(0.01f, visualHeightMultiplier);
- 	            float fallbackScale = (large ? FallbackLargeModelRootScale : FallbackSmallModelRootScale) * multiplier;
- 	            content.transform.localPosition = new Vector3(0f, FallbackModelRootYOffset, 0f);
+ 	            float fallbackScale = (large ? FallbackLargeModelRootScale : FallbackSmallModelRootScale) * VisualWorldScaleFromOriginal * multiplier;
+ 	            content.transform.localPosition = new Vector3(0f, FallbackModelRootYOffset * VisualWorldScaleFromOriginal, 0f);
  	            content.transform.localScale = new Vector3(fallbackScale, fallbackScale, fallbackScale);
+	            // NOTE: Keep the authored Unity 6 scale as the primary source of truth.
+	            // FBX bounds can vary across Unity 2017 import settings (and SkinnedMeshRenderer bounds
+	            // can be unreliable until animation updates), so auto-fitting can cause dramatic size jumps.
 
-	            ApplyRendererSorting(content, sortingOrder);
-	            FixMaterials(content, GetModelFolderResourcePath(character, large));
-	            SetupAnimator(content);
+		            ApplyRendererSorting(content, sortingOrder);
+		            FixMaterials(content, GetModelFolderResourcePath(character, large));
+		            RefreshEyeMaterials(content);
+		            SetEyeState(EyeState.Normal);
+		            EnsureBlinkRoutine();
+		            SetupAnimator(content);
 
             // Hide 2D placeholder sprite if present.
             if (_fallbackSprite != null) {
@@ -175,9 +209,94 @@ namespace NSMB.Player {
             }
 
             // Put the model slightly toward camera to avoid z-fighting with sprites at z=0.
-            Vector3 p = _modelRoot.transform.position;
-            _modelRoot.transform.position = new Vector3(p.x, p.y, transform.position.z - 0.2f);
-        }
+	            Vector3 p = _modelRoot.transform.position;
+	            _modelRoot.transform.position = new Vector3(p.x, p.y, transform.position.z - 0.2f);
+	        }
+
+	        private void EnsureBlinkRoutine() {
+	            if (!isActiveAndEnabled) {
+	                return;
+	            }
+	            if (_blinkCoroutine != null) {
+	                return;
+	            }
+	            _blinkCoroutine = StartCoroutine(BlinkRoutine());
+	        }
+
+	        private IEnumerator BlinkRoutine() {
+	            WaitForSeconds blinkStep = new WaitForSeconds(0.1f);
+	            while (true) {
+	                float wait = 3f + Random.value * 6f;
+	                yield return new WaitForSeconds(wait);
+
+	                // If the model was rebuilt mid-wait, we might not have eye materials yet.
+	                if (_eyeMaterials == null || _eyeMaterials.Count == 0) {
+	                    continue;
+	                }
+
+	                SetEyeState(EyeState.HalfBlink);
+	                yield return blinkStep;
+	                SetEyeState(EyeState.FullBlink);
+	                yield return blinkStep;
+	                SetEyeState(EyeState.HalfBlink);
+	                yield return blinkStep;
+	                SetEyeState(EyeState.Normal);
+	            }
+	        }
+
+	        private void RefreshEyeMaterials(GameObject modelContentRoot) {
+	            _eyeMaterials.Clear();
+	            if (modelContentRoot == null) {
+	                return;
+	            }
+
+	            Renderer[] renderers = modelContentRoot.GetComponentsInChildren<Renderer>(true);
+	            HashSet<int> seen = new HashSet<int>();
+	            for (int i = 0; i < renderers.Length; i++) {
+	                Renderer r = renderers[i];
+	                if (r == null) continue;
+
+	                Material[] mats = r.materials;
+	                if (mats == null) continue;
+
+	                for (int m = 0; m < mats.Length; m++) {
+	                    Material mat = mats[m];
+	                    if (mat == null) continue;
+
+	                    bool isEyeMaterial = false;
+	                    Shader sh = mat.shader;
+	                    if (sh != null && !string.IsNullOrEmpty(sh.name) &&
+	                        sh.name.IndexOf("NSMB/UnlitEyesFlipbook", System.StringComparison.InvariantCultureIgnoreCase) >= 0) {
+	                        isEyeMaterial = true;
+	                    } else if (mat.HasProperty("_EyeState") && mat.HasProperty("_EyeGrid")) {
+	                        isEyeMaterial = true;
+	                    }
+
+	                    if (!isEyeMaterial) continue;
+
+	                    int id = mat.GetInstanceID();
+	                    if (seen.Contains(id)) continue;
+	                    seen.Add(id);
+	                    _eyeMaterials.Add(mat);
+	                }
+	            }
+	        }
+
+	        private void SetEyeState(EyeState state) {
+	            _eyeState = state;
+	            float v = (float)(int)state;
+	            for (int i = 0; i < _eyeMaterials.Count; i++) {
+	                Material mat = _eyeMaterials[i];
+	                if (mat == null) continue;
+	                if (mat.HasProperty("_EyeState")) {
+	                    mat.SetFloat("_EyeState", v);
+	                }
+	                // Keep compatibility with any older shaders that used a non-underscored property.
+	                if (mat.HasProperty("EyeState")) {
+	                    mat.SetFloat("EyeState", v);
+	                }
+	            }
+	        }
 
         private void SetupAnimator(GameObject root) {
             if (root == null) {
@@ -300,6 +419,8 @@ namespace NSMB.Player {
 	                opaque = Shader.Find("Unlit/Texture");
 	            }
 	            Shader cutout = Shader.Find("NSMB/UnlitBaseMapCutout");
+                Shader cutoutDoubleSided = Shader.Find("NSMB/UnlitBaseMapCutoutDoubleSided");
+                Shader eyesShader = Shader.Find("NSMB/UnlitEyesFlipbook");
 	            if (cutout == null) {
 	                cutout = Shader.Find("Transparent/Cutout/Diffuse");
 	            }
@@ -310,14 +431,13 @@ namespace NSMB.Player {
 	            Texture2D[] textures = LoadTextures(modelFolderResourcePath);
 	            Texture2D primary = PickPrimaryTexture(textures, modelFolderResourcePath);
 
-            Renderer[] renderers = root.GetComponentsInChildren<Renderer>(true);
-            for (int i = 0; i < renderers.Length; i++) {
-                Renderer r = renderers[i];
-                if (r == null) continue;
-
-                float uvRangeY = 1f;
-                TryGetRendererUvRangeY(r, out uvRangeY);
-
+	            Renderer[] renderers = root.GetComponentsInChildren<Renderer>(true);
+	            for (int i = 0; i < renderers.Length; i++) {
+	                Renderer r = renderers[i];
+	                if (r == null) continue;
+	
+	                float uvRangeY = 1f;
+	                TryGetRendererUvRangeY(r, out uvRangeY);
 	                Material[] mats = r.sharedMaterials;
 	                if (mats == null || mats.Length == 0) {
 	                    // Some imports can produce a renderer with no materials assigned.
@@ -376,11 +496,13 @@ namespace NSMB.Player {
 	                    }
 
                         Texture2D mainTex2D = mainTex as Texture2D;
-                        if (mainTex2D != null) {
-                            // Enforce pixel-art sampling; helps reduce shimmering and color bleed on 3D models.
-                            mainTex2D.filterMode = FilterMode.Point;
-                            mainTex2D.wrapMode = TextureWrapMode.Clamp;
-                        }
+	                        if (mainTex2D != null) {
+	                            // Enforce pixel-art sampling; helps reduce shimmering and color bleed on 3D models.
+	                            mainTex2D.filterMode = FilterMode.Point;
+	
+	                            // Keep textures clamped; the eye shader wraps UVs into 0..1 (frac) when needed.
+	                            mainTex2D.wrapMode = TextureWrapMode.Clamp;
+	                        }
 
 	                     Vector2 scale = Vector2.one;
 	                     Vector2 offset = Vector2.zero;
@@ -409,7 +531,15 @@ namespace NSMB.Player {
 
 	                    // Always standardize to our unlit shaders so the character renders consistently
 	                    // regardless of scene lighting, while still keeping the original textures/UVs.
-	                    Shader targetShader = wantsCutout ? cutout : opaque;
+	                    Shader targetShader = null;
+                        if (wantsCutout) {
+                            // Eyes use a packed sprite sheet in the Unity 6 project, selected by EyeState
+                            // in the original shader. In Unity 2017 we emulate this by sampling from a 2D
+                            // sheet with an index (defaulting to 0 = open).
+                            targetShader = (eyesShader != null) ? eyesShader : ((cutoutDoubleSided != null) ? cutoutDoubleSided : cutout);
+                        } else {
+                            targetShader = opaque;
+                        }
 	                    if (targetShader == null) {
 	                        targetShader = opaque != null ? opaque : cutout;
 	                    }
@@ -427,9 +557,26 @@ namespace NSMB.Player {
 	                            repl.SetFloat("_Cutoff", 0.5f);
 	                        }
 	                    }
-	                    ApplyMaterialColors(repl);
-	                    newMats[m] = repl;
-	                }
+	                        if (wantsCutout && eyesShader != null && targetShader == eyesShader) {
+                            // Unity 6 imports mario_eyes.png as a flipbook with columns=4, rows=1 (Texture2DArray).
+                            // In Unity 2017 we emulate that with a 4x1 sheet.
+                            if (repl.HasProperty("_EyeGrid")) {
+                                repl.SetVector("_EyeGrid", new Vector4(4f, 1f, 0f, 0f));
+                            }
+                            if (repl.HasProperty("_EyeState")) {
+                                repl.SetFloat("_EyeState", 0f);
+                            }
+                            if (repl.HasProperty("_UseUv2")) {
+                                repl.SetFloat("_UseUv2", 0f);
+                            }
+	                            if (repl.HasProperty("_RowFromTop")) {
+	                                // Top row in the PNG contains the eye states; default to indexing from the top.
+	                                repl.SetFloat("_RowFromTop", 1f);
+	                            }
+	                        }
+	                        ApplyMaterialColors(repl);
+	                        newMats[m] = repl;
+	                    }
 
                 for (int m = 0; m < newMats.Length; m++) {
                     if (newMats[m] == null) {
@@ -440,10 +587,10 @@ namespace NSMB.Player {
             }
         }
 
-        private bool TryFitModelToHitbox(GameObject content, float fallbackScale) {
-            if (content == null) {
-                return false;
-            }
+	        private bool TryFitModelToHitbox(GameObject content, float fallbackScale) {
+	            if (content == null) {
+	                return false;
+	            }
 
             if (_col == null) {
                 return false;
@@ -459,15 +606,20 @@ namespace NSMB.Player {
                 return false;
             }
 
-            float modelHeight = bounds.size.y;
-            if (modelHeight <= 0.0001f) {
-                return false;
-            }
+	            float modelHeight = bounds.size.y;
+	            if (modelHeight <= 0.0001f) {
+	                return false;
+	            }
 
-            float scale = desiredHeight / modelHeight;
-            if (scale <= 0.000001f || float.IsNaN(scale) || float.IsInfinity(scale)) {
-                return false;
-            }
+	            float currentScale = content.transform.localScale.x;
+	            if (currentScale <= 0.000001f || float.IsNaN(currentScale) || float.IsInfinity(currentScale)) {
+	                currentScale = 1f;
+	            }
+
+	            float scale = currentScale * (desiredHeight / modelHeight);
+	            if (scale <= 0.000001f || float.IsNaN(scale) || float.IsInfinity(scale)) {
+	                return false;
+	            }
 
             // Guard against bogus bounds during import producing extreme scales.
             // Use the authored Unity 6 scale as a sanity check band.

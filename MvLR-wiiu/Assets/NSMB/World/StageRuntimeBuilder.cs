@@ -7,6 +7,10 @@ namespace NSMB.World {
         private const float PixelsPerUnit = 16f;
         private const float PixelUnit = 1f / PixelsPerUnit;
         private const float TileVisualOverlap = 1.001f;
+        private const int BackgroundSortingOrder = -2000;
+        private const float BackgroundZ = 10f;
+
+        private static readonly Dictionary<string, Sprite> _backgroundSpriteCache = new Dictionary<string, Sprite>(StringComparer.InvariantCultureIgnoreCase);
 
         public static void Build(StageDefinition def, Transform parent) {
             Build(def, parent, true, true);
@@ -22,6 +26,7 @@ namespace NSMB.World {
             root.transform.localPosition = Vector3.zero;
             root.transform.localScale = Vector3.one;
 
+            BuildBackground(def, root.transform);
             BuildTiles(def, root.transform, buildColliders);
             if (buildEntities) {
                 BuildEntities(def, root.transform);
@@ -41,6 +46,139 @@ namespace NSMB.World {
                     wrap.ConfigureBounds(def.cameraMin, def.cameraMax);
                 }
             }
+        }
+
+        private static void BuildBackground(StageDefinition def, Transform stageRoot) {
+            if (def == null || stageRoot == null) {
+                return;
+            }
+
+            string bgName = GetBackgroundNameForStage(def.stageKey);
+            if (string.IsNullOrEmpty(bgName)) {
+                return;
+            }
+
+            string resourcePath = "NSMB/LevelBackgrounds/" + bgName;
+            Sprite sprite = GetOrCreateBackgroundSprite(resourcePath);
+            if (sprite == null) {
+                return;
+            }
+
+            // Determine horizontal tiling span.
+            float left = 0f;
+            float right = 0f;
+            bool hasBounds = false;
+            if (def.wrapMin != def.wrapMax) {
+                left = Mathf.Min(def.wrapMin.x, def.wrapMax.x);
+                right = Mathf.Max(def.wrapMin.x, def.wrapMax.x);
+                hasBounds = true;
+            } else {
+                Vector2 min;
+                Vector2 max;
+                if (TryGetWrappingWorldBounds(def, out min, out max) || TryGetStageTileWorldBounds(def, out min, out max)) {
+                    left = min.x;
+                    right = max.x;
+                    hasBounds = true;
+                }
+            }
+            if (!hasBounds || right <= left + 0.0001f) {
+                // Fallback span: a few screens wide.
+                left = -32f;
+                right = 32f;
+            }
+
+            float baseY = (def.cameraMin != def.cameraMax) ? Mathf.Min(def.cameraMin.y, def.cameraMax.y) : 0f;
+
+            GameObject bgRoot = new GameObject("Background");
+            bgRoot.transform.parent = stageRoot;
+            bgRoot.transform.localPosition = new Vector3(0f, 0f, 0f);
+            bgRoot.transform.localScale = Vector3.one;
+
+            float spriteWidth = sprite.bounds.size.x;
+            if (spriteWidth <= 0.0001f) {
+                return;
+            }
+
+            int count = Mathf.Max(1, Mathf.CeilToInt((right - left) / spriteWidth) + 2);
+            for (int i = 0; i < count; i++) {
+                GameObject go = new GameObject("BG_" + i);
+                go.transform.parent = bgRoot.transform;
+                float x = left + (i * spriteWidth);
+                go.transform.position = new Vector3(x, baseY, BackgroundZ);
+
+                SpriteRenderer sr = go.AddComponent<SpriteRenderer>();
+                sr.sprite = sprite;
+                sr.sortingOrder = BackgroundSortingOrder;
+                sr.color = Color.white;
+            }
+        }
+
+        private static Sprite GetOrCreateBackgroundSprite(string resourcePath) {
+            if (string.IsNullOrEmpty(resourcePath)) {
+                return null;
+            }
+
+            Sprite cached;
+            if (_backgroundSpriteCache.TryGetValue(resourcePath, out cached) && cached != null) {
+                return cached;
+            }
+
+            // Some background textures are imported as "Multiple" sprites (split into top/bottom slices).
+            // Loading the first sprite is unstable (ordering isn't guaranteed) and can yield a cropped result.
+            // Always create a full-rect sprite from the underlying texture at the correct PPU.
+            Texture2D tex = null;
+            UnityEngine.Object asset = Resources.Load(resourcePath);
+            if (asset != null) {
+                Texture2D asTex = asset as Texture2D;
+                if (asTex != null) {
+                    tex = asTex;
+                } else {
+                    Sprite asSprite = asset as Sprite;
+                    if (asSprite != null) {
+                        tex = asSprite.texture;
+                    }
+                }
+            }
+
+            if (tex == null) {
+                Sprite[] sprites = Resources.LoadAll<Sprite>(resourcePath);
+                if (sprites != null && sprites.Length > 0 && sprites[0] != null) {
+                    tex = sprites[0].texture;
+                }
+            }
+
+            if (tex == null) {
+                return null;
+            }
+
+            tex.filterMode = FilterMode.Point;
+            tex.wrapMode = TextureWrapMode.Clamp;
+
+            Rect rect = new Rect(0f, 0f, tex.width, tex.height);
+            // Use a bottom pivot so the background sits on cameraMin.y like the original.
+            Sprite sprite = Sprite.Create(tex, rect, new Vector2(0.5f, 0f), PixelsPerUnit, 0, SpriteMeshType.FullRect);
+            _backgroundSpriteCache[resourcePath] = sprite;
+            return sprite;
+        }
+
+        private static string GetBackgroundNameForStage(string stageKey) {
+            string key = stageKey ?? string.Empty;
+            key = key.ToLowerInvariant();
+
+            if (key.IndexOf("beach", StringComparison.InvariantCultureIgnoreCase) >= 0) return "beach-bg";
+            if (key.IndexOf("bonus", StringComparison.InvariantCultureIgnoreCase) >= 0) return "bonus-bg";
+            if (key.IndexOf("brick", StringComparison.InvariantCultureIgnoreCase) >= 0) return "cave-bg";
+            if (key.IndexOf("fortress", StringComparison.InvariantCultureIgnoreCase) >= 0) return "castle-bg";
+            if (key.IndexOf("ghost", StringComparison.InvariantCultureIgnoreCase) >= 0) return "ghosthouse-bg";
+            if (key.IndexOf("ice", StringComparison.InvariantCultureIgnoreCase) >= 0) return "snow-bg";
+            if (key.IndexOf("jungle", StringComparison.InvariantCultureIgnoreCase) >= 0) return "jungle-bg";
+            if (key.IndexOf("pipes", StringComparison.InvariantCultureIgnoreCase) >= 0) return "pipe-bg";
+            if (key.IndexOf("sky", StringComparison.InvariantCultureIgnoreCase) >= 0) return "sky-bg";
+            if (key.IndexOf("snow", StringComparison.InvariantCultureIgnoreCase) >= 0) return "snow-bg";
+            if (key.IndexOf("volcano", StringComparison.InvariantCultureIgnoreCase) >= 0) return "volcano-bg";
+
+            // Default.
+            return "grass-sky";
         }
 
         private static bool TryGetWrappingWorldBounds(StageDefinition def, out Vector2 min, out Vector2 max) {

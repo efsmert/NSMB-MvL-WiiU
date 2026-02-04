@@ -10,9 +10,12 @@ namespace NSMB.Camera {
         [Header("Pixel Snapping")]
         public bool pixelSnap = true;
 
+        [Header("Clamp")]
         public bool clampToBounds;
         public Vector2 boundsMin;
         public Vector2 boundsMax;
+        public bool clampX = true;
+        public bool clampY = true;
 
         private Vector3 _velocity;
 
@@ -35,8 +38,23 @@ namespace NSMB.Camera {
                     float minY = boundsMin.y + halfH;
                     float maxY = boundsMax.y - halfH;
 
-                    if (minX <= maxX) next.x = Mathf.Clamp(next.x, minX, maxX);
-                    if (minY <= maxY) next.y = Mathf.Clamp(next.y, minY, maxY);
+                    if (clampX) {
+                        if (minX <= maxX) {
+                            next.x = Mathf.Clamp(next.x, minX, maxX);
+                        } else {
+                            // Stage bounds narrower than the camera view; center horizontally.
+                            next.x = (minX + maxX) * 0.5f;
+                        }
+                    }
+
+                    if (clampY) {
+                        if (minY <= maxY) {
+                            next.y = Mathf.Clamp(next.y, minY, maxY);
+                        } else {
+                            // Stage bounds shorter than the camera view; keep the bottom edge pinned to boundsMin.y.
+                            next.y = minY;
+                        }
+                    }
                 }
             }
 
