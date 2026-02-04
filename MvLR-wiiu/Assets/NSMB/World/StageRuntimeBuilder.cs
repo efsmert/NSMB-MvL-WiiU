@@ -8,7 +8,10 @@ namespace NSMB.World {
         private const float PixelUnit = 1f / PixelsPerUnit;
         private const float TileVisualOverlap = 1.001f;
         private const int BackgroundSortingOrder = -2000;
+        private const int ForegroundSortingOrder = BackgroundSortingOrder + 100;
         private const float BackgroundZ = 10f;
+        private const float ForegroundZ = BackgroundZ - 0.5f;
+        private const float BackgroundForegroundYOffsetFactor = 0.20f;
 
         private static readonly Dictionary<string, Sprite> _backgroundSpriteCache = new Dictionary<string, Sprite>(StringComparer.InvariantCultureIgnoreCase);
 
@@ -59,10 +62,6 @@ namespace NSMB.World {
             }
 
             string resourcePath = "NSMB/LevelBackgrounds/" + bgName;
-            Sprite sprite = GetOrCreateBackgroundSprite(resourcePath);
-            if (sprite == null) {
-                return;
-            }
 
             // Determine horizontal tiling span.
             float left = 0f;
@@ -94,6 +93,39 @@ namespace NSMB.World {
             bgRoot.transform.localPosition = new Vector3(0f, 0f, 0f);
             bgRoot.transform.localScale = Vector3.one;
 
+            Sprite backSprite;
+            Sprite foreSprite;
+            if (TryGetCompositeBackgroundSprites(resourcePath, bgName, out backSprite, out foreSprite) && backSprite != null && foreSprite != null) {
+                Transform backLayer = new GameObject("Back").transform;
+                backLayer.parent = bgRoot.transform;
+                backLayer.localPosition = Vector3.zero;
+                backLayer.localScale = Vector3.one;
+
+                BuildBackgroundTiled(backSprite, backLayer, left, right, baseY, BackgroundZ, BackgroundSortingOrder, "BG_");
+
+                Transform foregroundLayer = new GameObject("Foreground").transform;
+                foregroundLayer.parent = bgRoot.transform;
+                foregroundLayer.localPosition = Vector3.zero;
+                foregroundLayer.localScale = Vector3.one;
+
+                float foreY = baseY - (foreSprite.bounds.size.y * BackgroundForegroundYOffsetFactor);
+                BuildBackgroundTiled(foreSprite, foregroundLayer, left, right, foreY, ForegroundZ, ForegroundSortingOrder, "FG_");
+                return;
+            }
+
+            Sprite sprite = GetOrCreateBackgroundSprite(resourcePath);
+            if (sprite == null) {
+                return;
+            }
+
+            BuildBackgroundTiled(sprite, bgRoot.transform, left, right, baseY, BackgroundZ, BackgroundSortingOrder, "BG_");
+        }
+
+        private static void BuildBackgroundTiled(Sprite sprite, Transform parent, float left, float right, float baseY, float z, int sortingOrder, string namePrefix) {
+            if (sprite == null || parent == null) {
+                return;
+            }
+
             float spriteWidth = sprite.bounds.size.x;
             if (spriteWidth <= 0.0001f) {
                 return;
@@ -101,16 +133,80 @@ namespace NSMB.World {
 
             int count = Mathf.Max(1, Mathf.CeilToInt((right - left) / spriteWidth) + 2);
             for (int i = 0; i < count; i++) {
-                GameObject go = new GameObject("BG_" + i);
-                go.transform.parent = bgRoot.transform;
+                GameObject go = new GameObject(namePrefix + i);
+                go.transform.parent = parent;
                 float x = left + (i * spriteWidth);
-                go.transform.position = new Vector3(x, baseY, BackgroundZ);
+                go.transform.position = new Vector3(x, baseY, z);
 
                 SpriteRenderer sr = go.AddComponent<SpriteRenderer>();
                 sr.sprite = sprite;
-                sr.sortingOrder = BackgroundSortingOrder;
+                sr.sortingOrder = sortingOrder;
                 sr.color = Color.white;
             }
+        }
+
+        private static bool TryGetCompositeBackgroundSprites(string resourcePath, string baseName, out Sprite back, out Sprite foreground) {
+            back = null;
+            foreground = null;
+
+            if (string.IsNullOrEmpty(resourcePath) || string.IsNullOrEmpty(baseName)) {
+                return false;
+            }
+
+            Sprite[] slices = Resources.LoadAll<Sprite>(resourcePath);
+            if (slices == null || slices.Length < 2) {
+                return false;
+            }
+
+            string backName = baseName + "_0";
+            string foreName = baseName + "_1";
+
+            Sprite backSrc = null;
+            Sprite foreSrc = null;
+            for (int i = 0; i < slices.Length; i++) {
+                Sprite s = slices[i];
+                if (s == null) continue;
+                if (backSrc == null && string.Equals(s.name, backName, StringComparison.InvariantCultureIgnoreCase)) {
+                    backSrc = s;
+                } else if (foreSrc == null && string.Equals(s.name, foreName, StringComparison.InvariantCultureIgnoreCase)) {
+                    foreSrc = s;
+                }
+                if (backSrc != null && foreSrc != null) break;
+            }
+
+            if (backSrc == null || foreSrc == null) {
+                return false;
+            }
+
+            back = GetOrCreateBackgroundSliceSprite(resourcePath, backSrc);
+            foreground = GetOrCreateBackgroundSliceSprite(resourcePath, foreSrc);
+            return (back != null && foreground != null);
+        }
+
+        private static Sprite GetOrCreateBackgroundSliceSprite(string resourcePath, Sprite sourceSprite) {
+            if (string.IsNullOrEmpty(resourcePath) || sourceSprite == null) {
+                return null;
+            }
+
+            string cacheKey = resourcePath + "|slice|" + sourceSprite.name;
+            Sprite cached;
+            if (_backgroundSpriteCache.TryGetValue(cacheKey, out cached) && cached != null) {
+                return cached;
+            }
+
+            Texture2D tex = sourceSprite.texture;
+            if (tex == null) {
+                return null;
+            }
+
+            tex.filterMode = FilterMode.Point;
+            tex.wrapMode = TextureWrapMode.Clamp;
+
+            Rect rect = sourceSprite.rect;
+            // Use a bottom pivot so the slice sits on cameraMin.y like Unity 6.
+            Sprite sprite = Sprite.Create(tex, rect, new Vector2(0.5f, 0f), PixelsPerUnit, 0, SpriteMeshType.FullRect);
+            _backgroundSpriteCache[cacheKey] = sprite;
+            return sprite;
         }
 
         private static Sprite GetOrCreateBackgroundSprite(string resourcePath) {
