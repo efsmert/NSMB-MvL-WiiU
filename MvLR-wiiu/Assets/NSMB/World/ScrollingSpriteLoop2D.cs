@@ -24,16 +24,26 @@ namespace NSMB.World {
                 return;
             }
 
-            float t = (Time.time + _timeOffset) * speed;
+            // We apply offsets in local space, but the authored values are in world units.
+            // Convert by the current world scale so scaled layers (e.g. big clouds) scroll at
+            // the expected world speed and wrap with the correct repeat width.
+            float scaleX = Mathf.Abs(transform.lossyScale.x);
+            if (scaleX <= 0.0001f) {
+                scaleX = 1f;
+            }
+
+            float localSpeed = speed / scaleX;
+            float localTileWidth = tileWorldWidth / scaleX;
+
+            float t = (Time.time + _timeOffset) * localSpeed;
             float offset;
             if (t >= 0f) {
-                offset = Mathf.Repeat(t, tileWorldWidth);
+                offset = Mathf.Repeat(t, localTileWidth);
             } else {
-                offset = -Mathf.Repeat(-t, tileWorldWidth);
+                offset = -Mathf.Repeat(-t, localTileWidth);
             }
 
             transform.localPosition = new Vector3(_startLocalPos.x + offset, _startLocalPos.y, _startLocalPos.z);
         }
     }
 }
-

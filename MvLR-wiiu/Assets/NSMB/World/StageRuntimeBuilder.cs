@@ -82,6 +82,7 @@ namespace NSMB.World {
             }
 
             string resourcePath = "NSMB/LevelBackgrounds/" + bgName;
+            TryApplyCameraClearColor(bgName);
 
             // Determine horizontal tiling span.
             float left = 0f;
@@ -165,7 +166,11 @@ namespace NSMB.World {
 
             // Use the shared clouds texture from level backgrounds.
             const string cloudsResourcePath = "NSMB/LevelBackgrounds/clouds";
-            Sprite cloudSprite = GetOrCreateRuntimeSpriteFromTexture(cloudsResourcePath, cloudsResourcePath + "|ppu16|center", new Vector2(0.5f, 0.5f));
+            // Imported as a Sprite with PPU=100 + Repeat wrap, matching Unity 6.
+            Sprite cloudSprite = Resources.Load<Sprite>(cloudsResourcePath);
+            if (cloudSprite == null) {
+                cloudSprite = GetOrCreateRuntimeSpriteFromTexture(cloudsResourcePath, cloudsResourcePath + "|ppu100|center|repeat", new Vector2(0.5f, 0.5f), 100f, TextureWrapMode.Repeat);
+            }
             if (cloudSprite == null) {
                 return;
             }
@@ -174,6 +179,8 @@ namespace NSMB.World {
             float margin = spriteWidth * 2f;
             float l = left - margin;
             float r = right + margin;
+            float worldWidth = Mathf.Max(spriteWidth, r - l);
+            float centerX = (l + r) * 0.5f;
 
             Transform cloudsRoot = new GameObject("Clouds").transform;
             cloudsRoot.parent = bgRoot;
@@ -183,26 +190,72 @@ namespace NSMB.World {
             // Small clouds (fainter, slower) - matches Unity 6 defaults.
             Transform small = new GameObject("SmallClouds").transform;
             small.parent = cloudsRoot;
-            small.localPosition = Vector3.zero;
+            small.position = new Vector3(centerX, baseY + 5.11f, CloudSmallZ);
             small.localScale = Vector3.one;
             ScrollingSpriteLoop2D smallScroll = small.gameObject.AddComponent<ScrollingSpriteLoop2D>();
             smallScroll.speed = -0.1f;
             smallScroll.tileWorldWidth = spriteWidth;
 
-            BuildBackgroundTiled(cloudSprite, small, l, r, baseY + 5.11f, CloudSmallZ, CloudSmallSortingOrder, "C_");
-            ApplyTintAlpha(small, 0.27058825f);
+            SpriteRenderer smallSr = small.gameObject.AddComponent<SpriteRenderer>();
+            smallSr.sprite = cloudSprite;
+            smallSr.drawMode = SpriteDrawMode.Tiled;
+            smallSr.size = new Vector2(worldWidth, 0.86f);
+            smallSr.sortingOrder = CloudSmallSortingOrder;
+            smallSr.color = new Color(1f, 1f, 1f, 0.27058825f);
 
             // Big clouds (stronger, faster) - scaled up.
             Transform big = new GameObject("BigClouds").transform;
             big.parent = cloudsRoot;
-            big.localPosition = Vector3.zero;
+            big.position = new Vector3(centerX, baseY + 6.51f, CloudBigZ);
             big.localScale = new Vector3(2f, 2f, 1f);
             ScrollingSpriteLoop2D bigScroll = big.gameObject.AddComponent<ScrollingSpriteLoop2D>();
             bigScroll.speed = -0.2f;
-            bigScroll.tileWorldWidth = spriteWidth;
+            bigScroll.tileWorldWidth = spriteWidth * 2f;
 
-            BuildBackgroundTiled(cloudSprite, big, l, r, baseY + 6.51f, CloudBigZ, CloudBigSortingOrder, "C_");
-            ApplyTintAlpha(big, 0.8352941f);
+            SpriteRenderer bigSr = big.gameObject.AddComponent<SpriteRenderer>();
+            bigSr.sprite = cloudSprite;
+            bigSr.drawMode = SpriteDrawMode.Tiled;
+            bigSr.size = new Vector2(worldWidth * 0.5f, 1f);
+            bigSr.sortingOrder = CloudBigSortingOrder;
+            bigSr.color = new Color(1f, 1f, 1f, 0.8352941f);
+        }
+
+        private static void TryApplyCameraClearColor(string bgName) {
+            if (string.IsNullOrEmpty(bgName)) {
+                return;
+            }
+
+            Color clearColor;
+            if (!TryGetCameraClearColorForBackground(bgName, out clearColor)) {
+                return;
+            }
+
+            UnityEngine.Camera cam = UnityEngine.Camera.main;
+            if (cam == null) {
+                cam = UnityEngine.Object.FindObjectOfType(typeof(UnityEngine.Camera)) as UnityEngine.Camera;
+            }
+            if (cam == null) {
+                return;
+            }
+
+            cam.clearFlags = CameraClearFlags.SolidColor;
+            cam.backgroundColor = clearColor;
+        }
+
+        private static bool TryGetCameraClearColorForBackground(string bgName, out Color clearColor) {
+            // Match Unity 6 camera clear color to the top row of the gradient for these skies,
+            // so any visible "gap" above the background sprite blends seamlessly.
+            if (string.Equals(bgName, "grass-sky", StringComparison.InvariantCultureIgnoreCase)) {
+                clearColor = new Color(32f / 255f, 152f / 255f, 248f / 255f, 1f);
+                return true;
+            }
+            if (string.Equals(bgName, "sky-bg", StringComparison.InvariantCultureIgnoreCase)) {
+                clearColor = new Color(40f / 255f, 160f / 255f, 248f / 255f, 1f);
+                return true;
+            }
+
+            clearColor = Color.black;
+            return false;
         }
 
         private static void ApplyTintAlpha(Transform root, float a) {
@@ -313,6 +366,10 @@ namespace NSMB.World {
         }
 
         private static Sprite GetOrCreateRuntimeSpriteFromTexture(string resourcePath, string cacheKey, Vector2 pivot) {
+            return GetOrCreateRuntimeSpriteFromTexture(resourcePath, cacheKey, pivot, PixelsPerUnit, TextureWrapMode.Clamp);
+        }
+
+        private static Sprite GetOrCreateRuntimeSpriteFromTexture(string resourcePath, string cacheKey, Vector2 pivot, float pixelsPerUnit, TextureWrapMode wrapMode) {
             if (string.IsNullOrEmpty(resourcePath) || string.IsNullOrEmpty(cacheKey)) {
                 return null;
             }
@@ -334,10 +391,10 @@ namespace NSMB.World {
             }
 
             tex.filterMode = FilterMode.Point;
-            tex.wrapMode = TextureWrapMode.Clamp;
+            tex.wrapMode = wrapMode;
 
             Rect rect = new Rect(0f, 0f, tex.width, tex.height);
-            Sprite sprite = Sprite.Create(tex, rect, pivot, PixelsPerUnit, 0, SpriteMeshType.FullRect);
+            Sprite sprite = Sprite.Create(tex, rect, pivot, pixelsPerUnit, 0, SpriteMeshType.FullRect);
             _backgroundSpriteCache[cacheKey] = sprite;
             return sprite;
         }
