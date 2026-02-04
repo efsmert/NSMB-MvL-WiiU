@@ -51,6 +51,11 @@ namespace NSMB.Player {
 	        private readonly List<Material> _eyeMaterials = new List<Material>(4);
 	        private Coroutine _blinkCoroutine;
 	        private EyeState _eyeState = EyeState.Normal;
+	        private GameObject _wrapEchoLeft;
+	        private GameObject _wrapEchoRight;
+	        private NSMB.World.StageWrap2D _wrapStage;
+	        private float _wrapWidth;
+	        private float _nextWrapScanTime;
 
         private void Awake() {
             _motor = GetComponent<PlayerMotor2D>();
@@ -65,10 +70,12 @@ namespace NSMB.Player {
 	            TryBuildModel();
 	            _builtLarge = large;
 	            EnsureBlinkRoutine();
+	            EnsureWrapEchos();
 	        }
 
 	        private void OnEnable() {
 	            EnsureBlinkRoutine();
+	            EnsureWrapEchos();
 	        }
 
 	        private void OnDisable() {
@@ -76,6 +83,7 @@ namespace NSMB.Player {
 	                StopCoroutine(_blinkCoroutine);
 	                _blinkCoroutine = null;
 	            }
+	            DestroyWrapEchos();
 	        }
 
 	        private void LateUpdate() {
@@ -122,28 +130,31 @@ namespace NSMB.Player {
             float yaw = yawOffsetDegrees + (_facingRight ? 0f : 180f);
             _modelRoot.transform.localRotation = Quaternion.Euler(0f, yaw, 0f);
 
-            if (_animator != null) {
-                // These parameter names match the original controller (see MarioPlayerAnimator hashes).
-                _animator.SetFloat("velocityX", vx);
-                _animator.SetFloat("velocityY", vy);
-                _animator.SetFloat("velocityMagnitude", new Vector2(vx, vy).magnitude);
-                _animator.SetBool("onGround", _motor != null && _motor.IsGrounded);
-                _animator.SetBool("facingRight", _facingRight);
-            }
-        }
+	            if (_animator != null) {
+	                // These parameter names match the original controller (see MarioPlayerAnimator hashes).
+	                _animator.SetFloat("velocityX", vx);
+	                _animator.SetFloat("velocityY", vy);
+	                _animator.SetFloat("velocityMagnitude", new Vector2(vx, vy).magnitude);
+	                _animator.SetBool("onGround", _motor != null && _motor.IsGrounded);
+	                _animator.SetBool("facingRight", _facingRight);
+	            }
+
+	            UpdateWrapEchos();
+	        }
 
 	        private void RebuildForSize() {
-	            if (_modelRoot != null) {
-	                Destroy(_modelRoot);
-	                _modelRoot = null;
+		            if (_modelRoot != null) {
+		                Destroy(_modelRoot);
+		                _modelRoot = null;
 		                _animator = null;
 		            }
 
 		            _eyeMaterials.Clear();
 		            _eyeState = EyeState.Normal;
-	            TryBuildModel();
-	            _builtLarge = large;
-	        }
+		            DestroyWrapEchos();
+		            TryBuildModel();
+		            _builtLarge = large;
+		        }
 
 	        private void TryBuildModel() {
             string modelPath = GetModelResourcePath(character, large);
@@ -1082,6 +1093,156 @@ namespace NSMB.Player {
 
             rangeY = Mathf.Abs(maxY - minY);
             return true;
+        }
+
+        private void EnsureWrapEchos() {
+            _nextWrapScanTime = 0f;
+            UpdateWrapEchos();
+        }
+
+        private void UpdateWrapEchos() {
+            if (_modelRoot == null) {
+                DestroyWrapEchos();
+                return;
+            }
+
+            // Scan infrequently; StageWrap2D exists only in wrapping stages.
+            if (_wrapStage == null || Time.time >= _nextWrapScanTime) {
+                _nextWrapScanTime = Time.time + 1.0f;
+                _wrapStage = Object.FindObjectOfType(typeof(NSMB.World.StageWrap2D)) as NSMB.World.StageWrap2D;
+            }
+
+            if (_wrapStage == null || _wrapStage.WrapWidth <= 0.0001f) {
+                DestroyWrapEchos();
+                return;
+            }
+
+            float w = _wrapStage.WrapWidth;
+            if (_wrapEchoLeft == null || _wrapEchoRight == null || Mathf.Abs(w - _wrapWidth) > 0.001f) {
+                BuildWrapEchos(w);
+                return;
+            }
+
+            // Keep offsets up to date if wrap width changes (rare) without needing a rebuild.
+            NSMB.World.TransformHierarchyMirror left = _wrapEchoLeft.GetComponent<NSMB.World.TransformHierarchyMirror>();
+            if (left != null) {
+                left.rootLocalPositionOffset = new Vector3(-_wrapWidth, 0f, 0f);
+            }
+
+            NSMB.World.TransformHierarchyMirror right = _wrapEchoRight.GetComponent<NSMB.World.TransformHierarchyMirror>();
+            if (right != null) {
+                right.rootLocalPositionOffset = new Vector3(_wrapWidth, 0f, 0f);
+            }
+        }
+
+        private void BuildWrapEchos(float wrapWidth) {
+            DestroyWrapEchos();
+
+            if (_modelRoot == null || wrapWidth <= 0.0001f) {
+                return;
+            }
+
+            _wrapWidth = wrapWidth;
+            _wrapEchoLeft = CreateWrapEcho("Model_WrapLeft", -wrapWidth);
+            _wrapEchoRight = CreateWrapEcho("Model_WrapRight", wrapWidth);
+        }
+
+        private GameObject CreateWrapEcho(string name, float dx) {
+            if (_modelRoot == null) {
+                return null;
+            }
+
+            GameObject echo = Instantiate(_modelRoot);
+            echo.name = name;
+            echo.SetActive(false);
+
+            Transform src = _modelRoot.transform;
+            Transform dst = echo.transform;
+            dst.parent = src.parent;
+            dst.localPosition = src.localPosition + new Vector3(dx, 0f, 0f);
+            dst.localRotation = src.localRotation;
+            dst.localScale = src.localScale;
+
+            NSMB.World.TransformHierarchyMirror mirror = echo.AddComponent<NSMB.World.TransformHierarchyMirror>();
+            mirror.sourceRoot = src;
+            mirror.rootLocalPositionOffset = new Vector3(dx, 0f, 0f);
+
+            StripEchoToVisualOnly(echo.transform);
+            mirror.RebuildMap();
+
+            echo.SetActive(true);
+            return echo;
+        }
+
+        private static void StripEchoToVisualOnly(Transform root) {
+            if (root == null) {
+                return;
+            }
+
+            Transform[] all = root.GetComponentsInChildren<Transform>(true);
+            if (all == null) {
+                return;
+            }
+
+            for (int i = 0; i < all.Length; i++) {
+                Transform tr = all[i];
+                if (tr == null) continue;
+
+                // Remove scripts (mirror is the only one we keep).
+                MonoBehaviour[] behaviours = tr.GetComponents<MonoBehaviour>();
+                if (behaviours != null) {
+                    for (int b = 0; b < behaviours.Length; b++) {
+                        MonoBehaviour mb = behaviours[b];
+                        if (mb == null) continue;
+                        if (mb is NSMB.World.TransformHierarchyMirror) continue;
+                        Object.Destroy(mb);
+                    }
+                }
+
+                // Remove physics / interactions.
+                Collider2D[] cols2d = tr.GetComponents<Collider2D>();
+                if (cols2d != null) {
+                    for (int c = 0; c < cols2d.Length; c++) {
+                        Collider2D col = cols2d[c];
+                        if (col != null) {
+                            Object.Destroy(col);
+                        }
+                    }
+                }
+
+                Rigidbody2D rb2d = tr.GetComponent<Rigidbody2D>();
+                if (rb2d != null) {
+                    Object.Destroy(rb2d);
+                }
+
+                Animator anim = tr.GetComponent<Animator>();
+                if (anim != null) {
+                    Object.Destroy(anim);
+                }
+
+                Animation legacyAnim = tr.GetComponent<Animation>();
+                if (legacyAnim != null) {
+                    Object.Destroy(legacyAnim);
+                }
+
+                AudioSource audio = tr.GetComponent<AudioSource>();
+                if (audio != null) {
+                    Object.Destroy(audio);
+                }
+            }
+        }
+
+        private void DestroyWrapEchos() {
+            if (_wrapEchoLeft != null) {
+                Destroy(_wrapEchoLeft);
+                _wrapEchoLeft = null;
+            }
+            if (_wrapEchoRight != null) {
+                Destroy(_wrapEchoRight);
+                _wrapEchoRight = null;
+            }
+
+            _wrapWidth = 0f;
         }
 
         private static string Normalize(string s) {

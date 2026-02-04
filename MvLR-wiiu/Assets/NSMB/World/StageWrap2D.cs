@@ -23,6 +23,14 @@ namespace NSMB.World {
         private bool _builtVisualCopies;
         private float _effectiveWrapWidth;
 
+        public float WrapWidth {
+            get { return _effectiveWrapWidth; }
+        }
+
+        public float LeftX {
+            get { return _leftX; }
+        }
+
         private void Start() {
             ResolveBounds();
             ResolveCamera();
@@ -225,12 +233,17 @@ namespace NSMB.World {
                 }
             }
 
-            // Always include the player (lives outside the stage root).
-            NSMB.Player.PlayerMotor2D player = Object.FindObjectOfType(typeof(NSMB.Player.PlayerMotor2D)) as NSMB.Player.PlayerMotor2D;
-            if (player != null) {
-                Rigidbody2D prb = player.GetComponent<Rigidbody2D>();
-                if (prb != null) {
-                    _bodies.Add(prb);
+            // Always include players (live outside the stage root).
+            NSMB.Player.PlayerMotor2D[] players = Object.FindObjectsOfType(typeof(NSMB.Player.PlayerMotor2D)) as NSMB.Player.PlayerMotor2D[];
+            if (players != null) {
+                for (int i = 0; i < players.Length; i++) {
+                    NSMB.Player.PlayerMotor2D player = players[i];
+                    if (player == null) continue;
+                    Rigidbody2D prb = player.GetComponent<Rigidbody2D>();
+                    if (prb == null) continue;
+                    if (!_bodies.Contains(prb)) {
+                        _bodies.Add(prb);
+                    }
                 }
             }
         }
@@ -277,6 +290,17 @@ namespace NSMB.World {
                     return rb;
                 }
             }
+
+            // Fallback: player can be spawned after StageWrap2D.Start; don't wait for the next refresh tick.
+            NSMB.Player.PlayerMotor2D player = Object.FindObjectOfType(typeof(NSMB.Player.PlayerMotor2D)) as NSMB.Player.PlayerMotor2D;
+            if (player != null) {
+                Rigidbody2D prb = player.GetComponent<Rigidbody2D>();
+                if (prb != null) {
+                    _bodies.Add(prb);
+                    return prb;
+                }
+            }
+
             return null;
         }
 
@@ -373,9 +397,11 @@ namespace NSMB.World {
 
             GameObject copy = Object.Instantiate(src.gameObject);
             copy.name = src.name + suffix;
-            copy.transform.parent = transform;
-            copy.transform.localPosition = new Vector3(src.localPosition.x + dx, src.localPosition.y, src.localPosition.z);
-            copy.transform.localRotation = src.localRotation;
+            // Offset in world-space so scaled layers (e.g. cloud strips) wrap correctly.
+            copy.transform.SetParent(transform, true);
+            Vector3 srcPos = src.position;
+            copy.transform.position = new Vector3(srcPos.x + dx, srcPos.y, srcPos.z);
+            copy.transform.rotation = src.rotation;
             copy.transform.localScale = src.localScale;
 
             // Add mirrors for any tiles that have behaviour-driven visuals (question blocks, bump anim, etc.).
@@ -482,6 +508,10 @@ namespace NSMB.World {
                         if (mb != null) {
                             // Keep bootstrap so we can add mirrors after stripping.
                             if (mb is StageWrapMirrorBootstrap) {
+                                continue;
+                            }
+                            // Keep lightweight background scrollers (cloud layers, etc.) on wrap copies.
+                            if (mb is ScrollingSpriteLoop2D) {
                                 continue;
                             }
                             Object.Destroy(mb);

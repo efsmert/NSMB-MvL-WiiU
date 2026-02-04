@@ -9,8 +9,12 @@ namespace NSMB.World {
         private const float TileVisualOverlap = 1.001f;
         private const int BackgroundSortingOrder = -2000;
         private const int ForegroundSortingOrder = BackgroundSortingOrder + 100;
+        private const int CloudBigSortingOrder = BackgroundSortingOrder + 20;
+        private const int CloudSmallSortingOrder = BackgroundSortingOrder + 30;
         private const float BackgroundZ = 10f;
         private const float ForegroundZ = BackgroundZ - 0.5f;
+        private const float CloudBigZ = BackgroundZ - 0.15f;
+        private const float CloudSmallZ = BackgroundZ - 0.10f;
         private const float BackgroundForegroundYOffsetFactor = 0.20f;
 
         private static readonly Dictionary<string, Sprite> _backgroundSpriteCache = new Dictionary<string, Sprite>(StringComparer.InvariantCultureIgnoreCase);
@@ -33,6 +37,7 @@ namespace NSMB.World {
             BuildTiles(def, root.transform, buildColliders);
             if (buildEntities) {
                 BuildEntities(def, root.transform);
+                EnsurePitKillZone(def, root.transform);
             }
 
             if (def.isWrappingLevel) {
@@ -49,6 +54,21 @@ namespace NSMB.World {
                     wrap.ConfigureBounds(def.cameraMin, def.cameraMax);
                 }
             }
+        }
+
+        private static void EnsurePitKillZone(StageDefinition def, Transform stageRoot) {
+            if (def == null || stageRoot == null) {
+                return;
+            }
+
+            PitKillZone2D existing = stageRoot.GetComponent<PitKillZone2D>();
+            if (existing == null) {
+                existing = stageRoot.gameObject.AddComponent<PitKillZone2D>();
+            }
+
+            float baseY = (def.cameraMin != def.cameraMax) ? Mathf.Min(def.cameraMin.y, def.cameraMax.y) : 0f;
+            // Roughly matches the Unity 6 feel: falling below the visible play space kills you.
+            existing.killY = baseY - 8f;
         }
 
         private static void BuildBackground(StageDefinition def, Transform stageRoot) {
@@ -103,6 +123,8 @@ namespace NSMB.World {
 
                 BuildBackgroundTiled(backSprite, backLayer, left, right, baseY, BackgroundZ, BackgroundSortingOrder, "BG_");
 
+                TryBuildScrollingClouds(bgRoot.transform, bgName, left, right, baseY);
+
                 Transform foregroundLayer = new GameObject("Foreground").transform;
                 foregroundLayer.parent = bgRoot.transform;
                 foregroundLayer.localPosition = Vector3.zero;
@@ -119,6 +141,87 @@ namespace NSMB.World {
             }
 
             BuildBackgroundTiled(sprite, bgRoot.transform, left, right, baseY, BackgroundZ, BackgroundSortingOrder, "BG_");
+            TryBuildScrollingClouds(bgRoot.transform, bgName, left, right, baseY);
+        }
+
+        private static void TryBuildScrollingClouds(Transform bgRoot, string bgName, float left, float right, float baseY) {
+            if (bgRoot == null || string.IsNullOrEmpty(bgName)) {
+                return;
+            }
+
+            // Unity 6 grass/sky stages have 2 scrolling cloud layers.
+            bool wantsClouds =
+                string.Equals(bgName, "grass-sky", StringComparison.InvariantCultureIgnoreCase) ||
+                string.Equals(bgName, "sky-bg", StringComparison.InvariantCultureIgnoreCase);
+
+            if (!wantsClouds) {
+                return;
+            }
+
+            // Avoid duplicating if a background prefab already spawned clouds.
+            if (bgRoot.Find("Clouds") != null) {
+                return;
+            }
+
+            // Use the shared clouds texture from level backgrounds.
+            const string cloudsResourcePath = "NSMB/LevelBackgrounds/clouds";
+            Sprite cloudSprite = GetOrCreateRuntimeSpriteFromTexture(cloudsResourcePath, cloudsResourcePath + "|ppu16|center", new Vector2(0.5f, 0.5f));
+            if (cloudSprite == null) {
+                return;
+            }
+
+            float spriteWidth = cloudSprite.bounds.size.x;
+            float margin = spriteWidth * 2f;
+            float l = left - margin;
+            float r = right + margin;
+
+            Transform cloudsRoot = new GameObject("Clouds").transform;
+            cloudsRoot.parent = bgRoot;
+            cloudsRoot.localPosition = Vector3.zero;
+            cloudsRoot.localScale = Vector3.one;
+
+            // Small clouds (fainter, slower) - matches Unity 6 defaults.
+            Transform small = new GameObject("SmallClouds").transform;
+            small.parent = cloudsRoot;
+            small.localPosition = Vector3.zero;
+            small.localScale = Vector3.one;
+            ScrollingSpriteLoop2D smallScroll = small.gameObject.AddComponent<ScrollingSpriteLoop2D>();
+            smallScroll.speed = -0.1f;
+            smallScroll.tileWorldWidth = spriteWidth;
+
+            BuildBackgroundTiled(cloudSprite, small, l, r, baseY + 5.11f, CloudSmallZ, CloudSmallSortingOrder, "C_");
+            ApplyTintAlpha(small, 0.27058825f);
+
+            // Big clouds (stronger, faster) - scaled up.
+            Transform big = new GameObject("BigClouds").transform;
+            big.parent = cloudsRoot;
+            big.localPosition = Vector3.zero;
+            big.localScale = new Vector3(2f, 2f, 1f);
+            ScrollingSpriteLoop2D bigScroll = big.gameObject.AddComponent<ScrollingSpriteLoop2D>();
+            bigScroll.speed = -0.2f;
+            bigScroll.tileWorldWidth = spriteWidth;
+
+            BuildBackgroundTiled(cloudSprite, big, l, r, baseY + 6.51f, CloudBigZ, CloudBigSortingOrder, "C_");
+            ApplyTintAlpha(big, 0.8352941f);
+        }
+
+        private static void ApplyTintAlpha(Transform root, float a) {
+            if (root == null) {
+                return;
+            }
+
+            SpriteRenderer[] srs = root.GetComponentsInChildren<SpriteRenderer>(true);
+            if (srs == null) {
+                return;
+            }
+
+            for (int i = 0; i < srs.Length; i++) {
+                SpriteRenderer sr = srs[i];
+                if (sr == null) continue;
+                Color c = sr.color;
+                c.a = a;
+                sr.color = c;
+            }
         }
 
         private static void BuildBackgroundTiled(Sprite sprite, Transform parent, float left, float right, float baseY, float z, int sortingOrder, string namePrefix) {
@@ -205,6 +308,36 @@ namespace NSMB.World {
             Rect rect = sourceSprite.rect;
             // Use a bottom pivot so the slice sits on cameraMin.y like Unity 6.
             Sprite sprite = Sprite.Create(tex, rect, new Vector2(0.5f, 0f), PixelsPerUnit, 0, SpriteMeshType.FullRect);
+            _backgroundSpriteCache[cacheKey] = sprite;
+            return sprite;
+        }
+
+        private static Sprite GetOrCreateRuntimeSpriteFromTexture(string resourcePath, string cacheKey, Vector2 pivot) {
+            if (string.IsNullOrEmpty(resourcePath) || string.IsNullOrEmpty(cacheKey)) {
+                return null;
+            }
+
+            Sprite cached;
+            if (_backgroundSpriteCache.TryGetValue(cacheKey, out cached) && cached != null) {
+                return cached;
+            }
+
+            Texture2D tex = Resources.Load(resourcePath, typeof(Texture2D)) as Texture2D;
+            if (tex == null) {
+                Sprite s = Resources.Load(resourcePath, typeof(Sprite)) as Sprite;
+                if (s != null) {
+                    tex = s.texture;
+                }
+            }
+            if (tex == null) {
+                return null;
+            }
+
+            tex.filterMode = FilterMode.Point;
+            tex.wrapMode = TextureWrapMode.Clamp;
+
+            Rect rect = new Rect(0f, 0f, tex.width, tex.height);
+            Sprite sprite = Sprite.Create(tex, rect, pivot, PixelsPerUnit, 0, SpriteMeshType.FullRect);
             _backgroundSpriteCache[cacheKey] = sprite;
             return sprite;
         }

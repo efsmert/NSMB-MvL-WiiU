@@ -40,13 +40,28 @@ namespace NSMB.Player {
                 return;
             }
 
-            _invuln = invulnerableSeconds;
+            Respawn(true, true);
+        }
 
-            NSMB.Core.GameRoot root = NSMB.Core.GameRoot.Instance;
-            if (root != null) {
-                NSMB.Audio.AudioManager audio = root.GetComponent<NSMB.Audio.AudioManager>();
-                if (audio != null) {
-                    audio.PlayOneShot(NSMB.Audio.SoundEffectId.Player_Sound_Collision, 0.9f);
+        public void ForceRespawnFromPit() {
+            // Falling into pits should always "kill" you, even if invulnerable from a prior hit.
+            Respawn(true, false);
+        }
+
+        private void Respawn(bool giveInvulnerability, bool playHitSfx) {
+            if (giveInvulnerability) {
+                _invuln = invulnerableSeconds;
+            } else {
+                _invuln = 0f;
+            }
+
+            if (playHitSfx) {
+                NSMB.Core.GameRoot root = NSMB.Core.GameRoot.Instance;
+                if (root != null) {
+                    NSMB.Audio.AudioManager audio = root.GetComponent<NSMB.Audio.AudioManager>();
+                    if (audio != null) {
+                        audio.PlayOneShot(NSMB.Audio.SoundEffectId.Player_Sound_Collision, 0.9f);
+                    }
                 }
             }
 
@@ -61,4 +76,3 @@ namespace NSMB.Player {
         }
     }
 }
-
