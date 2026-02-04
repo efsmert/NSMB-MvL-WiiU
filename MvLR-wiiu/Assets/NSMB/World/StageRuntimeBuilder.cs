@@ -6,6 +6,7 @@ namespace NSMB.World {
     public static class StageRuntimeBuilder {
         private const float PixelsPerUnit = 16f;
         private const float PixelUnit = 1f / PixelsPerUnit;
+        private const float TileVisualOverlap = 1.001f;
 
         public static void Build(StageDefinition def, Transform parent) {
             Build(def, parent, true, true);
@@ -27,8 +28,113 @@ namespace NSMB.World {
             }
 
             if (def.isWrappingLevel) {
-                root.AddComponent<StageWrap2D>();
+                StageWrap2D wrap = root.AddComponent<StageWrap2D>();
+
+                Vector2 min;
+                Vector2 max;
+                if (def.wrapMin != def.wrapMax) {
+                    wrap.ConfigureBounds(def.wrapMin, def.wrapMax);
+                } else if (TryGetWrappingWorldBounds(def, out min, out max) || TryGetStageTileWorldBounds(def, out min, out max)) {
+                    wrap.ConfigureBounds(min, max);
+                } else if (def.cameraMin != def.cameraMax) {
+                    // Fallback: use imported camera clamp bounds if tile bounds are unavailable.
+                    wrap.ConfigureBounds(def.cameraMin, def.cameraMax);
+                }
             }
+        }
+
+        private static bool TryGetWrappingWorldBounds(StageDefinition def, out Vector2 min, out Vector2 max) {
+            // Prefer the "main" tilemap width for wrapping (matches Unity 6 StageData TileDimensions),
+            // rather than the union of all tile layers (which may include out-of-bounds decoration layers).
+            min = Vector2.zero;
+            max = Vector2.zero;
+
+            if (def == null || def.tileLayers == null || def.tileLayers.Count == 0) {
+                return false;
+            }
+
+            bool any = false;
+
+            for (int i = 0; i < def.tileLayers.Count; i++) {
+                StageTileLayer layer = def.tileLayers[i];
+                if (layer == null || layer.tiles == null || layer.tiles.Count == 0) {
+                    continue;
+                }
+
+                string n = layer.name ?? "";
+                bool isGround = (n.IndexOf("Tilemap_Ground", StringComparison.InvariantCultureIgnoreCase) >= 0);
+                if (!isGround) {
+                    continue;
+                }
+
+                Vector2 lmin;
+                Vector2 lmax;
+                if (!TryGetLayerTileWorldBounds(layer, out lmin, out lmax)) {
+                    continue;
+                }
+
+                if (!any) {
+                    min = lmin;
+                    max = lmax;
+                    any = true;
+                } else {
+                    min.x = Mathf.Min(min.x, lmin.x);
+                    min.y = Mathf.Min(min.y, lmin.y);
+                    max.x = Mathf.Max(max.x, lmax.x);
+                    max.y = Mathf.Max(max.y, lmax.y);
+                }
+            }
+
+            return any && (max.x > min.x + 0.0001f);
+        }
+
+        private static bool TryGetLayerTileWorldBounds(StageTileLayer layer, out Vector2 min, out Vector2 max) {
+            min = Vector2.zero;
+            max = Vector2.zero;
+            if (layer == null || layer.tiles == null || layer.tiles.Count == 0) {
+                return false;
+            }
+
+            Vector3 layerScale = (layer.scale.sqrMagnitude > 0.0001f) ? layer.scale : Vector3.one;
+            float legacyFactor = GetLegacyTileLayerScaleFactor(layerScale);
+            Vector3 layerPos = layer.position * legacyFactor;
+            layerScale = NormalizeLegacyTileLayerScale(layerScale);
+
+            float sx = Mathf.Abs(layerScale.x);
+            float sy = Mathf.Abs(layerScale.y);
+            if (sx <= 0.0001f || sy <= 0.0001f) {
+                return false;
+            }
+
+            bool any = false;
+
+            for (int t = 0; t < layer.tiles.Count; t++) {
+                StageTile tile = layer.tiles[t];
+
+                float cx = layerPos.x + (tile.x + 0.5f) * layerScale.x;
+                float cy = layerPos.y + (tile.y + 0.5f) * layerScale.y;
+
+                float halfW = sx * 0.5f;
+                float halfH = sy * 0.5f;
+
+                float tx0 = cx - halfW;
+                float tx1 = cx + halfW;
+                float ty0 = cy - halfH;
+                float ty1 = cy + halfH;
+
+                if (!any) {
+                    min = new Vector2(Mathf.Min(tx0, tx1), Mathf.Min(ty0, ty1));
+                    max = new Vector2(Mathf.Max(tx0, tx1), Mathf.Max(ty0, ty1));
+                    any = true;
+                } else {
+                    min.x = Mathf.Min(min.x, Mathf.Min(tx0, tx1));
+                    min.y = Mathf.Min(min.y, Mathf.Min(ty0, ty1));
+                    max.x = Mathf.Max(max.x, Mathf.Max(tx0, tx1));
+                    max.y = Mathf.Max(max.y, Mathf.Max(ty0, ty1));
+                }
+            }
+
+            return any && (max.x > min.x + 0.0001f);
         }
 
         private static void BuildTiles(StageDefinition def, Transform stageRoot, bool buildColliders) {
@@ -44,8 +150,11 @@ namespace NSMB.World {
 
                 GameObject layerGo = new GameObject(string.IsNullOrEmpty(layer.name) ? ("TileLayer_" + i) : layer.name);
                 layerGo.transform.parent = stageRoot;
-                layerGo.transform.localPosition = layer.position;
-                layerGo.transform.localScale = (layer.scale.sqrMagnitude > 0.0001f) ? layer.scale : Vector3.one;
+
+                Vector3 layerScale = (layer.scale.sqrMagnitude > 0.0001f) ? layer.scale : Vector3.one;
+                float legacyFactor = GetLegacyTileLayerScaleFactor(layerScale);
+                layerGo.transform.localPosition = layer.position * legacyFactor;
+                layerGo.transform.localScale = NormalizeLegacyTileLayerScale(layerScale);
 
                 // Snap tile layers to the pixel grid to avoid 1px seams due to sub-pixel offsets.
                 layerGo.transform.localPosition = SnapVector(layerGo.transform.localPosition, PixelUnit);
@@ -79,6 +188,15 @@ namespace NSMB.World {
                     if (sr.sprite == null) {
                         sr.sprite = TryResolveTileSprite(layer.resourcesAtlasPath, tile.spriteIndex);
                     }
+                    if (sr.sprite != null) {
+                        // Runtime safety net: enforce pixel-art sampling to reduce seams on hardware/players
+                        // where importer settings haven't been applied yet.
+                        Texture2D tex = sr.sprite.texture;
+                        if (tex != null) {
+                            tex.filterMode = FilterMode.Point;
+                            tex.wrapMode = TextureWrapMode.Clamp;
+                        }
+                    }
 
                     // Convert certain solid tiles into interactive block GameObjects (question blocks, etc.)
                     // so they can be bumped from below and animated like the original game.
@@ -86,6 +204,12 @@ namespace NSMB.World {
                     bool isAnimatedBlocksTile = TryGetAnimatedBlocksIndex(layer.resourcesAtlasPath, tile, out animatedBlocksIndex);
                     bool isInteractive = (tile.interactionKind != NSMB.World.StageTileInteractionKind.None) ||
                                          (isAnimatedBlocksTile && IsInteractiveBlockAnimatedIndex(animatedBlocksIndex));
+
+                    // Small visual overlap helps hide thin seams if a tile sprite has a 1px transparent edge.
+                    // Never apply to interactive blocks (their colliders must remain exactly 1x1).
+                    if (!isInteractive) {
+                        tileGo.transform.localScale = new Vector3(sx * TileVisualOverlap, sy * TileVisualOverlap, 1f);
+                    }
                     if (isInteractive) {
                         if (interactiveSolidKeys == null) {
                             interactiveSolidKeys = new HashSet<long>();
@@ -366,6 +490,96 @@ namespace NSMB.World {
             }
 
             return false;
+        }
+
+        private static Vector3 NormalizeLegacyTileLayerScale(Vector3 s) {
+            // Backwards-compat for imported StageDefinitions created before the importer normalized Tilemap scales.
+            // Unity 6 levels commonly have Tilemap transforms at scale 0.5; our runtime assumes 1 unit per tile.
+            // If we keep the 0.5 scale, tiles are half-size and all actors (player/enemies/items) look too big.
+            //
+            // New imports should already be normalized; this only applies to existing StageDefinition assets.
+            if (Mathf.Abs(s.x - 1f) <= 0.0005f && Mathf.Abs(s.y - 1f) <= 0.0005f) {
+                return Vector3.one;
+            }
+
+            if (Mathf.Abs(s.x - 0.5f) <= 0.0005f && Mathf.Abs(s.y - 0.5f) <= 0.0005f) {
+                return Vector3.one;
+            }
+
+            if (Mathf.Abs(s.x - 0.25f) <= 0.0005f && Mathf.Abs(s.y - 0.25f) <= 0.0005f) {
+                return Vector3.one;
+            }
+
+            return s;
+        }
+
+        private static float GetLegacyTileLayerScaleFactor(Vector3 s) {
+            // Legacy imported stage assets stored raw Unity 6 Tilemap transforms (scale 0.5 / 0.25) without
+            // applying the port's ImportScale (2x / 4x). To keep old assets playable without reimporting,
+            // scale both the layer scale AND its position by this factor.
+            if (Mathf.Abs(s.x - 0.5f) <= 0.0005f && Mathf.Abs(s.y - 0.5f) <= 0.0005f) {
+                return 2f;
+            }
+            if (Mathf.Abs(s.x - 0.25f) <= 0.0005f && Mathf.Abs(s.y - 0.25f) <= 0.0005f) {
+                return 4f;
+            }
+            return 1f;
+        }
+
+        private static bool TryGetStageTileWorldBounds(StageDefinition def, out Vector2 min, out Vector2 max) {
+            min = Vector2.zero;
+            max = Vector2.zero;
+            if (def == null || def.tileLayers == null || def.tileLayers.Count == 0) {
+                return false;
+            }
+
+            bool any = false;
+
+            for (int i = 0; i < def.tileLayers.Count; i++) {
+                StageTileLayer layer = def.tileLayers[i];
+                if (layer == null || layer.tiles == null || layer.tiles.Count == 0) {
+                    continue;
+                }
+
+                Vector3 layerScale = (layer.scale.sqrMagnitude > 0.0001f) ? layer.scale : Vector3.one;
+                float legacyFactor = GetLegacyTileLayerScaleFactor(layerScale);
+                Vector3 layerPos = layer.position * legacyFactor;
+                layerScale = NormalizeLegacyTileLayerScale(layerScale);
+
+                float sx = Mathf.Abs(layerScale.x);
+                float sy = Mathf.Abs(layerScale.y);
+                if (sx <= 0.0001f || sy <= 0.0001f) {
+                    continue;
+                }
+
+                for (int t = 0; t < layer.tiles.Count; t++) {
+                    StageTile tile = layer.tiles[t];
+
+                    float cx = layerPos.x + (tile.x + 0.5f) * layerScale.x;
+                    float cy = layerPos.y + (tile.y + 0.5f) * layerScale.y;
+
+                    float halfW = sx * 0.5f;
+                    float halfH = sy * 0.5f;
+
+                    float tx0 = cx - halfW;
+                    float tx1 = cx + halfW;
+                    float ty0 = cy - halfH;
+                    float ty1 = cy + halfH;
+
+                    if (!any) {
+                        min = new Vector2(Mathf.Min(tx0, tx1), Mathf.Min(ty0, ty1));
+                        max = new Vector2(Mathf.Max(tx0, tx1), Mathf.Max(ty0, ty1));
+                        any = true;
+                    } else {
+                        min.x = Mathf.Min(min.x, Mathf.Min(tx0, tx1));
+                        min.y = Mathf.Min(min.y, Mathf.Min(ty0, ty1));
+                        max.x = Mathf.Max(max.x, Mathf.Max(tx0, tx1));
+                        max.y = Mathf.Max(max.y, Mathf.Max(ty0, ty1));
+                    }
+                }
+            }
+
+            return any && (max.x > min.x + 0.0001f);
         }
 
         private static void BuildMergedColliders(List<StageTile> tiles, Transform layerTransform) {

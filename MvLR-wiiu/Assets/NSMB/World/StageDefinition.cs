@@ -117,6 +117,12 @@ namespace NSMB.World {
 
         public bool isWrappingLevel;
 
+        // Optional: world wrap bounds (Unity units). When set, StageWrap2D uses these bounds to compute the
+        // wrap width and to place visual wrap copies, matching the Unity 6 StageData TileOrigin/TileDimensions.
+        // If unset (min == max), runtime falls back to deriving bounds from tile layers.
+        public Vector2 wrapMin;
+        public Vector2 wrapMax;
+
         public List<StageTileLayer> tileLayers = new List<StageTileLayer>();
         public List<StageEntity> entities = new List<StageEntity>();
     }

@@ -20,8 +20,8 @@ MonoBehaviour:
   - name: Tilemap_Dark
     resourcesAtlasPath: NSMB/Sprites/Atlases/Terrain/beach-blue
     sortingOrder: -1002
-    position: {x: -2, y: 0, z: 0}
-    scale: {x: 0.5, y: 0.5, z: 1}
+    position: {x: -4, y: 0, z: 0}
+    scale: {x: 1, y: 1, z: 2}
     tiles:
     - x: 2
       y: -12
@@ -1244,8 +1244,8 @@ MonoBehaviour:
   - name: Tilemap_Dark_grass
     resourcesAtlasPath: NSMB/Sprites/Atlases/Terrain/grass
     sortingOrder: -1002
-    position: {x: -2, y: 0, z: 0}
-    scale: {x: 0.5, y: 0.5, z: 1}
+    position: {x: -4, y: 0, z: 0}
+    scale: {x: 1, y: 1, z: 2}
     tiles:
     - x: -27
       y: -6
@@ -1614,8 +1614,8 @@ MonoBehaviour:
   - name: Tilemap_Background
     resourcesAtlasPath: NSMB/Sprites/Atlases/Terrain/beach-blue
     sortingOrder: -1001
-    position: {x: -2, y: 0, z: 0}
-    scale: {x: 0.5, y: 0.5, z: 1}
+    position: {x: -4, y: 0, z: 0}
+    scale: {x: 1, y: 1, z: 2}
     tiles:
     - x: -10
       y: -12
@@ -5456,8 +5456,8 @@ MonoBehaviour:
   - name: Tilemap_Background_desert
     resourcesAtlasPath: NSMB/Sprites/Atlases/Terrain/desert
     sortingOrder: -1001
-    position: {x: -2, y: 0, z: 0}
-    scale: {x: 0.5, y: 0.5, z: 1}
+    position: {x: -4, y: 0, z: 0}
+    scale: {x: 1, y: 1, z: 2}
     tiles:
     - x: 14
       y: -5
@@ -5518,8 +5518,8 @@ MonoBehaviour:
   - name: Tilemap_Background_grass
     resourcesAtlasPath: NSMB/Sprites/Atlases/Terrain/grass
     sortingOrder: -1001
-    position: {x: -2, y: 0, z: 0}
-    scale: {x: 0.5, y: 0.5, z: 1}
+    position: {x: -4, y: 0, z: 0}
+    scale: {x: 1, y: 1, z: 2}
     tiles:
     - x: -14
       y: -5
@@ -5944,8 +5944,8 @@ MonoBehaviour:
   - name: Tilemap_Ground_animated-blocks
     resourcesAtlasPath: NSMB/Sprites/Atlases/Terrain/animated-blocks
     sortingOrder: -1000
-    position: {x: -2, y: 0, z: 0}
-    scale: {x: 0.5, y: 0.5, z: 1}
+    position: {x: -4, y: 0, z: 0}
+    scale: {x: 1, y: 1, z: 2}
     tiles:
     - x: 5
       y: -3
@@ -6160,8 +6160,8 @@ MonoBehaviour:
   - name: Tilemap_Ground
     resourcesAtlasPath: NSMB/Sprites/Atlases/Terrain/beach-blue
     sortingOrder: -1000
-    position: {x: -2, y: 0, z: 0}
-    scale: {x: 0.5, y: 0.5, z: 1}
+    position: {x: -4, y: 0, z: 0}
+    scale: {x: 1, y: 1, z: 2}
     tiles:
     - x: -28
       y: -12

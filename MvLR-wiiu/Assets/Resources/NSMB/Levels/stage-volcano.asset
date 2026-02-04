@@ -20,8 +20,8 @@ MonoBehaviour:
   - name: Tilemap_Background
     resourcesAtlasPath: NSMB/Sprites/Atlases/Terrain/31 Volcano (yellow)
     sortingOrder: -1001
-    position: {x: -3.5, y: 0, z: 0}
-    scale: {x: 0.5, y: 0.5, z: 1}
+    position: {x: -7, y: 0, z: 0}
+    scale: {x: 1, y: 1, z: 2}
     tiles:
     - x: 8
       y: -11
@@ -17540,8 +17540,8 @@ MonoBehaviour:
   - name: Tilemap_Background_volcano
     resourcesAtlasPath: NSMB/Sprites/Atlases/Terrain/volcano
     sortingOrder: -1001
-    position: {x: -3.5, y: 0, z: 0}
-    scale: {x: 0.5, y: 0.5, z: 1}
+    position: {x: -7, y: 0, z: 0}
+    scale: {x: 1, y: 1, z: 2}
     tiles:
     - x: 31
       y: -11
@@ -17602,8 +17602,8 @@ MonoBehaviour:
   - name: Tilemap_Ground
     resourcesAtlasPath: NSMB/Sprites/Atlases/Terrain/31 Volcano (yellow)
     sortingOrder: -1000
-    position: {x: -3.5, y: 0, z: 0}
-    scale: {x: 0.5, y: 0.5, z: 1}
+    position: {x: -7, y: 0, z: 0}
+    scale: {x: 1, y: 1, z: 2}
     tiles:
     - x: -33
       y: -11
@@ -29368,8 +29368,8 @@ MonoBehaviour:
   - name: Tilemap_Ground_animated-blocks
     resourcesAtlasPath: NSMB/Sprites/Atlases/Terrain/animated-blocks
     sortingOrder: -1000
-    position: {x: -3.5, y: 0, z: 0}
-    scale: {x: 0.5, y: 0.5, z: 1}
+    position: {x: -7, y: 0, z: 0}
+    scale: {x: 1, y: 1, z: 2}
     tiles:
     - x: -32
       y: -5
@@ -29458,8 +29458,8 @@ MonoBehaviour:
   - name: Tilemap_Ground_generic-blocks
     resourcesAtlasPath: NSMB/Sprites/Atlases/Terrain/generic-blocks
     sortingOrder: -1000
-    position: {x: -3.5, y: 0, z: 0}
-    scale: {x: 0.5, y: 0.5, z: 1}
+    position: {x: -7, y: 0, z: 0}
+    scale: {x: 1, y: 1, z: 2}
     tiles:
     - x: 31
       y: 0
@@ -37626,8 +37626,8 @@ MonoBehaviour:
   - name: Tilemap_Ground_grass
     resourcesAtlasPath: NSMB/Sprites/Atlases/Terrain/grass
     sortingOrder: -1000
-    position: {x: -3.5, y: 0, z: 0}
-    scale: {x: 0.5, y: 0.5, z: 1}
+    position: {x: -7, y: 0, z: 0}
+    scale: {x: 1, y: 1, z: 2}
     tiles:
     - x: 5
       y: -8

@@ -20,8 +20,8 @@ MonoBehaviour:
   - name: Tilemap_Background
     resourcesAtlasPath: NSMB/Sprites/Atlases/Terrain/forest
     sortingOrder: -1001
-    position: {x: 0, y: 5, z: 0}
-    scale: {x: 0.5, y: 0.5, z: 1}
+    position: {x: 0, y: 10, z: 0}
+    scale: {x: 1, y: 1, z: 2}
     tiles:
     - x: -52
       y: -12
@@ -5290,8 +5290,8 @@ MonoBehaviour:
   - name: Tilemap_Background_pipes
     resourcesAtlasPath: NSMB/Sprites/Atlases/Terrain/pipes
     sortingOrder: -1001
-    position: {x: 0, y: 5, z: 0}
-    scale: {x: 0.5, y: 0.5, z: 1}
+    position: {x: 0, y: 10, z: 0}
+    scale: {x: 1, y: 1, z: 2}
     tiles:
     - x: -10
       y: -8
@@ -5800,8 +5800,8 @@ MonoBehaviour:
   - name: Tilemap_Ground_animated-blocks
     resourcesAtlasPath: NSMB/Sprites/Atlases/Terrain/animated-blocks
     sortingOrder: -1000
-    position: {x: 0, y: 5, z: 0}
-    scale: {x: 0.5, y: 0.5, z: 1}
+    position: {x: 0, y: 10, z: 0}
+    scale: {x: 1, y: 1, z: 2}
     tiles:
     - x: 9
       y: -7
@@ -6142,8 +6142,8 @@ MonoBehaviour:
   - name: Tilemap_Ground
     resourcesAtlasPath: NSMB/Sprites/Atlases/Terrain/forest
     sortingOrder: -1000
-    position: {x: 0, y: 5, z: 0}
-    scale: {x: 0.5, y: 0.5, z: 1}
+    position: {x: 0, y: 10, z: 0}
+    scale: {x: 1, y: 1, z: 2}
     tiles:
     - x: -63
       y: -12
@@ -18706,8 +18706,8 @@ MonoBehaviour:
   - name: Tilemap_Ground_generic-blocks
     resourcesAtlasPath: NSMB/Sprites/Atlases/Terrain/generic-blocks
     sortingOrder: -1000
-    position: {x: 0, y: 5, z: 0}
-    scale: {x: 0.5, y: 0.5, z: 1}
+    position: {x: 0, y: 10, z: 0}
+    scale: {x: 1, y: 1, z: 2}
     tiles:
     - x: -49
       y: -9
@@ -18782,8 +18782,8 @@ MonoBehaviour:
   - name: Tilemap_Ground_grass
     resourcesAtlasPath: NSMB/Sprites/Atlases/Terrain/grass
     sortingOrder: -1000
-    position: {x: 0, y: 5, z: 0}
-    scale: {x: 0.5, y: 0.5, z: 1}
+    position: {x: 0, y: 10, z: 0}
+    scale: {x: 1, y: 1, z: 2}
     tiles:
     - x: -59
       y: -8
@@ -19180,8 +19180,8 @@ MonoBehaviour:
   - name: Tilemap_Ground_pipes
     resourcesAtlasPath: NSMB/Sprites/Atlases/Terrain/pipes
     sortingOrder: -1000
-    position: {x: 0, y: 5, z: 0}
-    scale: {x: 0.5, y: 0.5, z: 1}
+    position: {x: 0, y: 10, z: 0}
+    scale: {x: 1, y: 1, z: 2}
     tiles:
     - x: -33
       y: -12

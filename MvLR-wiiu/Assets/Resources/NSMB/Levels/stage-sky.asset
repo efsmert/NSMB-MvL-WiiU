@@ -20,8 +20,8 @@ MonoBehaviour:
   - name: Tilemap_Background
     resourcesAtlasPath: NSMB/Sprites/Atlases/Terrain/sky-mushroom
     sortingOrder: -1005
-    position: {x: -1, y: 3, z: 0}
-    scale: {x: 0.5, y: 0.5, z: 1}
+    position: {x: -2, y: 6, z: 0}
+    scale: {x: 1, y: 1, z: 2}
     tiles:
     - x: -22
       y: -6
@@ -110,8 +110,8 @@ MonoBehaviour:
   - name: Tilemap_Ground_animated-blocks
     resourcesAtlasPath: NSMB/Sprites/Atlases/Terrain/animated-blocks
     sortingOrder: -2
-    position: {x: -1, y: 3, z: 0}
-    scale: {x: 0.5, y: 0.5, z: 1}
+    position: {x: -2, y: 6, z: 0}
+    scale: {x: 1, y: 1, z: 2}
     tiles:
     - x: -9
       y: -9
@@ -284,8 +284,8 @@ MonoBehaviour:
   - name: Tilemap_Ground_grass
     resourcesAtlasPath: NSMB/Sprites/Atlases/Terrain/grass
     sortingOrder: -2
-    position: {x: -1, y: 3, z: 0}
-    scale: {x: 0.5, y: 0.5, z: 1}
+    position: {x: -2, y: 6, z: 0}
+    scale: {x: 1, y: 1, z: 2}
     tiles:
     - x: -18
       y: -10
@@ -976,8 +976,8 @@ MonoBehaviour:
   - name: Tilemap_Ground
     resourcesAtlasPath: NSMB/Sprites/Atlases/Terrain/sky-mushroom
     sortingOrder: -2
-    position: {x: -1, y: 3, z: 0}
-    scale: {x: 0.5, y: 0.5, z: 1}
+    position: {x: -2, y: 6, z: 0}
+    scale: {x: 1, y: 1, z: 2}
     tiles:
     - x: -26
       y: -13

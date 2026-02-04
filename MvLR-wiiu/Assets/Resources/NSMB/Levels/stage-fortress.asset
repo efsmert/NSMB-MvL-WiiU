@@ -20,8 +20,8 @@ MonoBehaviour:
   - name: Tilemap_Ground_animated-blocks
     resourcesAtlasPath: NSMB/Sprites/Atlases/Terrain/animated-blocks
     sortingOrder: -1000
-    position: {x: 3, y: 5, z: 0}
-    scale: {x: 0.5, y: 0.5, z: 1}
+    position: {x: 6, y: 10, z: 0}
+    scale: {x: 1, y: 1, z: 2}
     tiles:
     - x: 24
       y: -7
@@ -82,8 +82,8 @@ MonoBehaviour:
   - name: Tilemap_Ground
     resourcesAtlasPath: NSMB/Sprites/Atlases/Terrain/castle
     sortingOrder: -1000
-    position: {x: 3, y: 5, z: 0}
-    scale: {x: 0.5, y: 0.5, z: 1}
+    position: {x: 6, y: 10, z: 0}
+    scale: {x: 1, y: 1, z: 2}
     tiles:
     - x: -6
       y: -13
@@ -3644,8 +3644,8 @@ MonoBehaviour:
   - name: Tilemap_Squishy
     resourcesAtlasPath: NSMB/Sprites/Atlases/Terrain/squishy
     sortingOrder: 2
-    position: {x: 3, y: 0, z: 0}
-    scale: {x: 0.5, y: 0.5, z: 1}
+    position: {x: 6, y: 0, z: 0}
+    scale: {x: 1, y: 1, z: 2}
     tiles:
     - x: 16
       y: -8

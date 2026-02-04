@@ -222,6 +222,18 @@ public static class ImportOriginalStagesMenu {
         def.isWrappingLevel = stageData.isWrappingLevel;
         def.cameraMin = stageData.cameraMin;
         def.cameraMax = stageData.cameraMax;
+        if (stageData.tileDimX > 0 && stageData.tileDimY > 0) {
+            // Unity 6 VersusStageBaker defines wrap bounds via:
+            //   min = TilemapWorldPosition + TileOrigin/2
+            //   max = min + TileDimensions/2
+            // Then later code uses ImportScale=2 in this port, so:
+            //   unityMin = TilemapWorldPosition*2 + TileOrigin
+            //   unityMax = unityMin + TileDimensions
+            Vector2 wrapMin = stageData.tilemapWorldPosition + new Vector2(stageData.tileOriginX, stageData.tileOriginY);
+            Vector2 wrapMax = wrapMin + new Vector2(stageData.tileDimX, stageData.tileDimY);
+            def.wrapMin = wrapMin;
+            def.wrapMax = wrapMax;
+        }
 
         OriginalSpriteResolver spriteResolver = new OriginalSpriteResolver(originalProjectDir);
         OriginalTileColliderResolver tileColliderResolver = new OriginalTileColliderResolver(originalProjectDir);
@@ -1921,6 +1933,11 @@ public static class ImportOriginalStagesMenu {
         public Vector2 cameraMin;
         public Vector2 cameraMax;
         public bool isWrappingLevel;
+        public int tileOriginX;
+        public int tileOriginY;
+        public int tileDimX;
+        public int tileDimY;
+        public Vector2 tilemapWorldPosition;
     }
 
     private static StageDataInfo TryGetStageDataInfo(string originalProjectDir, string mapAssetPath) {
@@ -1930,6 +1947,11 @@ public static class ImportOriginalStagesMenu {
         info.cameraMin = Vector2.zero;
         info.cameraMax = Vector2.zero;
         info.isWrappingLevel = false;
+        info.tileOriginX = 0;
+        info.tileOriginY = 0;
+        info.tileDimX = 0;
+        info.tileDimY = 0;
+        info.tilemapWorldPosition = Vector2.zero;
 
         if (string.IsNullOrEmpty(mapAssetPath) || !File.Exists(mapAssetPath)) {
             return info;
@@ -1972,6 +1994,15 @@ public static class ImportOriginalStagesMenu {
                 bool? wrap = ParseBoolField(txt, "IsWrappingLevel:");
                 if (wrap.HasValue) {
                     info.isWrappingLevel = wrap.Value;
+                }
+
+                // Tilemap settings (used to compute exact wrap width like Unity 6 VersusStageBaker).
+                TryParseInt2FromBlock(txt, "TileOrigin:", out info.tileOriginX, out info.tileOriginY);
+                TryParseInt2FromBlock(txt, "TileDimensions:", out info.tileDimX, out info.tileDimY);
+
+                Vector2? tilemapWorld = ParseFpVec2FromBlock(txt, "TilemapWorldPosition:");
+                if (tilemapWorld.HasValue) {
+                    info.tilemapWorldPosition = tilemapWorld.Value * ImportScale;
                 }
 
                 return info;
@@ -2074,6 +2105,85 @@ public static class ImportOriginalStagesMenu {
             return v != 0;
         }
         return null;
+    }
+
+    private static bool TryParseInt2FromBlock(string text, string blockName, out int x, out int y) {
+        x = 0;
+        y = 0;
+        try {
+            if (string.IsNullOrEmpty(text) || string.IsNullOrEmpty(blockName)) {
+                return false;
+            }
+
+            string[] lines = text.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+            if (lines == null || lines.Length == 0) {
+                return false;
+            }
+
+            int start = -1;
+            for (int i = 0; i < lines.Length; i++) {
+                string t = lines[i].Trim();
+                if (string.Equals(t, blockName.TrimEnd(), StringComparison.InvariantCulture)) {
+                    start = i;
+                    break;
+                }
+            }
+            if (start < 0) {
+                return false;
+            }
+
+            bool haveX = false;
+            bool haveY = false;
+
+            for (int i = start + 1; i < lines.Length; i++) {
+                string raw = lines[i];
+                if (string.IsNullOrEmpty(raw)) {
+                    continue;
+                }
+
+                // End when we reach the next sibling field (MonoBehaviour fields are indented 2 spaces).
+                // Our block children are indented 4 spaces.
+                if (raw.StartsWith("  ", StringComparison.InvariantCulture) &&
+                    !raw.StartsWith("    ", StringComparison.InvariantCulture)) {
+                    break;
+                }
+
+                string t = raw.Trim();
+                if (!haveX && t.StartsWith("X:", StringComparison.InvariantCulture)) {
+                    int v;
+                    if (TryParseIntAfterColon(t, out v)) {
+                        x = v;
+                        haveX = true;
+                    }
+                    continue;
+                }
+                if (!haveY && t.StartsWith("Y:", StringComparison.InvariantCulture)) {
+                    int v;
+                    if (TryParseIntAfterColon(t, out v)) {
+                        y = v;
+                        haveY = true;
+                    }
+                    continue;
+                }
+            }
+
+            return haveX && haveY;
+        } catch (Exception) {
+            return false;
+        }
+    }
+
+    private static bool TryParseIntAfterColon(string line, out int value) {
+        value = 0;
+        if (string.IsNullOrEmpty(line)) {
+            return false;
+        }
+        int colon = line.IndexOf(':');
+        if (colon < 0) {
+            return false;
+        }
+        string num = line.Substring(colon + 1).Trim();
+        return int.TryParse(num, NumberStyles.Integer, CultureInfo.InvariantCulture, out value);
     }
 
     private sealed class SceneTilemapData {

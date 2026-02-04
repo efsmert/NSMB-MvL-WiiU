@@ -20,8 +20,8 @@ MonoBehaviour:
   - name: Tilemap_Ground_animated-blocks
     resourcesAtlasPath: NSMB/Sprites/Atlases/Terrain/animated-blocks
     sortingOrder: -1000
-    position: {x: 3.5, y: 0, z: 0}
-    scale: {x: 0.5, y: 0.5, z: 1}
+    position: {x: 7, y: 0, z: 0}
+    scale: {x: 1, y: 1, z: 2}
     tiles:
     - x: 9
       y: -4
@@ -40,8 +40,8 @@ MonoBehaviour:
   - name: Tilemap_Ground_generic-blocks
     resourcesAtlasPath: NSMB/Sprites/Atlases/Terrain/generic-blocks
     sortingOrder: -1000
-    position: {x: 3.5, y: 0, z: 0}
-    scale: {x: 0.5, y: 0.5, z: 1}
+    position: {x: 7, y: 0, z: 0}
+    scale: {x: 1, y: 1, z: 2}
     tiles:
     - x: -35
       y: -11
@@ -326,8 +326,8 @@ MonoBehaviour:
   - name: Tilemap_Ground
     resourcesAtlasPath: NSMB/Sprites/Atlases/Terrain/pipes
     sortingOrder: -1000
-    position: {x: 3.5, y: 0, z: 0}
-    scale: {x: 0.5, y: 0.5, z: 1}
+    position: {x: 7, y: 0, z: 0}
+    scale: {x: 1, y: 1, z: 2}
     tiles:
     - x: -39
       y: -11

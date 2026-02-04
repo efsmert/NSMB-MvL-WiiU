@@ -20,8 +20,8 @@ MonoBehaviour:
   - name: Tilemap_Background
     resourcesAtlasPath: NSMB/Sprites/Atlases/Terrain/desert
     sortingOrder: -1001
-    position: {x: -1, y: 5, z: 0}
-    scale: {x: 0.5, y: 0.5, z: 1}
+    position: {x: -2, y: 10, z: 0}
+    scale: {x: 1, y: 1, z: 2}
     tiles:
     - x: -19
       y: -9
@@ -2644,8 +2644,8 @@ MonoBehaviour:
   - name: Tilemap_Background_grass
     resourcesAtlasPath: NSMB/Sprites/Atlases/Terrain/grass
     sortingOrder: -1001
-    position: {x: -1, y: 5, z: 0}
-    scale: {x: 0.5, y: 0.5, z: 1}
+    position: {x: -2, y: 10, z: 0}
+    scale: {x: 1, y: 1, z: 2}
     tiles:
     - x: 11
       y: -9
@@ -2692,8 +2692,8 @@ MonoBehaviour:
   - name: Tilemap_Ground_animated-blocks
     resourcesAtlasPath: NSMB/Sprites/Atlases/Terrain/animated-blocks
     sortingOrder: -1000
-    position: {x: -1, y: 5, z: 0}
-    scale: {x: 0.5, y: 0.5, z: 1}
+    position: {x: -2, y: 10, z: 0}
+    scale: {x: 1, y: 1, z: 2}
     tiles:
     - x: 12
       y: -5
@@ -2754,8 +2754,8 @@ MonoBehaviour:
   - name: Tilemap_Ground
     resourcesAtlasPath: NSMB/Sprites/Atlases/Terrain/desert
     sortingOrder: -1000
-    position: {x: -1, y: 5, z: 0}
-    scale: {x: 0.5, y: 0.5, z: 1}
+    position: {x: -2, y: 10, z: 0}
+    scale: {x: 1, y: 1, z: 2}
     tiles:
     - x: -33
       y: -13

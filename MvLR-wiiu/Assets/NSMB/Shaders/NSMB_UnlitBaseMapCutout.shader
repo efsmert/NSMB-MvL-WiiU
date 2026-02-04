@@ -16,7 +16,7 @@ Shader "NSMB/UnlitBaseMapCutout"
         Tags { "Queue"="AlphaTest" "RenderType"="TransparentCutout" }
         LOD 100
 
-        Cull Off
+        Cull Back
         Lighting Off
         ZWrite On
 
@@ -71,4 +71,3 @@ Shader "NSMB/UnlitBaseMapCutout"
 
     Fallback "Transparent/Cutout/Diffuse"
 }
-

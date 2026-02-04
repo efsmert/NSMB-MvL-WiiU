@@ -45,7 +45,14 @@ namespace NSMB.Camera {
 	            if (pixelSnap) {
 	                UnityEngine.Camera cam = GetComponent<UnityEngine.Camera>();
 	                if (cam != null && cam.orthographic && cam.pixelHeight > 0) {
-	                    float unit = (cam.orthographicSize * 2f) / (float)cam.pixelHeight;
+                        float unit = 0f;
+                        PixelPerfectCameraManual pp = cam.GetComponent<PixelPerfectCameraManual>();
+                        if (pp != null) {
+                            unit = pp.GetPixelSnapUnit();
+                        }
+                        if (unit <= 0f) {
+	                        unit = (cam.orthographicSize * 2f) / (float)cam.pixelHeight;
+                        }
 	                    if (unit > 0f) {
 	                        Vector3 snapped = transform.position;
 	                        snapped.x = Mathf.Round(snapped.x / unit) * unit;

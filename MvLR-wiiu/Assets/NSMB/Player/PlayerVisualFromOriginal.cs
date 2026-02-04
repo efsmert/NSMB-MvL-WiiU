@@ -151,21 +151,16 @@ namespace NSMB.Player {
  	            content.transform.localPosition = Vector3.zero;
  	            content.transform.localScale = Vector3.one;
  
- 	            // Prefer fitting to the active hitbox so we match gameplay scale even if FBX import scales differ.
- 	            // If fitting fails (or produces a wildly wrong scale due to missing meshes during import),
- 	            // fall back to the Unity 6 authored root scales.
- 	            float scaleToUnity = 2f;
- 	            if (_motor != null && _motor.originalToUnityScale > 0.01f) {
- 	                scaleToUnity = _motor.originalToUnityScale;
- 	            }
+ 	            // Match the Unity 6 prefabs as closely as possible:
+ 	            // - Small model root scale: 0.03
+ 	            // - Large (Mushroom) model root scale: 0.054
+ 	            // - Root Y offset: -0.03
+ 	            //
+ 	            // NOTE: originalToUnityScale is a physics/velocity scaling factor; it should not affect the 3D model scale.
  	            float multiplier = Mathf.Max(0.01f, visualHeightMultiplier);
- 	            float fallbackScale = (large ? FallbackLargeModelRootScale : FallbackSmallModelRootScale) * scaleToUnity * multiplier;
- 	            float fallbackYOffset = FallbackModelRootYOffset * scaleToUnity;
- 
- 	            if (!TryFitModelToHitbox(content, fallbackScale)) {
- 	                content.transform.localPosition = new Vector3(0f, fallbackYOffset, 0f);
- 	                content.transform.localScale = new Vector3(fallbackScale, fallbackScale, fallbackScale);
- 	            }
+ 	            float fallbackScale = (large ? FallbackLargeModelRootScale : FallbackSmallModelRootScale) * multiplier;
+ 	            content.transform.localPosition = new Vector3(0f, FallbackModelRootYOffset, 0f);
+ 	            content.transform.localScale = new Vector3(fallbackScale, fallbackScale, fallbackScale);
 
 	            ApplyRendererSorting(content, sortingOrder);
 	            FixMaterials(content, GetModelFolderResourcePath(character, large));
@@ -320,6 +315,9 @@ namespace NSMB.Player {
                 Renderer r = renderers[i];
                 if (r == null) continue;
 
+                float uvRangeY = 1f;
+                TryGetRendererUvRangeY(r, out uvRangeY);
+
 	                Material[] mats = r.sharedMaterials;
 	                if (mats == null || mats.Length == 0) {
 	                    // Some imports can produce a renderer with no materials assigned.
@@ -339,14 +337,9 @@ namespace NSMB.Player {
 	                    if (mat == null) {
 	                        continue;
 	                    }
-
-	                    bool shaderMissing = (mat.shader == null) ||
-	                                         string.Equals(mat.shader.name, "Hidden/InternalErrorShader", System.StringComparison.InvariantCultureIgnoreCase);
+ 
 	                    bool wantsCutout = (!string.IsNullOrEmpty(mat.name) &&
-	                                       (mat.name.IndexOf("eye", System.StringComparison.InvariantCultureIgnoreCase) >= 0 ||
-	                                        mat.name.IndexOf("mask", System.StringComparison.InvariantCultureIgnoreCase) >= 0)) ||
-	                                       (!shaderMissing && mat.shader != null && mat.shader.name != null &&
-	                                        mat.shader.name.IndexOf("Cutout", System.StringComparison.InvariantCultureIgnoreCase) >= 0);
+	                                       (mat.name.IndexOf("eye", System.StringComparison.InvariantCultureIgnoreCase) >= 0));
 
  	                    // Unity 2017 can spam the Console when probing non-texture properties. Avoid accessing
  	                    // `mat.mainTexture`/`mat.mainTextureScale` here (they can resolve to missing/invalid
@@ -355,35 +348,64 @@ namespace NSMB.Player {
  	                    // Prefer the legacy Standard property, then fall back to guessing from the model folder.
  	                    Texture mainTex = SafeGetTexture(mat, "_MainTex");
 
-	                    if (mainTex == null && textures != null && textures.Length > 0) {
-	                        // Prefer dedicated eyes textures when present.
-	                        if (!string.IsNullOrEmpty(mat.name) &&
-	                            mat.name.IndexOf("eye", System.StringComparison.InvariantCultureIgnoreCase) >= 0) {
+	                    if (textures != null && textures.Length > 0) {
+	                        // Enforce stable texture selection for Unity 2017:
+	                        // - eye materials always use the dedicated eyes texture (when present)
+	                        // - everything else always uses the primary body texture (mario_big.png / luigi.png)
+	                        bool isEye = (!string.IsNullOrEmpty(mat.name) &&
+	                                      mat.name.IndexOf("eye", System.StringComparison.InvariantCultureIgnoreCase) >= 0);
+
+	                        if (isEye) {
+	                            Texture2D eyes = null;
 	                            for (int ti = 0; ti < textures.Length; ti++) {
 	                                Texture2D tt = textures[ti];
 	                                if (tt == null || string.IsNullOrEmpty(tt.name)) continue;
 	                                if (tt.name.IndexOf("eyes", System.StringComparison.InvariantCultureIgnoreCase) >= 0) {
-	                                    mainTex = tt;
+	                                    eyes = tt;
 	                                    break;
 	                                }
 	                            }
-	                        }
-
-	                        // Try to guess a texture based on the material name; fall back to first texture.
-	                        if (mainTex == null) {
-	                            Texture2D guess = GuessTexture(textures, mat.name);
-	                            if (guess != null) {
-	                                mainTex = guess;
+	                            if (eyes != null) {
+	                                mainTex = eyes;
 	                            } else if (primary != null) {
 	                                mainTex = primary;
 	                            }
+	                        } else if (primary != null) {
+	                            mainTex = primary;
 	                        }
 	                    }
+
+                        Texture2D mainTex2D = mainTex as Texture2D;
+                        if (mainTex2D != null) {
+                            // Enforce pixel-art sampling; helps reduce shimmering and color bleed on 3D models.
+                            mainTex2D.filterMode = FilterMode.Point;
+                            mainTex2D.wrapMode = TextureWrapMode.Clamp;
+                        }
 
 	                     Vector2 scale = Vector2.one;
 	                     Vector2 offset = Vector2.zero;
 	                     TryGetTextureScaleOffset(mat, "_MainTex", out scale, out offset);
-	                     // Keep authored UVs by default. These textures are atlases; do not auto-apply flipbook transforms here.
+
+                        // Unity 6 player textures are often tall flipbook atlases (stacked frames).
+                        // In Unity 2017 we don't have the original shader/controller driving the UV row, so pick a
+                        // stable default frame by slicing to the top row when:
+                        // - this isn't an eye material, and
+                        // - UVs appear to use full 0..1 range (rangeY large), and
+                        // - the incoming material doesn't already specify a transform.
+                        if (!wantsCutout && mainTex != null) {
+                            Vector2 fbScale;
+                            Vector2 fbOffset;
+                            if (TryGetFlipbookTransform(mainTex, out fbScale, out fbOffset)) {
+                                bool defaultTransform = (Mathf.Abs(scale.x - 1f) < 0.0001f &&
+                                                         Mathf.Abs(scale.y - 1f) < 0.0001f &&
+                                                         Mathf.Abs(offset.x) < 0.0001f &&
+                                                         Mathf.Abs(offset.y) < 0.0001f);
+                                if (defaultTransform && uvRangeY > 0.2f) {
+                                    scale = fbScale;
+                                    offset = fbOffset;
+                                }
+                            }
+                        }
 
 	                    // Always standardize to our unlit shaders so the character renders consistently
 	                    // regardless of scene lighting, while still keeping the original textures/UVs.
@@ -699,14 +721,34 @@ namespace NSMB.Player {
 	                }
 	            }
 
-	            // Small player folders don't contain the main body texture in the Unity 6 project.
-	            // Pull textures from the paired big folder as a fallback.
-	            string fallback = modelFolderResourcePath;
-	            if (fallback.IndexOf("_small", System.StringComparison.InvariantCultureIgnoreCase) >= 0) {
-	                fallback = fallback.Replace("_small", "_big");
+	            // Cross-load paired folders for parity with Unity 6:
+	            // - Small folders may not include the main body texture (fallback to *_big).
+	            // - Big folders may not include the shared eye texture (fallback to *_small).
+	            string fallbackBig = null;
+	            string fallbackSmall = null;
+	            if (modelFolderResourcePath.IndexOf("_small", System.StringComparison.InvariantCultureIgnoreCase) >= 0) {
+	                fallbackBig = modelFolderResourcePath.Replace("_small", "_big");
 	            }
-	            if (!string.Equals(fallback, modelFolderResourcePath, System.StringComparison.InvariantCultureIgnoreCase)) {
-	                UnityEngine.Object[] objs2 = Resources.LoadAll(fallback, typeof(Texture2D));
+	            if (modelFolderResourcePath.IndexOf("_big", System.StringComparison.InvariantCultureIgnoreCase) >= 0) {
+	                fallbackSmall = modelFolderResourcePath.Replace("_big", "_small");
+	            }
+
+	            if (!string.IsNullOrEmpty(fallbackBig) &&
+	                !string.Equals(fallbackBig, modelFolderResourcePath, System.StringComparison.InvariantCultureIgnoreCase)) {
+	                UnityEngine.Object[] objs2 = Resources.LoadAll(fallbackBig, typeof(Texture2D));
+	                if (objs2 != null) {
+	                    for (int i = 0; i < objs2.Length; i++) {
+	                        Texture2D t = objs2[i] as Texture2D;
+	                        if (t != null) {
+	                            textures.Add(t);
+	                        }
+	                    }
+	                }
+	            }
+
+	            if (!string.IsNullOrEmpty(fallbackSmall) &&
+	                !string.Equals(fallbackSmall, modelFolderResourcePath, System.StringComparison.InvariantCultureIgnoreCase)) {
+	                UnityEngine.Object[] objs2 = Resources.LoadAll(fallbackSmall, typeof(Texture2D));
 	                if (objs2 != null) {
 	                    for (int i = 0; i < objs2.Length; i++) {
 	                        Texture2D t = objs2[i] as Texture2D;
@@ -841,8 +883,52 @@ namespace NSMB.Player {
 
             float invRows = 1f / rows;
             scale = new Vector2(1f, invRows);
-            // Default to the TOP row (row 0 from top).
+            // Default to the TOP row (this matches the default "PowerupState=0" visuals in the Unity 6 shader).
             offset = new Vector2(0f, 1f - invRows);
+            return true;
+        }
+
+        private static bool TryGetRendererUvRangeY(Renderer r, out float rangeY) {
+            rangeY = 1f;
+            if (r == null) {
+                return false;
+            }
+
+            Mesh mesh = null;
+            SkinnedMeshRenderer smr = r as SkinnedMeshRenderer;
+            if (smr != null) {
+                mesh = smr.sharedMesh;
+            } else {
+                MeshFilter mf = r.GetComponent<MeshFilter>();
+                if (mf != null) {
+                    mesh = mf.sharedMesh;
+                }
+            }
+
+            if (mesh == null) {
+                return false;
+            }
+
+            Vector2[] uv = null;
+            try {
+                uv = mesh.uv;
+            } catch {
+                uv = null;
+            }
+
+            if (uv == null || uv.Length == 0) {
+                return false;
+            }
+
+            float minY = uv[0].y;
+            float maxY = uv[0].y;
+            for (int i = 1; i < uv.Length; i++) {
+                float y = uv[i].y;
+                if (y < minY) minY = y;
+                if (y > maxY) maxY = y;
+            }
+
+            rangeY = Mathf.Abs(maxY - minY);
             return true;
         }
 
