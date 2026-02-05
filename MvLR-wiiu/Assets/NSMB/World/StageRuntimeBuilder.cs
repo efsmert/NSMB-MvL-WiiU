@@ -180,31 +180,16 @@ namespace NSMB.World {
                 return;
             }
 
-            // Use two slices from the shared clouds texture so each layer renders a single row type:
-            // - top cloud slice for BigClouds
-            // - bottom cloud slice for SmallClouds
-            // This avoids the visual double-row overlap while preserving Unity 6 phase/speed behavior.
             const string cloudsResourcePath = "NSMB/LevelBackgrounds/clouds";
-            // Texture is 252x88 in both source and target.
-            Rect bigRect = new Rect(106f, 51f, 134f, 24f);
-            Rect smallRect = new Rect(10f, 11f, 134f, 24f);
-            Sprite bigCloudSprite = GetOrCreateRuntimeSpriteFromTextureRect(
+            // Unity 6 uses the same full clouds sprite for both layers with tiled draw mode.
+            Sprite cloudSprite = GetOrCreateRuntimeSpriteFromTexture(
                 cloudsResourcePath,
-                cloudsResourcePath + "|big|ppu100|repeat",
-                bigRect,
+                cloudsResourcePath + "|full|ppu100|repeat",
                 new Vector2(0.5f, 0.5f),
                 100f,
                 TextureWrapMode.Repeat
             );
-            Sprite smallCloudSprite = GetOrCreateRuntimeSpriteFromTextureRect(
-                cloudsResourcePath,
-                cloudsResourcePath + "|small|ppu100|repeat",
-                smallRect,
-                new Vector2(0.5f, 0.5f),
-                100f,
-                TextureWrapMode.Repeat
-            );
-            if (bigCloudSprite == null || smallCloudSprite == null) {
+            if (cloudSprite == null) {
                 return;
             }
 
@@ -240,18 +225,19 @@ namespace NSMB.World {
             BuildCloudStripLayer(
                 "SmallClouds",
                 cloudsRoot,
-                smallCloudSprite,
+                cloudSprite,
                 style.smallXOffset,
                 smallY,
                 CloudSmallZ,
                 style.smallScale,
-                smallCloudSprite.bounds.size.x,
+                CloudTileSizeX,
                 style.smallSizeY,
                 CloudSmallSortingOrder,
                 style.smallAlpha,
                 -0.1f,
                 CloudSourceTextureWidthWorld * style.smallScale,
-                false,
+                CloudTileSizeX * style.smallScale,
+                true,
                 l,
                 r
             );
@@ -259,18 +245,19 @@ namespace NSMB.World {
             BuildCloudStripLayer(
                 "BigClouds",
                 cloudsRoot,
-                bigCloudSprite,
+                cloudSprite,
                 style.bigXOffset,
                 bigY,
                 CloudBigZ,
                 style.bigScale,
-                bigCloudSprite.bounds.size.x,
+                CloudTileSizeX,
                 style.bigSizeY,
                 CloudBigSortingOrder,
                 style.bigAlpha,
                 -0.2f,
                 CloudSourceTextureWidthWorld * style.bigScale,
-                false,
+                CloudTileSizeX * style.bigScale,
+                true,
                 l,
                 r
             );
@@ -286,7 +273,7 @@ namespace NSMB.World {
             // - DefaultGrassLevel (grass-sky)
             // - CustomSky (sky-bg)
             if (string.Equals(bgName, "grass-sky", StringComparison.InvariantCultureIgnoreCase)) {
-                style.smallYOffsetFromTop = 1.70f;
+                style.smallYOffsetFromTop = 1.45f;
                 style.bigYOffsetFromTop = 0.40f;
                 style.smallScale = 1f;
                 style.bigScale = 2f;
@@ -316,14 +303,15 @@ namespace NSMB.World {
             return false;
         }
 
-        private static void BuildCloudStripLayer(string name, Transform parent, Sprite sprite, float anchorX, float y, float z, float scale, float tileSizeX, float tileSizeY, int sortingOrder, float alpha, float speed, float repeatPeriodWorld, bool tiled, float left, float right) {
+        private static void BuildCloudStripLayer(string name, Transform parent, Sprite sprite, float anchorX, float y, float z, float scale, float tileSizeX, float tileSizeY, int sortingOrder, float alpha, float speed, float repeatPeriodWorld, float segmentPeriodWorld, bool tiled, float left, float right) {
             if (parent == null || sprite == null) {
                 return;
             }
 
             float s = Mathf.Max(0.01f, scale);
-            float tileWorldWidth = (repeatPeriodWorld > 0.0001f) ? repeatPeriodWorld : (tileSizeX * s);
-            if (tileWorldWidth <= 0.0001f) {
+            float scrollPeriod = (repeatPeriodWorld > 0.0001f) ? repeatPeriodWorld : (tileSizeX * s);
+            float segmentPeriod = (segmentPeriodWorld > 0.0001f) ? segmentPeriodWorld : (tileSizeX * s);
+            if (scrollPeriod <= 0.0001f || segmentPeriod <= 0.0001f) {
                 return;
             }
 
@@ -334,15 +322,15 @@ namespace NSMB.World {
 
             ScrollingSpriteLoop2D scroll = layer.gameObject.AddComponent<ScrollingSpriteLoop2D>();
             scroll.speed = speed;
-            scroll.tileWorldWidth = tileWorldWidth;
+            scroll.tileWorldWidth = scrollPeriod;
 
             // Preserve Unity 6 strip phasing: anchor to world-space offsets (0 / 0.34), then replicate
             // in fixed strip widths instead of stage-centered placement.
-            int kMin = Mathf.FloorToInt((left - anchorX) / tileWorldWidth) - 2;
-            int kMax = Mathf.CeilToInt((right - anchorX) / tileWorldWidth) + 2;
+            int kMin = Mathf.FloorToInt((left - anchorX) / segmentPeriod) - 2;
+            int kMax = Mathf.CeilToInt((right - anchorX) / segmentPeriod) + 2;
 
             for (int k = kMin; k <= kMax; k++) {
-                float localX = (k * tileWorldWidth) / s;
+                float localX = (k * segmentPeriod) / s;
 
                 GameObject go = new GameObject("Seg_" + k);
                 go.transform.parent = layer;
