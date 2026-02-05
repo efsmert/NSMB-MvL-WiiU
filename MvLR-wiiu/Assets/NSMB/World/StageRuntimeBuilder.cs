@@ -129,7 +129,7 @@ namespace NSMB.World {
                 float camMaxY = (def.cameraMin != def.cameraMax) ? Mathf.Max(def.cameraMin.y, def.cameraMax.y) : (baseY + 9f);
                 float camCenterHintY = (def.cameraMin != def.cameraMax) ? Mathf.Clamp(def.spawnPoint.y, camMinY, camMaxY) : def.spawnPoint.y;
                 float orthoHalfHeight = GetMainCameraOrthoHalfHeight();
-                TryBuildScrollingClouds(bgRoot.transform, bgName, left, right, camMinY, camMaxY, camCenterHintY, orthoHalfHeight);
+                TryBuildScrollingClouds(bgRoot.transform, bgName, left, right, camMinY, camMaxY, camCenterHintY, orthoHalfHeight, def.isWrappingLevel);
 
                 Transform foregroundLayer = new GameObject("Foreground").transform;
                 foregroundLayer.parent = bgRoot.transform;
@@ -151,10 +151,10 @@ namespace NSMB.World {
             float camMaxYFallback = (def.cameraMin != def.cameraMax) ? Mathf.Max(def.cameraMin.y, def.cameraMax.y) : (baseY + 9f);
             float camCenterHintYFallback = (def.cameraMin != def.cameraMax) ? Mathf.Clamp(def.spawnPoint.y, camMinYFallback, camMaxYFallback) : def.spawnPoint.y;
             float orthoHalfHeightFallback = GetMainCameraOrthoHalfHeight();
-            TryBuildScrollingClouds(bgRoot.transform, bgName, left, right, camMinYFallback, camMaxYFallback, camCenterHintYFallback, orthoHalfHeightFallback);
+            TryBuildScrollingClouds(bgRoot.transform, bgName, left, right, camMinYFallback, camMaxYFallback, camCenterHintYFallback, orthoHalfHeightFallback, def.isWrappingLevel);
         }
 
-        private static void TryBuildScrollingClouds(Transform bgRoot, string bgName, float left, float right, float camMinY, float camMaxY, float camCenterHintY, float orthoHalfHeight) {
+        private static void TryBuildScrollingClouds(Transform bgRoot, string bgName, float left, float right, float camMinY, float camMaxY, float camCenterHintY, float orthoHalfHeight, bool isWrappingLevel) {
             if (bgRoot == null || string.IsNullOrEmpty(bgName)) {
                 return;
             }
@@ -212,7 +212,9 @@ namespace NSMB.World {
             float smallPeriod = smallSpriteWidthWorld * 5.5f;
             float bigPeriod = bigSpriteWidthWorld * 5.0f;
 
-            float margin = Mathf.Max(smallPeriod, bigPeriod) * 2f;
+            // IMPORTANT: Wrapping stages already create visual wrap copies. Extending beyond [left,right]
+            // causes wrap copies to overlap and visually "intersect" clouds. Keep span tight on wrap stages.
+            float margin = isWrappingLevel ? 0f : (Mathf.Max(smallPeriod, bigPeriod) * 2f);
             float l = left - margin;
             float r = right + margin;
             float centerX = (l + r) * 0.5f;
@@ -232,8 +234,8 @@ namespace NSMB.World {
             float minY = minViewTopY + Mathf.Max(0.5f, orthoHalfHeight * 0.35f);
 
             // Big row is near the very top; small row sits below it.
-            float bigYOffset = Mathf.Max(0.45f, orthoHalfHeight * 0.08f);
-            float smallYOffset = Mathf.Max(1.70f, orthoHalfHeight * 0.32f);
+            float bigYOffset = Mathf.Max(0.35f, orthoHalfHeight * 0.06f);
+            float smallYOffset = Mathf.Max(1.55f, orthoHalfHeight * 0.30f);
             float bigY = Mathf.Clamp(viewTopY - bigYOffset, minY, maxY);
             float smallY = Mathf.Clamp(viewTopY - smallYOffset, minY, maxY);
 
@@ -265,7 +267,8 @@ namespace NSMB.World {
                 smallScale,
                 smallPeriod,
                 new float[] { 0.06f, 0.22f, 0.44f, 0.66f, 0.88f },
-                new float[] { 0.00f, -0.10f, -0.22f, -0.08f, -0.18f },
+                // Add more vertical variation like the original (subtle but noticeable).
+                new float[] { 0.00f, -0.12f, -0.26f, 0.06f, -0.20f },
                 new bool[] { false, true, false, true, false },
                 CloudSmallSortingOrder,
                 0.27058825f
@@ -289,7 +292,7 @@ namespace NSMB.World {
                 bigScale,
                 bigPeriod,
                 new float[] { 0.16f, 0.54f, 0.86f },
-                new float[] { 0.00f, -0.06f, 0.03f },
+                new float[] { 0.00f, -0.22f, 0.12f },
                 new bool[] { false, true, false },
                 CloudBigSortingOrder,
                 0.8352941f
