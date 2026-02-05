@@ -125,11 +125,7 @@ namespace NSMB.World {
 
                 BuildBackgroundTiled(backSprite, backLayer, left, right, baseY, BackgroundZ, BackgroundSortingOrder, "BG_");
 
-                float camMinY = baseY;
-                float camMaxY = (def.cameraMin != def.cameraMax) ? Mathf.Max(def.cameraMin.y, def.cameraMax.y) : (baseY + 9f);
-                float camCenterHintY = (def.cameraMin != def.cameraMax) ? Mathf.Clamp(def.spawnPoint.y, camMinY, camMaxY) : def.spawnPoint.y;
-                float orthoHalfHeight = GetMainCameraOrthoHalfHeight();
-                TryBuildScrollingClouds(bgRoot.transform, bgName, left, right, camMinY, camMaxY, camCenterHintY, orthoHalfHeight, def.isWrappingLevel);
+                TryBuildScrollingClouds(bgRoot.transform, bgName, left, right, baseY, def.isWrappingLevel);
 
                 Transform foregroundLayer = new GameObject("Foreground").transform;
                 foregroundLayer.parent = bgRoot.transform;
@@ -147,24 +143,29 @@ namespace NSMB.World {
             }
 
             BuildBackgroundTiled(sprite, bgRoot.transform, left, right, baseY, BackgroundZ, BackgroundSortingOrder, "BG_");
-            float camMinYFallback = baseY;
-            float camMaxYFallback = (def.cameraMin != def.cameraMax) ? Mathf.Max(def.cameraMin.y, def.cameraMax.y) : (baseY + 9f);
-            float camCenterHintYFallback = (def.cameraMin != def.cameraMax) ? Mathf.Clamp(def.spawnPoint.y, camMinYFallback, camMaxYFallback) : def.spawnPoint.y;
-            float orthoHalfHeightFallback = GetMainCameraOrthoHalfHeight();
-            TryBuildScrollingClouds(bgRoot.transform, bgName, left, right, camMinYFallback, camMaxYFallback, camCenterHintYFallback, orthoHalfHeightFallback, def.isWrappingLevel);
+            TryBuildScrollingClouds(bgRoot.transform, bgName, left, right, baseY, def.isWrappingLevel);
         }
 
-        private static void TryBuildScrollingClouds(Transform bgRoot, string bgName, float left, float right, float camMinY, float camMaxY, float camCenterHintY, float orthoHalfHeight, bool isWrappingLevel) {
+        private struct CloudStripStyle {
+            public float smallYFromBase;
+            public float bigYFromBase;
+            public float smallScale;
+            public float bigScale;
+            public float smallAlpha;
+            public float bigAlpha;
+            public float smallSizeY;
+            public float bigSizeY;
+            public float smallXOffset;
+            public float bigXOffset;
+        }
+
+        private static void TryBuildScrollingClouds(Transform bgRoot, string bgName, float left, float right, float baseY, bool isWrappingLevel) {
             if (bgRoot == null || string.IsNullOrEmpty(bgName)) {
                 return;
             }
 
-            // Unity 6 grass/sky stages have 2 scrolling cloud layers.
-            bool wantsClouds =
-                string.Equals(bgName, "grass-sky", StringComparison.InvariantCultureIgnoreCase) ||
-                string.Equals(bgName, "sky-bg", StringComparison.InvariantCultureIgnoreCase);
-
-            if (!wantsClouds) {
+            CloudStripStyle style;
+            if (!TryGetCloudStripStyle(bgName, out style)) {
                 return;
             }
 
@@ -173,172 +174,149 @@ namespace NSMB.World {
                 return;
             }
 
-            // Use the shared clouds texture from level backgrounds.
+            // Use the shared clouds texture exactly like the Unity 6 scenes:
+            // one tiled strip for BigClouds and one for SmallClouds.
             const string cloudsResourcePath = "NSMB/LevelBackgrounds/clouds";
-            // Split the clouds texture into two sprites so the big layer doesn't also contain the small puffs.
-            Texture2D cloudTex = Resources.Load(cloudsResourcePath, typeof(Texture2D)) as Texture2D;
-            if (cloudTex == null) {
-                // Fallback for projects where the asset is imported as Sprite.
-                Sprite asSprite = Resources.Load(cloudsResourcePath, typeof(Sprite)) as Sprite;
-                if (asSprite != null) {
-                    cloudTex = asSprite.texture;
-                }
-            }
-            if (cloudTex == null) {
+            Sprite cloudSprite = GetOrCreateRuntimeSpriteFromTexture(
+                cloudsResourcePath,
+                cloudsResourcePath + "|full|ppu100|repeat",
+                new Vector2(0.5f, 0.5f),
+                100f,
+                TextureWrapMode.Repeat
+            );
+            if (cloudSprite == null) {
                 return;
             }
-
-            cloudTex.filterMode = FilterMode.Point;
-            cloudTex.wrapMode = TextureWrapMode.Repeat;
-
-            // Tight puff rects in the shared clouds texture (measured from the current asset).
-            // Note: Unity rect origin is bottom-left.
-            // Big puff (top-right in texture): x=106..239, y(top)=13..36 -> yBL = 88-(13+24)=51
-            // Small puff (bottom-left in texture): x=10..143, y(top)=53..76 -> yBL = 88-(53+24)=11
-            Rect bigRect = new Rect(106f, 51f, 134f, 24f);
-            Rect smallRect = new Rect(10f, 11f, 134f, 24f);
-
-            Sprite smallCloudSprite = GetOrCreateRuntimeSpriteFromTextureRect(cloudsResourcePath, cloudsResourcePath + "|small|ppu100|repeat", smallRect, new Vector2(0.5f, 0.5f), 100f, TextureWrapMode.Repeat);
-            Sprite bigCloudSprite = GetOrCreateRuntimeSpriteFromTextureRect(cloudsResourcePath, cloudsResourcePath + "|big|ppu100|repeat", bigRect, new Vector2(0.5f, 0.5f), 100f, TextureWrapMode.Repeat);
-            if (smallCloudSprite == null || bigCloudSprite == null) {
-                return;
-            }
-
-            float bigScale = 3.2f;
-            float smallScale = 1.8f;
-
-            float smallSpriteWidthWorld = smallCloudSprite.bounds.size.x * smallScale;
-            float bigSpriteWidthWorld = bigCloudSprite.bounds.size.x * bigScale;
-            float smallPeriod = smallSpriteWidthWorld * 5.5f;
-            float bigPeriod = bigSpriteWidthWorld * 5.0f;
 
             // IMPORTANT: Wrapping stages already create visual wrap copies. Extending beyond [left,right]
             // causes wrap copies to overlap and visually "intersect" clouds. Keep span tight on wrap stages.
-            float margin = isWrappingLevel ? 0f : (Mathf.Max(smallPeriod, bigPeriod) * 2f);
+            const float CloudTileSizeX = 5.12f; // Unity 6 scene value on both BigClouds and SmallClouds.
+            float maxTileWorldWidth = CloudTileSizeX * Mathf.Max(style.smallScale, style.bigScale);
+            float margin = isWrappingLevel ? 0f : (maxTileWorldWidth * 2f);
             float l = left - margin;
             float r = right + margin;
             float centerX = (l + r) * 0.5f;
-
-            // Place clouds relative to the *starting camera view* (camera center + ortho size),
-            // because StageDefinition camera bounds represent the camera *center* clamp, not the top edge.
-            // This makes clouds sit near the top of the screen across different pixel-perfect scales.
-            if (orthoHalfHeight <= 0.0001f) {
-                orthoHalfHeight = 5f;
-            }
-
-            float viewTopY = camCenterHintY + orthoHalfHeight;
-            float maxViewTopY = camMaxY + orthoHalfHeight;
-            float minViewTopY = camMinY + orthoHalfHeight;
-
-            float maxY = maxViewTopY - 0.05f;
-            float minY = minViewTopY + Mathf.Max(0.5f, orthoHalfHeight * 0.35f);
-
-            // Big row is near the very top; small row sits below it.
-            float bigYOffset = Mathf.Max(0.35f, orthoHalfHeight * 0.06f);
-            float smallYOffset = Mathf.Max(1.55f, orthoHalfHeight * 0.30f);
-            float bigY = Mathf.Clamp(viewTopY - bigYOffset, minY, maxY);
-            float smallY = Mathf.Clamp(viewTopY - smallYOffset, minY, maxY);
-
-            // Keep small below big even under clamping.
-            if (smallY > bigY - 0.20f) {
-                smallY = bigY - 0.20f;
-            }
 
             Transform cloudsRoot = new GameObject("Clouds").transform;
             cloudsRoot.parent = bgRoot;
             cloudsRoot.localPosition = Vector3.zero;
             cloudsRoot.localScale = Vector3.one;
 
-            // Small clouds (fainter, slower) - matches Unity 6 defaults.
-            Transform small = new GameObject("SmallClouds").transform;
-            small.parent = cloudsRoot;
-            small.position = new Vector3(centerX, smallY, CloudSmallZ);
-            small.localScale = new Vector3(smallScale, smallScale, 1f);
-            ScrollingSpriteLoop2D smallScroll = small.gameObject.AddComponent<ScrollingSpriteLoop2D>();
-            smallScroll.speed = -0.1f;
-            smallScroll.tileWorldWidth = smallPeriod;
-
-            BuildCloudPatternStrip(
-                smallCloudSprite,
-                small,
-                l,
-                r,
-                centerX,
-                smallScale,
-                smallPeriod,
-                new float[] { 0.06f, 0.22f, 0.44f, 0.66f, 0.88f },
-                // Add more vertical variation like the original (subtle but noticeable).
-                new float[] { 0.00f, -0.12f, -0.26f, 0.06f, -0.20f },
-                new bool[] { false, true, false, true, false },
+            BuildCloudStripLayer(
+                "SmallClouds",
+                cloudsRoot,
+                cloudSprite,
+                centerX + style.smallXOffset,
+                baseY + style.smallYFromBase,
+                CloudSmallZ,
+                style.smallScale,
+                CloudTileSizeX,
+                style.smallSizeY,
                 CloudSmallSortingOrder,
-                0.27058825f
+                style.smallAlpha,
+                -0.1f,
+                l,
+                r
             );
 
-            // Big clouds (stronger, faster) - scaled up.
-            Transform big = new GameObject("BigClouds").transform;
-            big.parent = cloudsRoot;
-            big.position = new Vector3(centerX, bigY, CloudBigZ);
-            big.localScale = new Vector3(bigScale, bigScale, 1f);
-            ScrollingSpriteLoop2D bigScroll = big.gameObject.AddComponent<ScrollingSpriteLoop2D>();
-            bigScroll.speed = -0.2f;
-            bigScroll.tileWorldWidth = bigPeriod;
-
-            BuildCloudPatternStrip(
-                bigCloudSprite,
-                big,
-                l,
-                r,
-                centerX,
-                bigScale,
-                bigPeriod,
-                new float[] { 0.16f, 0.54f, 0.86f },
-                new float[] { 0.00f, -0.22f, 0.12f },
-                new bool[] { false, true, false },
+            BuildCloudStripLayer(
+                "BigClouds",
+                cloudsRoot,
+                cloudSprite,
+                centerX + style.bigXOffset,
+                baseY + style.bigYFromBase,
+                CloudBigZ,
+                style.bigScale,
+                CloudTileSizeX,
+                style.bigSizeY,
                 CloudBigSortingOrder,
-                0.8352941f
+                style.bigAlpha,
+                -0.2f,
+                l,
+                r
             );
         }
 
-        private static void BuildCloudPatternStrip(Sprite sprite, Transform layerRoot, float left, float right, float centerX, float scaleX, float periodWorld, float[] patternXFracs, float[] patternYOffsets, bool[] patternFlipX, int sortingOrder, float alpha) {
-            if (sprite == null || layerRoot == null) {
+        private static bool TryGetCloudStripStyle(string bgName, out CloudStripStyle style) {
+            style = new CloudStripStyle();
+            if (string.IsNullOrEmpty(bgName)) {
+                return false;
+            }
+
+            // Values copied from Unity 6 scenes:
+            // - DefaultGrassLevel (grass-sky)
+            // - CustomSky (sky-bg)
+            if (string.Equals(bgName, "grass-sky", StringComparison.InvariantCultureIgnoreCase)) {
+                style.smallYFromBase = 5.11f;
+                style.bigYFromBase = 6.51f;
+                style.smallScale = 1f;
+                style.bigScale = 2f;
+                style.smallAlpha = 0.27058825f;
+                style.bigAlpha = 0.8352941f;
+                style.smallSizeY = 0.86f;
+                style.bigSizeY = 1.00f;
+                style.smallXOffset = 0f;
+                style.bigXOffset = 0.34f;
+                return true;
+            }
+
+            if (string.Equals(bgName, "sky-bg", StringComparison.InvariantCultureIgnoreCase)) {
+                style.smallYFromBase = 10.06f;
+                style.bigYFromBase = 11.88f;
+                style.smallScale = 1f;
+                style.bigScale = 2f;
+                style.smallAlpha = 0.27058825f;
+                style.bigAlpha = 0.56078434f;
+                style.smallSizeY = 0.80f;
+                style.bigSizeY = 0.80f;
+                style.smallXOffset = 0f;
+                style.bigXOffset = 0.34f;
+                return true;
+            }
+
+            return false;
+        }
+
+        private static void BuildCloudStripLayer(string name, Transform parent, Sprite sprite, float centerX, float y, float z, float scale, float tileSizeX, float tileSizeY, int sortingOrder, float alpha, float speed, float left, float right) {
+            if (parent == null || sprite == null) {
                 return;
             }
 
-            if (patternXFracs == null || patternYOffsets == null || patternXFracs.Length == 0 || patternYOffsets.Length == 0) {
+            float s = Mathf.Max(0.01f, scale);
+            float tileWorldWidth = tileSizeX * s;
+            if (tileWorldWidth <= 0.0001f) {
                 return;
             }
 
-            int patternCount = Mathf.Min(patternXFracs.Length, patternYOffsets.Length);
-            if (patternFlipX != null) {
-                patternCount = Mathf.Min(patternCount, patternFlipX.Length);
-            }
+            Transform layer = new GameObject(name).transform;
+            layer.parent = parent;
+            layer.position = new Vector3(centerX, y, z);
+            layer.localScale = new Vector3(s, s, 1f);
 
+            ScrollingSpriteLoop2D scroll = layer.gameObject.AddComponent<ScrollingSpriteLoop2D>();
+            scroll.speed = speed;
+            scroll.tileWorldWidth = tileWorldWidth;
+
+            // Build repeated strip segments so the layer fills stage width before/after scroll.
             float span = Mathf.Max(0.01f, right - left);
-            int cellCount = Mathf.Max(1, Mathf.CeilToInt(span / Mathf.Max(0.01f, periodWorld)) + 4);
+            int segmentCount = Mathf.Max(3, Mathf.CeilToInt(span / tileWorldWidth) + 4);
+            float firstWorldX = left - tileWorldWidth;
 
-            float invScaleX = 1f / Mathf.Max(0.01f, scaleX);
+            for (int i = 0; i < segmentCount; i++) {
+                float worldX = firstWorldX + (i * tileWorldWidth);
+                float localX = (worldX - centerX) / s;
 
-            for (int cell = 0; cell < cellCount; cell++) {
-                float cellStartX = left + (cell * periodWorld);
+                GameObject go = new GameObject("Seg_" + i);
+                go.transform.parent = layer;
+                go.transform.localPosition = new Vector3(localX, 0f, 0f);
+                go.transform.localScale = Vector3.one;
 
-                for (int p = 0; p < patternCount; p++) {
-                    float worldX = cellStartX + (patternXFracs[p] * periodWorld);
-                    float localX = (worldX - centerX) * invScaleX;
-                    float localY = patternYOffsets[p] * invScaleX;
-
-                    GameObject go = new GameObject("C_" + cell + "_" + p);
-                    go.transform.parent = layerRoot;
-                    go.transform.localPosition = new Vector3(localX, localY, 0f);
-                    go.transform.localScale = Vector3.one;
-
-                    SpriteRenderer sr = go.AddComponent<SpriteRenderer>();
-                    sr.sprite = sprite;
-                    sr.sortingOrder = sortingOrder;
-                    sr.color = new Color(1f, 1f, 1f, alpha);
-                    if (patternFlipX != null) {
-                        sr.flipX = patternFlipX[p];
-                    }
-                }
+                SpriteRenderer sr = go.AddComponent<SpriteRenderer>();
+                sr.sprite = sprite;
+                sr.drawMode = SpriteDrawMode.Tiled;
+                sr.size = new Vector2(tileSizeX, tileSizeY);
+                sr.sortingOrder = sortingOrder;
+                sr.color = new Color(1f, 1f, 1f, alpha);
             }
         }
 
@@ -362,20 +340,6 @@ namespace NSMB.World {
 
             cam.clearFlags = CameraClearFlags.SolidColor;
             cam.backgroundColor = clearColor;
-        }
-
-        private static float GetMainCameraOrthoHalfHeight() {
-            UnityEngine.Camera cam = UnityEngine.Camera.main;
-            if (cam == null) {
-                cam = UnityEngine.Object.FindObjectOfType(typeof(UnityEngine.Camera)) as UnityEngine.Camera;
-            }
-            if (cam == null) {
-                return 5f;
-            }
-            if (!cam.orthographic) {
-                return 5f;
-            }
-            return Mathf.Max(0.01f, cam.orthographicSize);
         }
 
         private static bool TryGetCameraClearColorForBackground(string bgName, out Color clearColor) {
