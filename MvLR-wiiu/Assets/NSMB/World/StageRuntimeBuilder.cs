@@ -182,10 +182,13 @@ namespace NSMB.World {
             }
 
             float spriteWidth = cloudSprite.bounds.size.x;
-            float margin = spriteWidth * 2f;
+            // Make the pattern sparser than strict texture tiling by spacing cloud sprites further apart.
+            float smallPeriod = spriteWidth * 4.0f;
+            float bigPeriod = spriteWidth * 6.0f;
+
+            float margin = Mathf.Max(smallPeriod, bigPeriod) * 2f;
             float l = left - margin;
             float r = right + margin;
-            float worldWidth = Mathf.Max(spriteWidth, r - l);
             float centerX = (l + r) * 0.5f;
 
             // Place clouds relative to the *starting camera view* (camera center + ortho size),
@@ -222,14 +225,9 @@ namespace NSMB.World {
             small.localScale = Vector3.one;
             ScrollingSpriteLoop2D smallScroll = small.gameObject.AddComponent<ScrollingSpriteLoop2D>();
             smallScroll.speed = -0.1f;
-            smallScroll.tileWorldWidth = spriteWidth;
+            smallScroll.tileWorldWidth = smallPeriod;
 
-            SpriteRenderer smallSr = small.gameObject.AddComponent<SpriteRenderer>();
-            smallSr.sprite = cloudSprite;
-            smallSr.drawMode = SpriteDrawMode.Tiled;
-            smallSr.size = new Vector2(worldWidth, 0.86f);
-            smallSr.sortingOrder = CloudSmallSortingOrder;
-            smallSr.color = new Color(1f, 1f, 1f, 0.27058825f);
+            BuildCloudSparseStrip(cloudSprite, small, l, r, centerX, 1f, smallPeriod, CloudSmallSortingOrder, 0.27058825f);
 
             // Big clouds (stronger, faster) - scaled up.
             Transform big = new GameObject("BigClouds").transform;
@@ -238,14 +236,33 @@ namespace NSMB.World {
             big.localScale = new Vector3(2f, 2f, 1f);
             ScrollingSpriteLoop2D bigScroll = big.gameObject.AddComponent<ScrollingSpriteLoop2D>();
             bigScroll.speed = -0.2f;
-            bigScroll.tileWorldWidth = spriteWidth * 2f;
+            bigScroll.tileWorldWidth = bigPeriod;
 
-            SpriteRenderer bigSr = big.gameObject.AddComponent<SpriteRenderer>();
-            bigSr.sprite = cloudSprite;
-            bigSr.drawMode = SpriteDrawMode.Tiled;
-            bigSr.size = new Vector2(worldWidth * 0.5f, 1f);
-            bigSr.sortingOrder = CloudBigSortingOrder;
-            bigSr.color = new Color(1f, 1f, 1f, 0.8352941f);
+            BuildCloudSparseStrip(cloudSprite, big, l, r, centerX, 2f, bigPeriod, CloudBigSortingOrder, 0.8352941f);
+        }
+
+        private static void BuildCloudSparseStrip(Sprite sprite, Transform layerRoot, float left, float right, float centerX, float scaleX, float periodWorld, int sortingOrder, float alpha) {
+            if (sprite == null || layerRoot == null) {
+                return;
+            }
+
+            float span = Mathf.Max(0.01f, right - left);
+            int count = Mathf.Max(1, Mathf.CeilToInt(span / Mathf.Max(0.01f, periodWorld)) + 3);
+
+            for (int i = 0; i < count; i++) {
+                float worldX = left + (i * periodWorld);
+                float localX = (worldX - centerX) / Mathf.Max(0.01f, scaleX);
+
+                GameObject go = new GameObject("C_" + i);
+                go.transform.parent = layerRoot;
+                go.transform.localPosition = new Vector3(localX, 0f, 0f);
+                go.transform.localScale = Vector3.one;
+
+                SpriteRenderer sr = go.AddComponent<SpriteRenderer>();
+                sr.sprite = sprite;
+                sr.sortingOrder = sortingOrder;
+                sr.color = new Color(1f, 1f, 1f, alpha);
+            }
         }
 
         private static void TryApplyCameraClearColor(string bgName) {
