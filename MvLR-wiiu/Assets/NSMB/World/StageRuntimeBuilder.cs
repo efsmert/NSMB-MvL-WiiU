@@ -175,16 +175,36 @@ namespace NSMB.World {
 
             // Use the shared clouds texture from level backgrounds.
             const string cloudsResourcePath = "NSMB/LevelBackgrounds/clouds";
-            // Always create a FullRect sprite for tiling (avoids Unity warning when drawMode=Tiled).
-            Sprite cloudSprite = GetOrCreateRuntimeSpriteFromTexture(cloudsResourcePath, cloudsResourcePath + "|ppu100|center|repeat|fullrect", new Vector2(0.5f, 0.5f), 100f, TextureWrapMode.Repeat);
-            if (cloudSprite == null) {
+            // Split the clouds texture into two sprites so the big layer doesn't also contain the small puffs.
+            Texture2D cloudTex = Resources.Load(cloudsResourcePath, typeof(Texture2D)) as Texture2D;
+            if (cloudTex == null) {
+                // Fallback for projects where the asset is imported as Sprite.
+                Sprite asSprite = Resources.Load(cloudsResourcePath, typeof(Sprite)) as Sprite;
+                if (asSprite != null) {
+                    cloudTex = asSprite.texture;
+                }
+            }
+            if (cloudTex == null) {
                 return;
             }
 
-            float spriteWidth = cloudSprite.bounds.size.x;
-            // Match Unity 6 style distribution by repeating a small deterministic pattern over a scroll period.
-            float smallPeriod = spriteWidth * 3.0f;
-            float bigPeriod = spriteWidth * 4.0f;
+            cloudTex.filterMode = FilterMode.Point;
+            cloudTex.wrapMode = TextureWrapMode.Repeat;
+
+            int halfH = Mathf.Max(1, cloudTex.height / 2);
+            Rect smallRect = new Rect(0f, 0f, cloudTex.width, halfH);
+            Rect bigRect = new Rect(0f, halfH, cloudTex.width, cloudTex.height - halfH);
+
+            Sprite smallCloudSprite = GetOrCreateRuntimeSpriteFromTextureRect(cloudsResourcePath, cloudsResourcePath + "|small|ppu100|repeat", smallRect, new Vector2(0.5f, 0.5f), 100f, TextureWrapMode.Repeat);
+            Sprite bigCloudSprite = GetOrCreateRuntimeSpriteFromTextureRect(cloudsResourcePath, cloudsResourcePath + "|big|ppu100|repeat", bigRect, new Vector2(0.5f, 0.5f), 100f, TextureWrapMode.Repeat);
+            if (smallCloudSprite == null || bigCloudSprite == null) {
+                return;
+            }
+
+            float smallSpriteWidth = smallCloudSprite.bounds.size.x;
+            float bigSpriteWidth = bigCloudSprite.bounds.size.x;
+            float smallPeriod = smallSpriteWidth * 2.0f;
+            float bigPeriod = bigSpriteWidth * 2.0f;
 
             float margin = Mathf.Max(smallPeriod, bigPeriod) * 2f;
             float l = left - margin;
@@ -205,9 +225,9 @@ namespace NSMB.World {
             float maxY = maxViewTopY - 0.05f;
             float minY = minViewTopY + Mathf.Max(0.5f, orthoHalfHeight * 0.35f);
 
-            // Big row is near the very top; small row sits mid-high (closer to Unity 6 screenshot).
-            float bigYOffset = Mathf.Max(0.85f, orthoHalfHeight * 0.16f);
-            float smallYOffset = Mathf.Max(2.50f, orthoHalfHeight * 0.48f);
+            // Big row is near the very top; small row sits below it.
+            float bigYOffset = Mathf.Max(0.70f, orthoHalfHeight * 0.12f);
+            float smallYOffset = Mathf.Max(2.10f, orthoHalfHeight * 0.40f);
             float bigY = Mathf.Clamp(viewTopY - bigYOffset, minY, maxY);
             float smallY = Mathf.Clamp(viewTopY - smallYOffset, minY, maxY);
 
@@ -225,94 +245,33 @@ namespace NSMB.World {
             Transform small = new GameObject("SmallClouds").transform;
             small.parent = cloudsRoot;
             small.position = new Vector3(centerX, smallY, CloudSmallZ);
-            small.localScale = Vector3.one;
+            small.localScale = new Vector3(1.6f, 1.6f, 1f);
             ScrollingSpriteLoop2D smallScroll = small.gameObject.AddComponent<ScrollingSpriteLoop2D>();
             smallScroll.speed = -0.1f;
-            smallScroll.tileWorldWidth = smallPeriod;
+            smallScroll.tileWorldWidth = smallSpriteWidth * small.localScale.x;
 
-            // Pattern: two loose rows of small clouds.
-            BuildCloudPatternStrip(
-                cloudSprite,
-                small,
-                l,
-                r,
-                centerX,
-                1f,
-                smallPeriod,
-                new float[] { 0.08f, 0.32f, 0.58f, 0.84f },
-                new float[] { 0.00f, -0.18f, -0.06f, -0.24f },
-                new bool[] { false, true, false, true },
-                CloudSmallSortingOrder,
-                0.27058825f
-            );
+            SpriteRenderer smallSr = small.gameObject.AddComponent<SpriteRenderer>();
+            smallSr.sprite = smallCloudSprite;
+            smallSr.drawMode = SpriteDrawMode.Tiled;
+            smallSr.size = new Vector2((r - l) / Mathf.Max(0.01f, small.localScale.x), 0.86f);
+            smallSr.sortingOrder = CloudSmallSortingOrder;
+            smallSr.color = new Color(1f, 1f, 1f, 0.27058825f);
 
             // Big clouds (stronger, faster) - scaled up.
             Transform big = new GameObject("BigClouds").transform;
             big.parent = cloudsRoot;
             big.position = new Vector3(centerX, bigY, CloudBigZ);
-            big.localScale = new Vector3(2f, 2f, 1f);
+            big.localScale = new Vector3(3.0f, 3.0f, 1f);
             ScrollingSpriteLoop2D bigScroll = big.gameObject.AddComponent<ScrollingSpriteLoop2D>();
             bigScroll.speed = -0.2f;
-            bigScroll.tileWorldWidth = bigPeriod;
+            bigScroll.tileWorldWidth = bigSpriteWidth * big.localScale.x;
 
-            // Pattern: top row of large puffs (fewer, more opaque).
-            BuildCloudPatternStrip(
-                cloudSprite,
-                big,
-                l,
-                r,
-                centerX,
-                2f,
-                bigPeriod,
-                new float[] { 0.18f, 0.64f },
-                new float[] { 0.00f, -0.10f },
-                new bool[] { false, true },
-                CloudBigSortingOrder,
-                0.8352941f
-            );
-        }
-
-        private static void BuildCloudPatternStrip(Sprite sprite, Transform layerRoot, float left, float right, float centerX, float scaleX, float periodWorld, float[] patternXFracs, float[] patternYOffsets, bool[] patternFlipX, int sortingOrder, float alpha) {
-            if (sprite == null || layerRoot == null) {
-                return;
-            }
-
-            if (patternXFracs == null || patternYOffsets == null || patternXFracs.Length == 0 || patternYOffsets.Length == 0) {
-                return;
-            }
-
-            int patternCount = Mathf.Min(patternXFracs.Length, patternYOffsets.Length);
-            if (patternFlipX != null) {
-                patternCount = Mathf.Min(patternCount, patternFlipX.Length);
-            }
-
-            float span = Mathf.Max(0.01f, right - left);
-            int cellCount = Mathf.Max(1, Mathf.CeilToInt(span / Mathf.Max(0.01f, periodWorld)) + 4);
-
-            float invScaleX = 1f / Mathf.Max(0.01f, scaleX);
-
-            for (int cell = 0; cell < cellCount; cell++) {
-                float cellStartX = left + (cell * periodWorld);
-
-                for (int p = 0; p < patternCount; p++) {
-                    float worldX = cellStartX + (patternXFracs[p] * periodWorld);
-                    float localX = (worldX - centerX) * invScaleX;
-                    float localY = patternYOffsets[p] * invScaleX;
-
-                    GameObject go = new GameObject("C_" + cell + "_" + p);
-                    go.transform.parent = layerRoot;
-                    go.transform.localPosition = new Vector3(localX, localY, 0f);
-                    go.transform.localScale = Vector3.one;
-
-                    SpriteRenderer sr = go.AddComponent<SpriteRenderer>();
-                    sr.sprite = sprite;
-                    sr.sortingOrder = sortingOrder;
-                    sr.color = new Color(1f, 1f, 1f, alpha);
-                    if (patternFlipX != null) {
-                        sr.flipX = patternFlipX[p];
-                    }
-                }
-            }
+            SpriteRenderer bigSr = big.gameObject.AddComponent<SpriteRenderer>();
+            bigSr.sprite = bigCloudSprite;
+            bigSr.drawMode = SpriteDrawMode.Tiled;
+            bigSr.size = new Vector2((r - l) / Mathf.Max(0.01f, big.localScale.x), 1.0f);
+            bigSr.sortingOrder = CloudBigSortingOrder;
+            bigSr.color = new Color(1f, 1f, 1f, 0.8352941f);
         }
 
         private static void TryApplyCameraClearColor(string bgName) {
@@ -504,6 +463,41 @@ namespace NSMB.World {
 
             Rect rect = new Rect(0f, 0f, tex.width, tex.height);
             Sprite sprite = Sprite.Create(tex, rect, pivot, pixelsPerUnit, 0, SpriteMeshType.FullRect);
+            _backgroundSpriteCache[cacheKey] = sprite;
+            return sprite;
+        }
+
+        private static Sprite GetOrCreateRuntimeSpriteFromTextureRect(string resourcePath, string cacheKey, Rect rect, Vector2 pivot, float pixelsPerUnit, TextureWrapMode wrapMode) {
+            if (string.IsNullOrEmpty(resourcePath) || string.IsNullOrEmpty(cacheKey)) {
+                return null;
+            }
+
+            Sprite cached;
+            if (_backgroundSpriteCache.TryGetValue(cacheKey, out cached) && cached != null) {
+                return cached;
+            }
+
+            Texture2D tex = Resources.Load(resourcePath, typeof(Texture2D)) as Texture2D;
+            if (tex == null) {
+                Sprite s = Resources.Load(resourcePath, typeof(Sprite)) as Sprite;
+                if (s != null) {
+                    tex = s.texture;
+                }
+            }
+            if (tex == null) {
+                return null;
+            }
+
+            tex.filterMode = FilterMode.Point;
+            tex.wrapMode = wrapMode;
+
+            Rect safe = rect;
+            safe.x = Mathf.Clamp(safe.x, 0f, Mathf.Max(0f, tex.width - 1));
+            safe.y = Mathf.Clamp(safe.y, 0f, Mathf.Max(0f, tex.height - 1));
+            safe.width = Mathf.Clamp(safe.width, 1f, tex.width - safe.x);
+            safe.height = Mathf.Clamp(safe.height, 1f, tex.height - safe.y);
+
+            Sprite sprite = Sprite.Create(tex, safe, pivot, pixelsPerUnit, 0, SpriteMeshType.FullRect);
             _backgroundSpriteCache[cacheKey] = sprite;
             return sprite;
         }
