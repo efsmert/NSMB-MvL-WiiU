@@ -474,6 +474,7 @@ namespace NSMB.Player {
 	                                       (mat.name.IndexOf("eye", System.StringComparison.InvariantCultureIgnoreCase) >= 0));
                         bool hasEyeProps = mat.HasProperty("_EyeState") || mat.HasProperty("EyeState") ||
                                            (mat.HasProperty("_EyeGrid") && mat.HasProperty("_UseUv2"));
+                        bool texSaysEye = false;
 	                    bool wantsCutout = nameSaysEye || hasEyeProps;
 
  	                    // Unity 2017 can spam the Console when probing non-texture properties. Avoid accessing
@@ -482,6 +483,13 @@ namespace NSMB.Player {
  	                    //
  	                    // Prefer the legacy Standard property, then fall back to guessing from the model folder.
  	                    Texture mainTex = SafeGetTexture(mat, "_MainTex");
+                        Texture2D sourceTex2D = mainTex as Texture2D;
+                        if (sourceTex2D != null && !string.IsNullOrEmpty(sourceTex2D.name)) {
+                            texSaysEye = sourceTex2D.name.IndexOf("eye", System.StringComparison.InvariantCultureIgnoreCase) >= 0;
+                            if (texSaysEye) {
+                                wantsCutout = true;
+                            }
+                        }
 
 	                    if (textures != null && textures.Length > 0) {
 	                        // Enforce stable texture selection for Unity 2017:
@@ -587,6 +595,12 @@ namespace NSMB.Player {
 	                                // Top row in the PNG contains the eye states; default to indexing from the top.
 	                                repl.SetFloat("_RowFromTop", 1f);
 	                            }
+                                if (repl.HasProperty("_Cutoff")) {
+                                    // Eye textures are authored as opaque; avoid full discard from import/cutoff drift.
+                                    repl.SetFloat("_Cutoff", 0.01f);
+                                }
+                                // Ensure eyes render on top of surrounding geometry/background.
+                                repl.renderQueue = 5000;
 	                        }
 	                        ApplyMaterialColors(repl);
 	                        newMats[m] = repl;
