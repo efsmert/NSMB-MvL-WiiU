@@ -125,7 +125,10 @@ namespace NSMB.World {
 
                 BuildBackgroundTiled(backSprite, backLayer, left, right, baseY, BackgroundZ, BackgroundSortingOrder, "BG_");
 
-                TryBuildScrollingClouds(bgRoot.transform, bgName, left, right, baseY, def.isWrappingLevel);
+                float camMinY = baseY;
+                float camMaxY = (def.cameraMin != def.cameraMax) ? Mathf.Max(def.cameraMin.y, def.cameraMax.y) : (baseY + 9f);
+                float camCenterHintY = (def.cameraMin != def.cameraMax) ? Mathf.Clamp(def.spawnPoint.y, camMinY, camMaxY) : def.spawnPoint.y;
+                TryBuildScrollingClouds(bgRoot.transform, bgName, left, right, baseY, camMinY, camMaxY, camCenterHintY, def.isWrappingLevel);
 
                 Transform foregroundLayer = new GameObject("Foreground").transform;
                 foregroundLayer.parent = bgRoot.transform;
@@ -143,12 +146,15 @@ namespace NSMB.World {
             }
 
             BuildBackgroundTiled(sprite, bgRoot.transform, left, right, baseY, BackgroundZ, BackgroundSortingOrder, "BG_");
-            TryBuildScrollingClouds(bgRoot.transform, bgName, left, right, baseY, def.isWrappingLevel);
+            float camMinYFallback = baseY;
+            float camMaxYFallback = (def.cameraMin != def.cameraMax) ? Mathf.Max(def.cameraMin.y, def.cameraMax.y) : (baseY + 9f);
+            float camCenterHintYFallback = (def.cameraMin != def.cameraMax) ? Mathf.Clamp(def.spawnPoint.y, camMinYFallback, camMaxYFallback) : def.spawnPoint.y;
+            TryBuildScrollingClouds(bgRoot.transform, bgName, left, right, baseY, camMinYFallback, camMaxYFallback, camCenterHintYFallback, def.isWrappingLevel);
         }
 
         private struct CloudStripStyle {
-            public float smallYFromBase;
-            public float bigYFromBase;
+            public float smallYOffsetFromTop;
+            public float bigYOffsetFromTop;
             public float smallScale;
             public float bigScale;
             public float smallAlpha;
@@ -159,7 +165,7 @@ namespace NSMB.World {
             public float bigXOffset;
         }
 
-        private static void TryBuildScrollingClouds(Transform bgRoot, string bgName, float left, float right, float baseY, bool isWrappingLevel) {
+        private static void TryBuildScrollingClouds(Transform bgRoot, string bgName, float left, float right, float baseY, float camMinY, float camMaxY, float camCenterHintY, bool isWrappingLevel) {
             if (bgRoot == null || string.IsNullOrEmpty(bgName)) {
                 return;
             }
@@ -179,10 +185,10 @@ namespace NSMB.World {
             const string cloudsResourcePath = "NSMB/LevelBackgrounds/clouds";
             Sprite cloudSprite = GetOrCreateRuntimeSpriteFromTexture(
                 cloudsResourcePath,
-                cloudsResourcePath + "|full|ppu100|repeat",
+                cloudsResourcePath + "|full|ppu100|clamp",
                 new Vector2(0.5f, 0.5f),
                 100f,
-                TextureWrapMode.Repeat
+                TextureWrapMode.Clamp
             );
             if (cloudSprite == null) {
                 return;
@@ -197,6 +203,21 @@ namespace NSMB.World {
             float r = right + margin;
             float centerX = (l + r) * 0.5f;
 
+            // Anchor cloud rows near the top of the visible camera area (Unity 6 style), not absolute world Y.
+            float orthoHalfHeight = GetMainCameraOrthoHalfHeight();
+            float viewTopY = camCenterHintY + orthoHalfHeight;
+            float maxViewTopY = camMaxY + orthoHalfHeight;
+            float minViewTopY = camMinY + orthoHalfHeight;
+
+            float maxY = maxViewTopY - 0.05f;
+            float minY = minViewTopY + Mathf.Max(0.5f, orthoHalfHeight * 0.25f);
+
+            float bigY = Mathf.Clamp(viewTopY - style.bigYOffsetFromTop, minY, maxY);
+            float smallY = Mathf.Clamp(viewTopY - style.smallYOffsetFromTop, minY, maxY);
+            if (smallY > bigY - 0.25f) {
+                smallY = bigY - 0.25f;
+            }
+
             Transform cloudsRoot = new GameObject("Clouds").transform;
             cloudsRoot.parent = bgRoot;
             cloudsRoot.localPosition = Vector3.zero;
@@ -207,7 +228,7 @@ namespace NSMB.World {
                 cloudsRoot,
                 cloudSprite,
                 centerX + style.smallXOffset,
-                baseY + style.smallYFromBase,
+                smallY,
                 CloudSmallZ,
                 style.smallScale,
                 CloudTileSizeX,
@@ -224,7 +245,7 @@ namespace NSMB.World {
                 cloudsRoot,
                 cloudSprite,
                 centerX + style.bigXOffset,
-                baseY + style.bigYFromBase,
+                bigY,
                 CloudBigZ,
                 style.bigScale,
                 CloudTileSizeX,
@@ -247,8 +268,8 @@ namespace NSMB.World {
             // - DefaultGrassLevel (grass-sky)
             // - CustomSky (sky-bg)
             if (string.Equals(bgName, "grass-sky", StringComparison.InvariantCultureIgnoreCase)) {
-                style.smallYFromBase = 5.11f;
-                style.bigYFromBase = 6.51f;
+                style.smallYOffsetFromTop = 1.70f;
+                style.bigYOffsetFromTop = 0.40f;
                 style.smallScale = 1f;
                 style.bigScale = 2f;
                 style.smallAlpha = 0.27058825f;
@@ -261,8 +282,8 @@ namespace NSMB.World {
             }
 
             if (string.Equals(bgName, "sky-bg", StringComparison.InvariantCultureIgnoreCase)) {
-                style.smallYFromBase = 10.06f;
-                style.bigYFromBase = 11.88f;
+                style.smallYOffsetFromTop = 1.95f;
+                style.bigYOffsetFromTop = 0.75f;
                 style.smallScale = 1f;
                 style.bigScale = 2f;
                 style.smallAlpha = 0.27058825f;
@@ -309,15 +330,27 @@ namespace NSMB.World {
                 GameObject go = new GameObject("Seg_" + i);
                 go.transform.parent = layer;
                 go.transform.localPosition = new Vector3(localX, 0f, 0f);
-                go.transform.localScale = Vector3.one;
+                Vector2 spriteSize = sprite.bounds.size;
+                float sx = (spriteSize.x > 0.0001f) ? (tileSizeX / spriteSize.x) : 1f;
+                float sy = (spriteSize.y > 0.0001f) ? (tileSizeY / spriteSize.y) : 1f;
+                go.transform.localScale = new Vector3(sx, sy, 1f);
 
                 SpriteRenderer sr = go.AddComponent<SpriteRenderer>();
                 sr.sprite = sprite;
-                sr.drawMode = SpriteDrawMode.Tiled;
-                sr.size = new Vector2(tileSizeX, tileSizeY);
                 sr.sortingOrder = sortingOrder;
                 sr.color = new Color(1f, 1f, 1f, alpha);
             }
+        }
+
+        private static float GetMainCameraOrthoHalfHeight() {
+            UnityEngine.Camera cam = UnityEngine.Camera.main;
+            if (cam == null) {
+                cam = UnityEngine.Object.FindObjectOfType(typeof(UnityEngine.Camera)) as UnityEngine.Camera;
+            }
+            if (cam == null || !cam.orthographic) {
+                return 5f;
+            }
+            return Mathf.Max(0.01f, cam.orthographicSize);
         }
 
         private static void TryApplyCameraClearColor(string bgName) {
