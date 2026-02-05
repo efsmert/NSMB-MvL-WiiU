@@ -184,9 +184,10 @@ namespace NSMB.World {
             float worldWidth = Mathf.Max(spriteWidth, r - l);
             float centerX = (l + r) * 0.5f;
 
-            // Place clouds near the top of the camera bounds like Unity 6 (small below big).
-            float smallY = Mathf.Lerp(baseY, topY, 0.78f);
-            float bigY = Mathf.Lerp(baseY, topY, 0.92f);
+            // Place clouds high in the sky, above the mushroom band. (Small below big.)
+            // These factors are tuned against the Unity 6 grass/sky presentation with our current camera.
+            float smallY = Mathf.Lerp(baseY, topY, 0.86f);
+            float bigY = Mathf.Lerp(baseY, topY, 0.96f);
 
             Transform cloudsRoot = new GameObject("Clouds").transform;
             cloudsRoot.parent = bgRoot;
