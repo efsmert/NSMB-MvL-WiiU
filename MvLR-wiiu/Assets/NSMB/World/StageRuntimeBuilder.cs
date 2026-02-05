@@ -184,12 +184,15 @@ namespace NSMB.World {
 
             // Place clouds high in the sky above the mushroom band. (Small below big.)
             float stageHeight = Mathf.Max(1f, topY - baseY);
-            float bigY = topY - (stageHeight * 0.07f);
-            float smallY = topY - (stageHeight * 0.23f);
+            // Use top-of-camera offsets so clouds land in the upper-sky band across stage heights.
+            float bigYOffset = Mathf.Max(0.55f, stageHeight * 0.05f);
+            float smallYOffset = Mathf.Max(1.25f, stageHeight * 0.14f);
+            float bigY = topY - bigYOffset;
+            float smallY = topY - smallYOffset;
 
             // Safety: keep them within camera band.
             float maxY = topY - (stageHeight * 0.02f);
-            float minY = baseY + (stageHeight * 0.55f);
+            float minY = baseY + (stageHeight * 0.70f);
             bigY = Mathf.Clamp(bigY, minY, maxY);
             smallY = Mathf.Clamp(smallY, minY, maxY);
 
