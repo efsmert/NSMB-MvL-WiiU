@@ -442,14 +442,15 @@ namespace NSMB.Player {
 	            Texture2D[] textures = LoadTextures(modelFolderResourcePath);
 	            Texture2D primary = PickPrimaryTexture(textures, modelFolderResourcePath);
 
-	            Renderer[] renderers = root.GetComponentsInChildren<Renderer>(true);
-	            for (int i = 0; i < renderers.Length; i++) {
-	                Renderer r = renderers[i];
-	                if (r == null) continue;
+            Renderer[] renderers = root.GetComponentsInChildren<Renderer>(true);
+            for (int i = 0; i < renderers.Length; i++) {
+                Renderer r = renderers[i];
+                if (r == null) continue;
+                bool rendererHasUv2 = RendererHasUv2(r);
 	
-	                float uvRangeY = 1f;
-	                TryGetRendererUvRangeY(r, out uvRangeY);
-	                Material[] mats = r.sharedMaterials;
+                float uvRangeY = 1f;
+                TryGetRendererUvRangeY(r, out uvRangeY);
+                Material[] mats = r.sharedMaterials;
 	                if (mats == null || mats.Length == 0) {
 	                    // Some imports can produce a renderer with no materials assigned.
 	                    if (primary != null && opaque != null) {
@@ -469,8 +470,11 @@ namespace NSMB.Player {
 	                        continue;
 	                    }
  
-	                    bool wantsCutout = (!string.IsNullOrEmpty(mat.name) &&
+	                    bool nameSaysEye = (!string.IsNullOrEmpty(mat.name) &&
 	                                       (mat.name.IndexOf("eye", System.StringComparison.InvariantCultureIgnoreCase) >= 0));
+                        bool hasEyeProps = mat.HasProperty("_EyeState") || mat.HasProperty("EyeState") ||
+                                           (mat.HasProperty("_EyeGrid") && mat.HasProperty("_UseUv2"));
+	                    bool wantsCutout = nameSaysEye || hasEyeProps;
 
  	                    // Unity 2017 can spam the Console when probing non-texture properties. Avoid accessing
  	                    // `mat.mainTexture`/`mat.mainTextureScale` here (they can resolve to missing/invalid
@@ -483,8 +487,7 @@ namespace NSMB.Player {
 	                        // Enforce stable texture selection for Unity 2017:
 	                        // - eye materials always use the dedicated eyes texture (when present)
 	                        // - everything else always uses the primary body texture (mario_big.png / luigi.png)
-	                        bool isEye = (!string.IsNullOrEmpty(mat.name) &&
-	                                      mat.name.IndexOf("eye", System.StringComparison.InvariantCultureIgnoreCase) >= 0);
+	                        bool isEye = wantsCutout;
 
 	                        if (isEye) {
 	                            Texture2D eyes = null;
@@ -577,9 +580,9 @@ namespace NSMB.Player {
                             if (repl.HasProperty("_EyeState")) {
                                 repl.SetFloat("_EyeState", 0f);
                             }
-                            if (repl.HasProperty("_UseUv2")) {
-                                repl.SetFloat("_UseUv2", 0f);
-                            }
+	                            if (repl.HasProperty("_UseUv2")) {
+	                                repl.SetFloat("_UseUv2", rendererHasUv2 ? 1f : 0f);
+	                            }
 	                            if (repl.HasProperty("_RowFromTop")) {
 	                                // Top row in the PNG contains the eye states; default to indexing from the top.
 	                                repl.SetFloat("_RowFromTop", 1f);
@@ -1093,6 +1096,46 @@ namespace NSMB.Player {
 
             rangeY = Mathf.Abs(maxY - minY);
             return true;
+        }
+
+        private static bool RendererHasUv2(Renderer r) {
+            if (r == null) {
+                return false;
+            }
+
+            Mesh mesh = null;
+            SkinnedMeshRenderer smr = r as SkinnedMeshRenderer;
+            if (smr != null) {
+                mesh = smr.sharedMesh;
+            } else {
+                MeshFilter mf = r.GetComponent<MeshFilter>();
+                if (mf != null) {
+                    mesh = mf.sharedMesh;
+                }
+            }
+
+            if (mesh == null) {
+                return false;
+            }
+
+            Vector2[] uv2 = null;
+            try {
+                uv2 = mesh.uv2;
+            } catch {
+                uv2 = null;
+            }
+            if (uv2 == null || uv2.Length == 0) {
+                return false;
+            }
+
+            // Ignore empty/generated channels that contain only zeroes.
+            for (int i = 0; i < uv2.Length; i++) {
+                if (Mathf.Abs(uv2[i].x) > 0.0001f || Mathf.Abs(uv2[i].y) > 0.0001f) {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         private void EnsureWrapEchos() {
