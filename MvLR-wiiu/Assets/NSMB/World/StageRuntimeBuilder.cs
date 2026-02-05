@@ -124,7 +124,8 @@ namespace NSMB.World {
 
                 BuildBackgroundTiled(backSprite, backLayer, left, right, baseY, BackgroundZ, BackgroundSortingOrder, "BG_");
 
-                TryBuildScrollingClouds(bgRoot.transform, bgName, left, right, baseY);
+                float topY = (def.cameraMin != def.cameraMax) ? Mathf.Max(def.cameraMin.y, def.cameraMax.y) : (baseY + 9f);
+                TryBuildScrollingClouds(bgRoot.transform, bgName, left, right, baseY, topY);
 
                 Transform foregroundLayer = new GameObject("Foreground").transform;
                 foregroundLayer.parent = bgRoot.transform;
@@ -142,10 +143,11 @@ namespace NSMB.World {
             }
 
             BuildBackgroundTiled(sprite, bgRoot.transform, left, right, baseY, BackgroundZ, BackgroundSortingOrder, "BG_");
-            TryBuildScrollingClouds(bgRoot.transform, bgName, left, right, baseY);
+            float topYFallback = (def.cameraMin != def.cameraMax) ? Mathf.Max(def.cameraMin.y, def.cameraMax.y) : (baseY + 9f);
+            TryBuildScrollingClouds(bgRoot.transform, bgName, left, right, baseY, topYFallback);
         }
 
-        private static void TryBuildScrollingClouds(Transform bgRoot, string bgName, float left, float right, float baseY) {
+        private static void TryBuildScrollingClouds(Transform bgRoot, string bgName, float left, float right, float baseY, float topY) {
             if (bgRoot == null || string.IsNullOrEmpty(bgName)) {
                 return;
             }
@@ -182,6 +184,10 @@ namespace NSMB.World {
             float worldWidth = Mathf.Max(spriteWidth, r - l);
             float centerX = (l + r) * 0.5f;
 
+            // Place clouds near the top of the camera bounds like Unity 6 (small below big).
+            float smallY = Mathf.Lerp(baseY, topY, 0.78f);
+            float bigY = Mathf.Lerp(baseY, topY, 0.92f);
+
             Transform cloudsRoot = new GameObject("Clouds").transform;
             cloudsRoot.parent = bgRoot;
             cloudsRoot.localPosition = Vector3.zero;
@@ -190,7 +196,7 @@ namespace NSMB.World {
             // Small clouds (fainter, slower) - matches Unity 6 defaults.
             Transform small = new GameObject("SmallClouds").transform;
             small.parent = cloudsRoot;
-            small.position = new Vector3(centerX, baseY + 5.11f, CloudSmallZ);
+            small.position = new Vector3(centerX, smallY, CloudSmallZ);
             small.localScale = Vector3.one;
             ScrollingSpriteLoop2D smallScroll = small.gameObject.AddComponent<ScrollingSpriteLoop2D>();
             smallScroll.speed = -0.1f;
@@ -206,7 +212,7 @@ namespace NSMB.World {
             // Big clouds (stronger, faster) - scaled up.
             Transform big = new GameObject("BigClouds").transform;
             big.parent = cloudsRoot;
-            big.position = new Vector3(centerX, baseY + 6.51f, CloudBigZ);
+            big.position = new Vector3(centerX, bigY, CloudBigZ);
             big.localScale = new Vector3(2f, 2f, 1f);
             ScrollingSpriteLoop2D bigScroll = big.gameObject.AddComponent<ScrollingSpriteLoop2D>();
             bigScroll.speed = -0.2f;
