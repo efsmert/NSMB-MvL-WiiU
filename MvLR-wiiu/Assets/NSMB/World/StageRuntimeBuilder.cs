@@ -125,8 +125,11 @@ namespace NSMB.World {
 
                 BuildBackgroundTiled(backSprite, backLayer, left, right, baseY, BackgroundZ, BackgroundSortingOrder, "BG_");
 
-                float topY = (def.cameraMin != def.cameraMax) ? Mathf.Max(def.cameraMin.y, def.cameraMax.y) : (baseY + 9f);
-                TryBuildScrollingClouds(bgRoot.transform, bgName, left, right, baseY, topY);
+                float camMinY = baseY;
+                float camMaxY = (def.cameraMin != def.cameraMax) ? Mathf.Max(def.cameraMin.y, def.cameraMax.y) : (baseY + 9f);
+                float camCenterHintY = (def.cameraMin != def.cameraMax) ? Mathf.Clamp(def.spawnPoint.y, camMinY, camMaxY) : def.spawnPoint.y;
+                float orthoHalfHeight = GetMainCameraOrthoHalfHeight();
+                TryBuildScrollingClouds(bgRoot.transform, bgName, left, right, camMinY, camMaxY, camCenterHintY, orthoHalfHeight);
 
                 Transform foregroundLayer = new GameObject("Foreground").transform;
                 foregroundLayer.parent = bgRoot.transform;
@@ -144,11 +147,14 @@ namespace NSMB.World {
             }
 
             BuildBackgroundTiled(sprite, bgRoot.transform, left, right, baseY, BackgroundZ, BackgroundSortingOrder, "BG_");
-            float topYFallback = (def.cameraMin != def.cameraMax) ? Mathf.Max(def.cameraMin.y, def.cameraMax.y) : (baseY + 9f);
-            TryBuildScrollingClouds(bgRoot.transform, bgName, left, right, baseY, topYFallback);
+            float camMinYFallback = baseY;
+            float camMaxYFallback = (def.cameraMin != def.cameraMax) ? Mathf.Max(def.cameraMin.y, def.cameraMax.y) : (baseY + 9f);
+            float camCenterHintYFallback = (def.cameraMin != def.cameraMax) ? Mathf.Clamp(def.spawnPoint.y, camMinYFallback, camMaxYFallback) : def.spawnPoint.y;
+            float orthoHalfHeightFallback = GetMainCameraOrthoHalfHeight();
+            TryBuildScrollingClouds(bgRoot.transform, bgName, left, right, camMinYFallback, camMaxYFallback, camCenterHintYFallback, orthoHalfHeightFallback);
         }
 
-        private static void TryBuildScrollingClouds(Transform bgRoot, string bgName, float left, float right, float baseY, float topY) {
+        private static void TryBuildScrollingClouds(Transform bgRoot, string bgName, float left, float right, float camMinY, float camMaxY, float camCenterHintY, float orthoHalfHeight) {
             if (bgRoot == null || string.IsNullOrEmpty(bgName)) {
                 return;
             }
@@ -182,19 +188,27 @@ namespace NSMB.World {
             float worldWidth = Mathf.Max(spriteWidth, r - l);
             float centerX = (l + r) * 0.5f;
 
-            // Place clouds high in the sky above the mushroom band. (Small below big.)
-            float stageHeight = Mathf.Max(1f, topY - baseY);
-            // Use top-of-camera offsets so clouds land in the upper-sky band across stage heights.
-            float bigYOffset = Mathf.Max(0.55f, stageHeight * 0.05f);
-            float smallYOffset = Mathf.Max(1.25f, stageHeight * 0.14f);
-            float bigY = topY - bigYOffset;
-            float smallY = topY - smallYOffset;
+            // Place clouds relative to the *starting camera view* (camera center + ortho size),
+            // because StageDefinition camera bounds represent the camera *center* clamp, not the top edge.
+            // This makes clouds sit near the top of the screen across different pixel-perfect scales.
+            if (orthoHalfHeight <= 0.0001f) {
+                orthoHalfHeight = 5f;
+            }
 
-            // Safety: keep them within camera band.
-            float maxY = topY - (stageHeight * 0.02f);
-            float minY = baseY + (stageHeight * 0.70f);
-            bigY = Mathf.Clamp(bigY, minY, maxY);
-            smallY = Mathf.Clamp(smallY, minY, maxY);
+            float viewTopY = camCenterHintY + orthoHalfHeight;
+            float maxViewTopY = camMaxY + orthoHalfHeight;
+            float minViewTopY = camMinY + orthoHalfHeight;
+
+            float maxY = maxViewTopY - 0.05f;
+            float minY = minViewTopY + Mathf.Max(0.5f, orthoHalfHeight * 0.35f);
+
+            float bigY = Mathf.Clamp(viewTopY - 1.05f, minY, maxY);
+            float smallY = Mathf.Clamp(viewTopY - 2.10f, minY, maxY);
+
+            // Keep small below big even under clamping.
+            if (smallY > bigY - 0.20f) {
+                smallY = bigY - 0.20f;
+            }
 
             Transform cloudsRoot = new GameObject("Clouds").transform;
             cloudsRoot.parent = bgRoot;
@@ -254,6 +268,20 @@ namespace NSMB.World {
 
             cam.clearFlags = CameraClearFlags.SolidColor;
             cam.backgroundColor = clearColor;
+        }
+
+        private static float GetMainCameraOrthoHalfHeight() {
+            UnityEngine.Camera cam = UnityEngine.Camera.main;
+            if (cam == null) {
+                cam = UnityEngine.Object.FindObjectOfType(typeof(UnityEngine.Camera)) as UnityEngine.Camera;
+            }
+            if (cam == null) {
+                return 5f;
+            }
+            if (!cam.orthographic) {
+                return 5f;
+            }
+            return Mathf.Max(0.01f, cam.orthographicSize);
         }
 
         private static bool TryGetCameraClearColorForBackground(string bgName, out Color clearColor) {
