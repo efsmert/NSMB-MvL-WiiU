@@ -9,10 +9,9 @@ namespace NSMB.World {
         private const float TileVisualOverlap = 1.001f;
         private const int BackgroundSortingOrder = -2000;
         private const int ForegroundSortingOrder = BackgroundSortingOrder + 100;
-        // Clouds should sit in the clear-sky region above the background sprite, not on top of the mushroom art.
-        // Sorting them behind the mushroom background ensures they only appear where the camera clear color shows.
-        private const int CloudBigSortingOrder = BackgroundSortingOrder - 20;
-        private const int CloudSmallSortingOrder = BackgroundSortingOrder - 10;
+        // Clouds render above the background sky gradient, but below the foreground bushes layer.
+        private const int CloudBigSortingOrder = BackgroundSortingOrder + 20;
+        private const int CloudSmallSortingOrder = BackgroundSortingOrder + 30;
         private const float BackgroundZ = 10f;
         private const float ForegroundZ = BackgroundZ - 0.5f;
         private const float CloudBigZ = BackgroundZ - 0.15f;
@@ -183,10 +182,16 @@ namespace NSMB.World {
             float worldWidth = Mathf.Max(spriteWidth, r - l);
             float centerX = (l + r) * 0.5f;
 
-            // Place clouds high in the sky, above the mushroom band. (Small below big.)
-            // These factors are tuned against the Unity 6 grass/sky presentation with our current camera.
-            float smallY = Mathf.Lerp(baseY, topY, 0.86f);
-            float bigY = Mathf.Lerp(baseY, topY, 0.96f);
+            // Place clouds high in the sky above the mushroom band. (Small below big.)
+            float stageHeight = Mathf.Max(1f, topY - baseY);
+            float bigY = topY - (stageHeight * 0.07f);
+            float smallY = topY - (stageHeight * 0.23f);
+
+            // Safety: keep them within camera band.
+            float maxY = topY - (stageHeight * 0.02f);
+            float minY = baseY + (stageHeight * 0.55f);
+            bigY = Mathf.Clamp(bigY, minY, maxY);
+            smallY = Mathf.Clamp(smallY, minY, maxY);
 
             Transform cloudsRoot = new GameObject("Clouds").transform;
             cloudsRoot.parent = bgRoot;
