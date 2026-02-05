@@ -9,8 +9,10 @@ namespace NSMB.World {
         private const float TileVisualOverlap = 1.001f;
         private const int BackgroundSortingOrder = -2000;
         private const int ForegroundSortingOrder = BackgroundSortingOrder + 100;
-        private const int CloudBigSortingOrder = BackgroundSortingOrder + 20;
-        private const int CloudSmallSortingOrder = BackgroundSortingOrder + 30;
+        // Clouds should sit in the clear-sky region above the background sprite, not on top of the mushroom art.
+        // Sorting them behind the mushroom background ensures they only appear where the camera clear color shows.
+        private const int CloudBigSortingOrder = BackgroundSortingOrder - 20;
+        private const int CloudSmallSortingOrder = BackgroundSortingOrder - 10;
         private const float BackgroundZ = 10f;
         private const float ForegroundZ = BackgroundZ - 0.5f;
         private const float CloudBigZ = BackgroundZ - 0.15f;
@@ -168,11 +170,8 @@ namespace NSMB.World {
 
             // Use the shared clouds texture from level backgrounds.
             const string cloudsResourcePath = "NSMB/LevelBackgrounds/clouds";
-            // Imported as a Sprite with PPU=100 + Repeat wrap, matching Unity 6.
-            Sprite cloudSprite = Resources.Load<Sprite>(cloudsResourcePath);
-            if (cloudSprite == null) {
-                cloudSprite = GetOrCreateRuntimeSpriteFromTexture(cloudsResourcePath, cloudsResourcePath + "|ppu100|center|repeat", new Vector2(0.5f, 0.5f), 100f, TextureWrapMode.Repeat);
-            }
+            // Always create a FullRect sprite for tiling (avoids Unity warning when drawMode=Tiled).
+            Sprite cloudSprite = GetOrCreateRuntimeSpriteFromTexture(cloudsResourcePath, cloudsResourcePath + "|ppu100|center|repeat|fullrect", new Vector2(0.5f, 0.5f), 100f, TextureWrapMode.Repeat);
             if (cloudSprite == null) {
                 return;
             }
