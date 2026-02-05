@@ -180,16 +180,19 @@ namespace NSMB.World {
                 return;
             }
 
-            // Use the shared clouds texture exactly like the Unity 6 scenes:
+            // Use the shared clouds sprite exactly like the Unity 6 scenes:
             // one tiled strip for BigClouds and one for SmallClouds.
             const string cloudsResourcePath = "NSMB/LevelBackgrounds/clouds";
-            Sprite cloudSprite = GetOrCreateRuntimeSpriteFromTexture(
-                cloudsResourcePath,
-                cloudsResourcePath + "|full|ppu100|clamp",
-                new Vector2(0.5f, 0.5f),
-                100f,
-                TextureWrapMode.Clamp
-            );
+            Sprite cloudSprite = Resources.Load(cloudsResourcePath, typeof(Sprite)) as Sprite;
+            if (cloudSprite == null) {
+                cloudSprite = GetOrCreateRuntimeSpriteFromTexture(
+                    cloudsResourcePath,
+                    cloudsResourcePath + "|full|ppu100|repeat",
+                    new Vector2(0.5f, 0.5f),
+                    100f,
+                    TextureWrapMode.Repeat
+                );
+            }
             if (cloudSprite == null) {
                 return;
             }
@@ -201,7 +204,6 @@ namespace NSMB.World {
             float margin = isWrappingLevel ? 0f : (maxTileWorldWidth * 2f);
             float l = left - margin;
             float r = right + margin;
-            float centerX = (l + r) * 0.5f;
 
             // Anchor cloud rows near the top of the visible camera area (Unity 6 style), not absolute world Y.
             float orthoHalfHeight = GetMainCameraOrthoHalfHeight();
@@ -227,7 +229,7 @@ namespace NSMB.World {
                 "SmallClouds",
                 cloudsRoot,
                 cloudSprite,
-                centerX + style.smallXOffset,
+                style.smallXOffset,
                 smallY,
                 CloudSmallZ,
                 style.smallScale,
@@ -244,7 +246,7 @@ namespace NSMB.World {
                 "BigClouds",
                 cloudsRoot,
                 cloudSprite,
-                centerX + style.bigXOffset,
+                style.bigXOffset,
                 bigY,
                 CloudBigZ,
                 style.bigScale,
@@ -298,7 +300,7 @@ namespace NSMB.World {
             return false;
         }
 
-        private static void BuildCloudStripLayer(string name, Transform parent, Sprite sprite, float centerX, float y, float z, float scale, float tileSizeX, float tileSizeY, int sortingOrder, float alpha, float speed, float left, float right) {
+        private static void BuildCloudStripLayer(string name, Transform parent, Sprite sprite, float anchorX, float y, float z, float scale, float tileSizeX, float tileSizeY, int sortingOrder, float alpha, float speed, float left, float right) {
             if (parent == null || sprite == null) {
                 return;
             }
@@ -311,32 +313,30 @@ namespace NSMB.World {
 
             Transform layer = new GameObject(name).transform;
             layer.parent = parent;
-            layer.position = new Vector3(centerX, y, z);
+            layer.position = new Vector3(anchorX, y, z);
             layer.localScale = new Vector3(s, s, 1f);
 
             ScrollingSpriteLoop2D scroll = layer.gameObject.AddComponent<ScrollingSpriteLoop2D>();
             scroll.speed = speed;
             scroll.tileWorldWidth = tileWorldWidth;
 
-            // Build repeated strip segments so the layer fills stage width before/after scroll.
-            float span = Mathf.Max(0.01f, right - left);
-            int segmentCount = Mathf.Max(3, Mathf.CeilToInt(span / tileWorldWidth) + 4);
-            float firstWorldX = left - tileWorldWidth;
+            // Preserve Unity 6 strip phasing: anchor to world-space offsets (0 / 0.34), then replicate
+            // in fixed strip widths instead of stage-centered placement.
+            int kMin = Mathf.FloorToInt((left - anchorX) / tileWorldWidth) - 2;
+            int kMax = Mathf.CeilToInt((right - anchorX) / tileWorldWidth) + 2;
 
-            for (int i = 0; i < segmentCount; i++) {
-                float worldX = firstWorldX + (i * tileWorldWidth);
-                float localX = (worldX - centerX) / s;
+            for (int k = kMin; k <= kMax; k++) {
+                float localX = (k * tileWorldWidth) / s;
 
-                GameObject go = new GameObject("Seg_" + i);
+                GameObject go = new GameObject("Seg_" + k);
                 go.transform.parent = layer;
                 go.transform.localPosition = new Vector3(localX, 0f, 0f);
-                Vector2 spriteSize = sprite.bounds.size;
-                float sx = (spriteSize.x > 0.0001f) ? (tileSizeX / spriteSize.x) : 1f;
-                float sy = (spriteSize.y > 0.0001f) ? (tileSizeY / spriteSize.y) : 1f;
-                go.transform.localScale = new Vector3(sx, sy, 1f);
+                go.transform.localScale = Vector3.one;
 
                 SpriteRenderer sr = go.AddComponent<SpriteRenderer>();
                 sr.sprite = sprite;
+                sr.drawMode = SpriteDrawMode.Tiled;
+                sr.size = new Vector2(tileSizeX, tileSizeY);
                 sr.sortingOrder = sortingOrder;
                 sr.color = new Color(1f, 1f, 1f, alpha);
             }
