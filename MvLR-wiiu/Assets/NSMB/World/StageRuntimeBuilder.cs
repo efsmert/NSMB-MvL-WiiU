@@ -182,9 +182,9 @@ namespace NSMB.World {
             }
 
             float spriteWidth = cloudSprite.bounds.size.x;
-            // Make the pattern sparser than strict texture tiling by spacing cloud sprites further apart.
-            float smallPeriod = spriteWidth * 4.0f;
-            float bigPeriod = spriteWidth * 6.0f;
+            // Match Unity 6 style distribution by repeating a small deterministic pattern over a scroll period.
+            float smallPeriod = spriteWidth * 3.0f;
+            float bigPeriod = spriteWidth * 4.0f;
 
             float margin = Mathf.Max(smallPeriod, bigPeriod) * 2f;
             float l = left - margin;
@@ -205,8 +205,11 @@ namespace NSMB.World {
             float maxY = maxViewTopY - 0.05f;
             float minY = minViewTopY + Mathf.Max(0.5f, orthoHalfHeight * 0.35f);
 
-            float bigY = Mathf.Clamp(viewTopY - 1.05f, minY, maxY);
-            float smallY = Mathf.Clamp(viewTopY - 2.10f, minY, maxY);
+            // Big row is near the very top; small row sits mid-high (closer to Unity 6 screenshot).
+            float bigYOffset = Mathf.Max(0.85f, orthoHalfHeight * 0.16f);
+            float smallYOffset = Mathf.Max(2.50f, orthoHalfHeight * 0.48f);
+            float bigY = Mathf.Clamp(viewTopY - bigYOffset, minY, maxY);
+            float smallY = Mathf.Clamp(viewTopY - smallYOffset, minY, maxY);
 
             // Keep small below big even under clamping.
             if (smallY > bigY - 0.20f) {
@@ -227,7 +230,21 @@ namespace NSMB.World {
             smallScroll.speed = -0.1f;
             smallScroll.tileWorldWidth = smallPeriod;
 
-            BuildCloudSparseStrip(cloudSprite, small, l, r, centerX, 1f, smallPeriod, CloudSmallSortingOrder, 0.27058825f);
+            // Pattern: two loose rows of small clouds.
+            BuildCloudPatternStrip(
+                cloudSprite,
+                small,
+                l,
+                r,
+                centerX,
+                1f,
+                smallPeriod,
+                new float[] { 0.08f, 0.32f, 0.58f, 0.84f },
+                new float[] { 0.00f, -0.18f, -0.06f, -0.24f },
+                new bool[] { false, true, false, true },
+                CloudSmallSortingOrder,
+                0.27058825f
+            );
 
             // Big clouds (stronger, faster) - scaled up.
             Transform big = new GameObject("BigClouds").transform;
@@ -238,30 +255,63 @@ namespace NSMB.World {
             bigScroll.speed = -0.2f;
             bigScroll.tileWorldWidth = bigPeriod;
 
-            BuildCloudSparseStrip(cloudSprite, big, l, r, centerX, 2f, bigPeriod, CloudBigSortingOrder, 0.8352941f);
+            // Pattern: top row of large puffs (fewer, more opaque).
+            BuildCloudPatternStrip(
+                cloudSprite,
+                big,
+                l,
+                r,
+                centerX,
+                2f,
+                bigPeriod,
+                new float[] { 0.18f, 0.64f },
+                new float[] { 0.00f, -0.10f },
+                new bool[] { false, true },
+                CloudBigSortingOrder,
+                0.8352941f
+            );
         }
 
-        private static void BuildCloudSparseStrip(Sprite sprite, Transform layerRoot, float left, float right, float centerX, float scaleX, float periodWorld, int sortingOrder, float alpha) {
+        private static void BuildCloudPatternStrip(Sprite sprite, Transform layerRoot, float left, float right, float centerX, float scaleX, float periodWorld, float[] patternXFracs, float[] patternYOffsets, bool[] patternFlipX, int sortingOrder, float alpha) {
             if (sprite == null || layerRoot == null) {
                 return;
             }
 
+            if (patternXFracs == null || patternYOffsets == null || patternXFracs.Length == 0 || patternYOffsets.Length == 0) {
+                return;
+            }
+
+            int patternCount = Mathf.Min(patternXFracs.Length, patternYOffsets.Length);
+            if (patternFlipX != null) {
+                patternCount = Mathf.Min(patternCount, patternFlipX.Length);
+            }
+
             float span = Mathf.Max(0.01f, right - left);
-            int count = Mathf.Max(1, Mathf.CeilToInt(span / Mathf.Max(0.01f, periodWorld)) + 3);
+            int cellCount = Mathf.Max(1, Mathf.CeilToInt(span / Mathf.Max(0.01f, periodWorld)) + 4);
 
-            for (int i = 0; i < count; i++) {
-                float worldX = left + (i * periodWorld);
-                float localX = (worldX - centerX) / Mathf.Max(0.01f, scaleX);
+            float invScaleX = 1f / Mathf.Max(0.01f, scaleX);
 
-                GameObject go = new GameObject("C_" + i);
-                go.transform.parent = layerRoot;
-                go.transform.localPosition = new Vector3(localX, 0f, 0f);
-                go.transform.localScale = Vector3.one;
+            for (int cell = 0; cell < cellCount; cell++) {
+                float cellStartX = left + (cell * periodWorld);
 
-                SpriteRenderer sr = go.AddComponent<SpriteRenderer>();
-                sr.sprite = sprite;
-                sr.sortingOrder = sortingOrder;
-                sr.color = new Color(1f, 1f, 1f, alpha);
+                for (int p = 0; p < patternCount; p++) {
+                    float worldX = cellStartX + (patternXFracs[p] * periodWorld);
+                    float localX = (worldX - centerX) * invScaleX;
+                    float localY = patternYOffsets[p] * invScaleX;
+
+                    GameObject go = new GameObject("C_" + cell + "_" + p);
+                    go.transform.parent = layerRoot;
+                    go.transform.localPosition = new Vector3(localX, localY, 0f);
+                    go.transform.localScale = Vector3.one;
+
+                    SpriteRenderer sr = go.AddComponent<SpriteRenderer>();
+                    sr.sprite = sprite;
+                    sr.sortingOrder = sortingOrder;
+                    sr.color = new Color(1f, 1f, 1f, alpha);
+                    if (patternFlipX != null) {
+                        sr.flipX = patternFlipX[p];
+                    }
+                }
             }
         }
 
