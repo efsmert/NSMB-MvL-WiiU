@@ -181,15 +181,25 @@ namespace NSMB.World {
             }
 
             const string cloudsResourcePath = "NSMB/LevelBackgrounds/clouds";
-            // Unity 6 uses the same full clouds sprite for both layers with tiled draw mode.
-            Sprite cloudSprite = GetOrCreateRuntimeSpriteFromTexture(
+            // The source texture contains two horizontal cloud rows. Build full-width row sprites so
+            // each runtime layer contributes a single band (prevents stacked duplicates).
+            Sprite bigCloudRowSprite = GetOrCreateRuntimeSpriteFromTextureRect(
                 cloudsResourcePath,
-                cloudsResourcePath + "|full|ppu100|repeat",
+                cloudsResourcePath + "|bigrow|ppu100|repeat",
+                new Rect(0f, 53f, 252f, 24f),
                 new Vector2(0.5f, 0.5f),
                 100f,
                 TextureWrapMode.Repeat
             );
-            if (cloudSprite == null) {
+            Sprite smallCloudRowSprite = GetOrCreateRuntimeSpriteFromTextureRect(
+                cloudsResourcePath,
+                cloudsResourcePath + "|smallrow|ppu100|repeat",
+                new Rect(0f, 13f, 252f, 24f),
+                new Vector2(0.5f, 0.5f),
+                100f,
+                TextureWrapMode.Repeat
+            );
+            if (bigCloudRowSprite == null || smallCloudRowSprite == null) {
                 return;
             }
 
@@ -225,7 +235,7 @@ namespace NSMB.World {
             BuildCloudStripLayer(
                 "SmallClouds",
                 cloudsRoot,
-                cloudSprite,
+                smallCloudRowSprite,
                 style.smallXOffset,
                 smallY,
                 CloudSmallZ,
@@ -237,7 +247,7 @@ namespace NSMB.World {
                 -0.1f,
                 CloudSourceTextureWidthWorld * style.smallScale,
                 CloudTileSizeX * style.smallScale,
-                true,
+                false,
                 l,
                 r
             );
@@ -245,7 +255,7 @@ namespace NSMB.World {
             BuildCloudStripLayer(
                 "BigClouds",
                 cloudsRoot,
-                cloudSprite,
+                bigCloudRowSprite,
                 style.bigXOffset,
                 bigY,
                 CloudBigZ,
@@ -257,7 +267,7 @@ namespace NSMB.World {
                 -0.2f,
                 CloudSourceTextureWidthWorld * style.bigScale,
                 CloudTileSizeX * style.bigScale,
-                true,
+                false,
                 l,
                 r
             );
@@ -273,14 +283,14 @@ namespace NSMB.World {
             // - DefaultGrassLevel (grass-sky)
             // - CustomSky (sky-bg)
             if (string.Equals(bgName, "grass-sky", StringComparison.InvariantCultureIgnoreCase)) {
-                style.smallYOffsetFromTop = 1.45f;
-                style.bigYOffsetFromTop = 0.40f;
+                style.smallYOffsetFromTop = 1.15f;
+                style.bigYOffsetFromTop = 0.22f;
                 style.smallScale = 1f;
                 style.bigScale = 2f;
                 style.smallAlpha = 0.27058825f;
                 style.bigAlpha = 0.8352941f;
-                style.smallSizeY = 0.86f;
-                style.bigSizeY = 1.00f;
+                style.smallSizeY = 0.34f;
+                style.bigSizeY = 0.32f;
                 style.smallXOffset = 0f;
                 style.bigXOffset = 0.34f;
                 return true;
@@ -293,8 +303,8 @@ namespace NSMB.World {
                 style.bigScale = 2f;
                 style.smallAlpha = 0.27058825f;
                 style.bigAlpha = 0.56078434f;
-                style.smallSizeY = 0.80f;
-                style.bigSizeY = 0.80f;
+                style.smallSizeY = 0.24f;
+                style.bigSizeY = 0.24f;
                 style.smallXOffset = 0f;
                 style.bigXOffset = 0.34f;
                 return true;
@@ -342,6 +352,12 @@ namespace NSMB.World {
                 if (tiled) {
                     sr.drawMode = SpriteDrawMode.Tiled;
                     sr.size = new Vector2(tileSizeX, tileSizeY);
+                } else {
+                    // Keep one cloud row per segment and scale it to the intended strip dimensions.
+                    Vector2 spriteSize = sprite.bounds.size;
+                    float sx = (spriteSize.x > 0.0001f) ? (tileSizeX / spriteSize.x) : 1f;
+                    float sy = (spriteSize.y > 0.0001f) ? (tileSizeY / spriteSize.y) : 1f;
+                    go.transform.localScale = new Vector3(sx, sy, 1f);
                 }
                 sr.sortingOrder = sortingOrder;
                 sr.color = new Color(1f, 1f, 1f, alpha);
