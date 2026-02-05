@@ -181,25 +181,16 @@ namespace NSMB.World {
             }
 
             const string cloudsResourcePath = "NSMB/LevelBackgrounds/clouds";
-            // The source texture contains two horizontal cloud rows. Build full-width row sprites so
-            // each runtime layer contributes a single band (prevents stacked duplicates).
-            Sprite bigCloudRowSprite = GetOrCreateRuntimeSpriteFromTextureRect(
+            // Unity 6 uses the full clouds texture for each strip layer. Keeping full texture restores
+            // the expected internal vertical stagger within each moving cloud band.
+            Sprite cloudSprite = GetOrCreateRuntimeSpriteFromTexture(
                 cloudsResourcePath,
-                cloudsResourcePath + "|bigrow|ppu100|repeat",
-                new Rect(0f, 53f, 252f, 24f),
+                cloudsResourcePath + "|full|ppu100|repeat",
                 new Vector2(0.5f, 0.5f),
                 100f,
                 TextureWrapMode.Repeat
             );
-            Sprite smallCloudRowSprite = GetOrCreateRuntimeSpriteFromTextureRect(
-                cloudsResourcePath,
-                cloudsResourcePath + "|smallrow|ppu100|repeat",
-                new Rect(0f, 13f, 252f, 24f),
-                new Vector2(0.5f, 0.5f),
-                100f,
-                TextureWrapMode.Repeat
-            );
-            if (bigCloudRowSprite == null || smallCloudRowSprite == null) {
+            if (cloudSprite == null) {
                 return;
             }
 
@@ -235,7 +226,7 @@ namespace NSMB.World {
             BuildCloudStripLayer(
                 "SmallClouds",
                 cloudsRoot,
-                smallCloudRowSprite,
+                cloudSprite,
                 style.smallXOffset,
                 smallY,
                 CloudSmallZ,
@@ -247,7 +238,7 @@ namespace NSMB.World {
                 -0.1f,
                 CloudSourceTextureWidthWorld * style.smallScale,
                 CloudTileSizeX * style.smallScale,
-                false,
+                true,
                 l,
                 r
             );
@@ -255,7 +246,7 @@ namespace NSMB.World {
             BuildCloudStripLayer(
                 "BigClouds",
                 cloudsRoot,
-                bigCloudRowSprite,
+                cloudSprite,
                 style.bigXOffset,
                 bigY,
                 CloudBigZ,
@@ -267,7 +258,7 @@ namespace NSMB.World {
                 -0.2f,
                 CloudSourceTextureWidthWorld * style.bigScale,
                 CloudTileSizeX * style.bigScale,
-                false,
+                true,
                 l,
                 r
             );
@@ -283,14 +274,14 @@ namespace NSMB.World {
             // - DefaultGrassLevel (grass-sky)
             // - CustomSky (sky-bg)
             if (string.Equals(bgName, "grass-sky", StringComparison.InvariantCultureIgnoreCase)) {
-                style.smallYOffsetFromTop = 1.15f;
-                style.bigYOffsetFromTop = 0.22f;
+                style.smallYOffsetFromTop = 1.30f;
+                style.bigYOffsetFromTop = 0.30f;
                 style.smallScale = 1f;
                 style.bigScale = 2f;
                 style.smallAlpha = 0.27058825f;
                 style.bigAlpha = 0.8352941f;
-                style.smallSizeY = 0.34f;
-                style.bigSizeY = 0.32f;
+                style.smallSizeY = 0.86f;
+                style.bigSizeY = 1.00f;
                 style.smallXOffset = 0f;
                 style.bigXOffset = 0.34f;
                 return true;
@@ -303,8 +294,8 @@ namespace NSMB.World {
                 style.bigScale = 2f;
                 style.smallAlpha = 0.27058825f;
                 style.bigAlpha = 0.56078434f;
-                style.smallSizeY = 0.24f;
-                style.bigSizeY = 0.24f;
+                style.smallSizeY = 0.80f;
+                style.bigSizeY = 0.80f;
                 style.smallXOffset = 0f;
                 style.bigXOffset = 0.34f;
                 return true;
