@@ -180,26 +180,38 @@ namespace NSMB.World {
                 return;
             }
 
-            // Use the shared clouds sprite exactly like the Unity 6 scenes:
-            // one tiled strip for BigClouds and one for SmallClouds.
+            // Use two slices from the shared clouds texture so each layer renders a single row type:
+            // - top cloud slice for BigClouds
+            // - bottom cloud slice for SmallClouds
+            // This avoids the visual double-row overlap while preserving Unity 6 phase/speed behavior.
             const string cloudsResourcePath = "NSMB/LevelBackgrounds/clouds";
-            Sprite cloudSprite = Resources.Load(cloudsResourcePath, typeof(Sprite)) as Sprite;
-            if (cloudSprite == null) {
-                cloudSprite = GetOrCreateRuntimeSpriteFromTexture(
-                    cloudsResourcePath,
-                    cloudsResourcePath + "|full|ppu100|repeat",
-                    new Vector2(0.5f, 0.5f),
-                    100f,
-                    TextureWrapMode.Repeat
-                );
-            }
-            if (cloudSprite == null) {
+            // Texture is 252x88 in both source and target.
+            Rect bigRect = new Rect(106f, 51f, 134f, 24f);
+            Rect smallRect = new Rect(10f, 11f, 134f, 24f);
+            Sprite bigCloudSprite = GetOrCreateRuntimeSpriteFromTextureRect(
+                cloudsResourcePath,
+                cloudsResourcePath + "|big|ppu100|repeat",
+                bigRect,
+                new Vector2(0.5f, 0.5f),
+                100f,
+                TextureWrapMode.Repeat
+            );
+            Sprite smallCloudSprite = GetOrCreateRuntimeSpriteFromTextureRect(
+                cloudsResourcePath,
+                cloudsResourcePath + "|small|ppu100|repeat",
+                smallRect,
+                new Vector2(0.5f, 0.5f),
+                100f,
+                TextureWrapMode.Repeat
+            );
+            if (bigCloudSprite == null || smallCloudSprite == null) {
                 return;
             }
 
             // IMPORTANT: Wrapping stages already create visual wrap copies. Extending beyond [left,right]
             // causes wrap copies to overlap and visually "intersect" clouds. Keep span tight on wrap stages.
-            const float CloudTileSizeX = 5.12f; // Unity 6 scene value on both BigClouds and SmallClouds.
+            const float CloudTileSizeX = 5.12f; // Unity 6 strip width in SpriteRenderer size.x.
+            const float CloudSourceTextureWidthWorld = 2.52f; // 252px / 100 PPU.
             float maxTileWorldWidth = CloudTileSizeX * Mathf.Max(style.smallScale, style.bigScale);
             float margin = isWrappingLevel ? 0f : (maxTileWorldWidth * 2f);
             float l = left - margin;
@@ -228,16 +240,18 @@ namespace NSMB.World {
             BuildCloudStripLayer(
                 "SmallClouds",
                 cloudsRoot,
-                cloudSprite,
+                smallCloudSprite,
                 style.smallXOffset,
                 smallY,
                 CloudSmallZ,
                 style.smallScale,
-                CloudTileSizeX,
+                smallCloudSprite.bounds.size.x,
                 style.smallSizeY,
                 CloudSmallSortingOrder,
                 style.smallAlpha,
                 -0.1f,
+                CloudSourceTextureWidthWorld * style.smallScale,
+                false,
                 l,
                 r
             );
@@ -245,16 +259,18 @@ namespace NSMB.World {
             BuildCloudStripLayer(
                 "BigClouds",
                 cloudsRoot,
-                cloudSprite,
+                bigCloudSprite,
                 style.bigXOffset,
                 bigY,
                 CloudBigZ,
                 style.bigScale,
-                CloudTileSizeX,
+                bigCloudSprite.bounds.size.x,
                 style.bigSizeY,
                 CloudBigSortingOrder,
                 style.bigAlpha,
                 -0.2f,
+                CloudSourceTextureWidthWorld * style.bigScale,
+                false,
                 l,
                 r
             );
@@ -300,13 +316,13 @@ namespace NSMB.World {
             return false;
         }
 
-        private static void BuildCloudStripLayer(string name, Transform parent, Sprite sprite, float anchorX, float y, float z, float scale, float tileSizeX, float tileSizeY, int sortingOrder, float alpha, float speed, float left, float right) {
+        private static void BuildCloudStripLayer(string name, Transform parent, Sprite sprite, float anchorX, float y, float z, float scale, float tileSizeX, float tileSizeY, int sortingOrder, float alpha, float speed, float repeatPeriodWorld, bool tiled, float left, float right) {
             if (parent == null || sprite == null) {
                 return;
             }
 
             float s = Mathf.Max(0.01f, scale);
-            float tileWorldWidth = tileSizeX * s;
+            float tileWorldWidth = (repeatPeriodWorld > 0.0001f) ? repeatPeriodWorld : (tileSizeX * s);
             if (tileWorldWidth <= 0.0001f) {
                 return;
             }
@@ -335,8 +351,10 @@ namespace NSMB.World {
 
                 SpriteRenderer sr = go.AddComponent<SpriteRenderer>();
                 sr.sprite = sprite;
-                sr.drawMode = SpriteDrawMode.Tiled;
-                sr.size = new Vector2(tileSizeX, tileSizeY);
+                if (tiled) {
+                    sr.drawMode = SpriteDrawMode.Tiled;
+                    sr.size = new Vector2(tileSizeX, tileSizeY);
+                }
                 sr.sortingOrder = sortingOrder;
                 sr.color = new Color(1f, 1f, 1f, alpha);
             }
